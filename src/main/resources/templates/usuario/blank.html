@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{usuario/template_user.html::head}"> </head>
+
+
+<body>
+	<div class="container-fluid position-relative d-flex p-0">
+		
+		<div th:insert="~{usuario/template_user.html::spinner}"></div>
+		
+		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
+
+
+		<!-- Content Start -->
+		<div class="content">
+			
+			<div th:insert="~{usuario/template_user.html::navbar}"></div>
+
+			<!-- Blank Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
+					<div class="col-md-6 text-center">
+						<h3>This is blank page</h3>
+					</div>
+				</div>
+			</div>
+			<!-- Blank End -->
+			<div th:insert="~{usuario/template_user.html::footer}">
+
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+
+</body>
+
+</html>
+
+</html>

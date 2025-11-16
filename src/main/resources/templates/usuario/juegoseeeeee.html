@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{usuario/template_user.html::head}"> </head>
+
+
+<body>
+	<div class="container-fluid position-relative d-flex p-0">
+		
+		
+		
+		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
+
+
+		<!-- Content Start -->
+		<div class="content">
+			
+			<div th:insert="~{usuario/template_user.html::navbar}"></div>
+
+			<!-- Blank Start -->
+			<div class="container-fluid pt-4 px-4">
+				
+					<div class="col-sm-12 ">
+					    <div class="bg-secondary rounded h-100 p-4">
+					        <h6 class="mb-12">Table Without Border</h6>
+					        <table class="table table-borderless">
+					            <thead>
+					                <tr class="center"> 
+										<th scope="col">imagen</th>
+					                    <th scope="col">Nombre</th>
+					                    <th scope="col">Calificación</th>
+					                    <th scope="col">Album</th>
+					                    <th scope="col">Drive</th>
+										<th scope="col">Fecha de registro</th>
+										
+										<th scope="col">Ver</th>
+										<th scope="col">Editar</th>
+										<th scope="col">Eliminar</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					                <tr>
+					                    <th scope="row">1</th>
+					                    <td>John</td>
+					                    <td>Doe</td>
+					                    <td>jhon@email.com</td>
+					                </tr>
+					               
+					            </tbody>
+					        </table>
+					    </div>
+					</div>
+				
+			</div>
+			<!-- Blank End -->
+			<div th:insert="~{usuario/template_user.html::footer}">
+
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+
+</body>
+
+</html>
+
+</html>

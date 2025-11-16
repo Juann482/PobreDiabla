@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{usuario/template_user.html::head}"> </head>
+
+<body>
+	<div class="container-fluid position-relative d-flex p-0">
+
+		<div th:insert="~{usuario/template_user.html::spinner}"></div>
+		
+		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
+
+		<div class="content">
+			
+			<div th:insert="~{usuario/template_user.html::navbar}"></div>
+
+			<!-- AQUI DEJAS TU CONTENIDO -->
+			<div class="container-fluid pt-4 px-4">
+				<h1 class="text-white">Bienvenido Juanito 😎</h1>
+			</div>
+
+			<!-- Footer -->
+			<div th:insert="~{usuario/template_user.html::footer}"></div>
+		</div>
+	</div>
+	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+
+</body>
+
+</html>
