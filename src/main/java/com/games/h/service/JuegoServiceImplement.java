@@ -1,6 +1,7 @@
 package com.games.h.service;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.games.h.model.Correos;
 import com.games.h.model.Juego;
-import com.games.h.model.Personaje;
 import com.games.h.repository.IJuegoRepository;
 
 @Service
@@ -28,7 +28,7 @@ public class JuegoServiceImplement implements IJuegoService {
     }
     
     @Override
-    public Personaje findByEnlaceAlbum(String enlaceAlbum) {
+    public Juego findByEnlaceAlbum(String enlaceAlbum) {
         return juegoRepository.findByEnlaceAlbum(enlaceAlbum);
     }
 
@@ -60,11 +60,38 @@ public class JuegoServiceImplement implements IJuegoService {
 
     @Override
     public List<Juego> findAll() {
-        return juegoRepository.findAll();
+        return juegoRepository.findAllByOrderByPuestoAsc();
     }
 
 	@Override
 	public List<Juego> findAllOrderByCalificacion() {
 		return juegoRepository.findAllByOrderByCalificacionDesc();
+	}
+
+	@Override
+	public void guardarConAjusteJJ(Juego nuevo) {
+		
+		// Buscar si existe alguien ocupando el puesto del nuevo
+	    List<Juego> ocupantes = juegoRepository.findByPuesto(nuevo.getPuesto());
+
+	    if (!ocupantes.isEmpty()) {
+	        Juego antiguo = ocupantes.get(0); // Tomamos el que tiene ese puesto
+	        antiguo.setPuesto(antiguo.getPuesto() + 1); // Lo bajamos un puesto
+	        juegoRepository.save(antiguo);
+	    }
+
+	    // Guardamos el nuevo ocupando su puesto
+	    juegoRepository.save(nuevo);
+    }
+	
+
+	@Override
+	public List<Juego> findByPuesto(Integer puesto) {
+		return juegoRepository.findByPuesto(puesto);
+	}
+
+	@Override
+	public Optional<Juego> findById(Integer id) {
+		return juegoRepository.findById(id);
 	}
 }

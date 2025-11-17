@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.games.h.model.Juego;
 import com.games.h.model.Personaje;
+import com.games.h.model.Usuario;
 
 public interface IPersonajeService {
 	
@@ -25,5 +26,9 @@ public interface IPersonajeService {
 	void update(Personaje personaje);
 	
 	List<Personaje> findAll();
+
+	Optional<Personaje> findByPuesto(Integer Puesto);
+
+	Optional<Personaje> findById(Integer id);
 
 }

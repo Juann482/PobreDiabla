@@ -5,7 +5,7 @@
 
 <body>
 	<div class="container-fluid position-relative d-flex p-0">
-		
+
 		<div th:insert="~{usuario/template_user.html::spinner}"></div>
 
 		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
@@ -18,32 +18,149 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="col-sm-12 ">
 					<div class="bg-secondary rounded h-100 p-4">
-						<div></div>
-						<h6 class="h2 text-white-50">Correos</h6>
+						<div class="d-flex justify-content-between align-items-center mb-3">
+						    <h6 class="h2 text-white-50 m-0">Correos</h6>
+
+						    <button class="btn btn-success"
+						            data-bs-toggle="modal"
+						            data-bs-target="#modalRegistrarCorreo">
+						        <i class="bi bi-plus-circle"></i> Registrar
+						    </button>
+						</div>
+
 						<table class="table table-borderless">
 							<thead>
 								<tr class="center">
 									<th scope="col" class="text-danger">Nombre</th>
 									<th scope="col" class="text-danger">Correo</th>
 									<th scope="col" class="text-danger">Contraseña</th>
-									
+
 									<th scope="col" class="text-warning">Editar</th>
 									<th scope="col" class="text-primary">Eliminar</th>
 								</tr>
 							</thead>
-							<tbody >
+							<tbody th:each="corr : ${correo}">
 								<tr class=" center text-white">
-									
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
+
+									<td th:text="${corr.nombre}" class="medalla-plata"></td>
+									<td th:text="${corr.email}"></td>
+									<td th:text="${corr.contraseña}"></td>
+
+									<td>
+										<button type="button" class="btn btn-warning" data-bs-toggle="modal"
+											th:attr="data-bs-target='#modalEditarCorreo__' + ${corr.id}">
+											<i class="bi bi-pencil-fill" style="color: aliceblue;"></i>
+										</button>
+									</td>
+
+									<td><a title="Eliminar" class="btn btn-primary"
+											th:href="@{/usuario/DeleteCorreo/{id} (id = ${corr.id})}">
+											<i class="bi bi-trash-fill" style="color: aliceblue;"></i></a></td>
 								</tr>
 
 							</tbody>
 						</table>
+					</div>
+				</div>
+			</div>
+			<!-- MODAL REGISTRAR CORREO -->
+			<div class="modal fade" id="modalRegistrarCorreo" tabindex="-1">
+
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content bg-dark text-white border-secondary">
+
+						<div class="modal-header border-secondary">
+							<h5 class="modal-title">Registrar Correo</h5>
+							<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+						</div>
+
+						<form th:action="@{/usuario/GuardarCorreo}" method="post">
+							<div class="modal-body">
+
+								<!-- id oculto vacío = creación -->
+								<input type="hidden" name="id">
+
+								<div class="mb-3">
+									<label class="form-label">Nombre</label>
+									<input type="text" class="form-control bg-secondary text-white border-dark"
+										name="nombre" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">Correo</label>
+									<input type="email" class="form-control bg-secondary text-white border-dark"
+										name="email" required>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label">Contraseña</label>
+									<input type="text" class="form-control bg-secondary text-white border-dark"
+										name="contraseña" required>
+								</div>
+
+							</div>
+
+							<div class="modal-footer border-secondary">
+								<button type="button" class="btn btn-outline-light"
+									data-bs-dismiss="modal">Cancelar</button>
+								<button type="submit" class="btn btn-success">Registrar</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+
+			</div>
+
+			<!-- MODAL EDITAR CORREO -->
+			<div th:each="corr : ${correo}">
+				<div class="modal fade" th:id="'modalEditarCorreo__' + ${corr.id}" tabindex="-1">
+
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content bg-dark text-white border-secondary">
+
+							<div class="modal-header border-secondary">
+								<h5 class="modal-title">
+									Editar correo: <span th:text="${corr.nombre}"></span>
+								</h5>
+								<button type="button" class="btn-close btn-close-white"
+									data-bs-dismiss="modal"></button>
+							</div>
+
+							<form th:action="@{/usuario/GuardarCorreo}" method="post">
+								<div class="modal-body">
+
+									<!-- ID oculto -->
+									<input type="hidden" name="id" th:value="${corr.id}">
+
+									<div class="mb-3">
+										<label class="form-label">Nombre</label>
+										<input type="text" class="form-control bg-secondary text-white border-dark"
+											name="nombre" th:value="${corr.nombre}" required>
+									</div>
+
+									<div class="mb-3">
+										<label class="form-label">Correo</label>
+										<input type="email" class="form-control bg-secondary text-white border-dark"
+											name="email" th:value="${corr.email}" required>
+									</div>
+
+									<div class="mb-3">
+										<label class="form-label">Contraseña</label>
+										<input type="text" class="form-control bg-secondary text-white border-dark"
+											name="contraseña" th:value="${corr.contraseña}" required>
+									</div>
+
+								</div>
+
+								<div class="modal-footer border-secondary">
+									<button type="button" class="btn btn-outline-light"
+										data-bs-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-warning">Guardar cambios</button>
+								</div>
+							</form>
+
+						</div>
 					</div>
 				</div>
 			</div>
@@ -53,7 +170,12 @@
 		</div>
 	</div>
 	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
-
+	<script>
+		function abrirModalCorreo() {
+			const modal = new bootstrap.Modal(document.getElementById("modalCorreo"));
+			modal.show();
+		}
+	</script>
 </body>
 
 </html>

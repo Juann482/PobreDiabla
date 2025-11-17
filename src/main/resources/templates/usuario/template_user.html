@@ -27,6 +27,50 @@
 
 	<!-- Template Styles -->
 	<link th:href="@{/css/style.css}" rel="stylesheet">
+	<style>
+		.text-oro {
+			color: #ffd700 !important;
+		}
+
+		.text-plata {
+			color: #c0c0c0 !important;
+		}
+
+		.text-bronce {
+			color: #cd7f32 !important;
+		}
+	</style>
+	<style>
+		.modal.fade .modal-dialog {
+			transform: translateY(20px);
+			opacity: 0;
+			transition: all 0.35s ease-out;
+		}
+
+		.modal.fade.show .modal-dialog {
+			transform: translateY(0);
+			opacity: 1;
+		}
+
+		.border-oro {
+			border: 4px solid #ffd700;
+		}
+
+		.border-plata {
+			border: 4px solid #c0c0c0;
+		}
+
+		.border-bronce {
+			border: 4px solid #cd7f32;
+		}
+		.card-detalle {
+		       background: #1e1e1e;
+		       border-radius: 12px;
+		       padding: 20px;
+		       box-shadow: 0 0 25px rgba(255,255,255,0.05);
+		       transition: 0.3s;
+		   }
+	</style>
 
 	<style>
 		.center {
@@ -50,57 +94,60 @@
 		.icon-link:hover i {
 			transform: scale(1.2);
 		}
-		
+
 		/* Oro */
 		.medalla-oro {
-		    color: gold !important;
-		    filter: drop-shadow(0 0 6px gold);
-		    transition: transform .2s ease, filter .3s ease;
+			color: gold !important;
+			filter: drop-shadow(0 0 6px gold);
+			transition: transform .2s ease, filter .3s ease;
 		}
+
 		.medalla-oro:hover {
-		    transform: scale(1.15);
-		    filter: drop-shadow(0 0 12px gold);
+			transform: scale(1.15);
+			filter: drop-shadow(0 0 12px gold);
 		}
 
 		/* Plata */
 		.medalla-plata {
-		    color: silver !important;
-		    filter: drop-shadow(0 0 6px silver);
-		    transition: transform .2s ease, filter .3s ease;
+			color: silver !important;
+			filter: drop-shadow(0 0 6px silver);
+			transition: transform .2s ease, filter .3s ease;
 		}
+
 		.medalla-plata:hover {
-		    transform: scale(1.15);
-		    filter: drop-shadow(0 0 12px silver);
+			transform: scale(1.15);
+			filter: drop-shadow(0 0 12px silver);
 		}
 
 		/* Bronce */
 		.medalla-bronce {
-		    color: #cd7f32 !important; /* color bronce bonito */
-		    filter: drop-shadow(0 0 6px #cd7f32);
-		    transition: transform .2s ease, filter .3s ease;
+			color: #cd7f32 !important;
+			/* color bronce bonito */
+			filter: drop-shadow(0 0 6px #cd7f32);
+			transition: transform .2s ease, filter .3s ease;
 		}
+
 		.medalla-bronce:hover {
-		    transform: scale(1.15);
-		    filter: drop-shadow(0 0 12px #cd7f32);
+			transform: scale(1.15);
+			filter: drop-shadow(0 0 12px #cd7f32);
 		}
-		
+
 		/* ====== TEXTO CON BRILLO SEGÚN EL PUESTO ====== */
 
 		.text-oro {
-		    color: gold !important;
-		    text-shadow: 0 0 6px gold;
+			color: gold !important;
+			text-shadow: 0 0 6px gold;
 		}
 
 		.text-plata {
-		    color: silver !important;
-		    text-shadow: 0 0 6px silver;
+			color: silver !important;
+			text-shadow: 0 0 6px silver;
 		}
 
 		.text-bronce {
-		    color: #cd7f32 !important;
-		    text-shadow: 0 0 6px #cd7f32;
+			color: #cd7f32 !important;
+			text-shadow: 0 0 6px #cd7f32;
 		}
-
 	</style>
 </head>
 
@@ -145,7 +192,7 @@
 					<div class="dropdown-menu bg-transparent border-0">
 						<a th:href="@{/usuario/Juegos}" class="dropdown-item">Juegos</a>
 						<a th:href="@{/usuario/Personajes}" class="dropdown-item">Personajes</a>
-						<a th:href="@{/typography}" class="dropdown-item">Correos</a>
+						<a th:href="@{/usuario/Correos}" class="dropdown-item">Correos</a>
 					</div>
 				</div>
 				<div class="nav-item dropdown">
@@ -155,12 +202,8 @@
 					<div class="dropdown-menu bg-transparent border-0">
 						<a th:href="@{/usuario/JuegosRegistro}" class="dropdown-item">Registro de juegos</a>
 						<a th:href="@{/usuario/PersonajeRegistro}" class="dropdown-item">Registro de personajes</a>
-						<a th:href="@{/typography}" class="dropdown-item">Registro de correos</a>
 					</div>
 				</div>
-				<a th:href="@{/widgets}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-				<a th:href="@{/forms}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-				<a th:href="@{/tables}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
 			</div>
 		</nav>
 	</div>
@@ -307,4 +350,65 @@
 			setInterval(actualizarFechaHora, 1000);
 		});
 	</script>
+	//modal para detalles de personaje
+	<script>
+    function mostrarDetalles(btn) {
+
+        const nombre = btn.getAttribute("data-nombre");
+        const img = btn.getAttribute("data-img");
+        const calificacion = btn.getAttribute("data-calificacion");
+        const juego = btn.getAttribute("data-juego");
+        const puesto = parseInt(btn.getAttribute("data-puesto"));
+        const descripcion = btn.getAttribute("data-descripcion");
+
+        document.getElementById("modalNombre").innerText = nombre;
+        document.getElementById("modalImagen").src = img;
+        document.getElementById("modalJuego").innerText = juego;
+        document.getElementById("modalPuesto").innerText = puesto;
+        document.getElementById("modalDescripcion").innerText = descripcion;
+
+        document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(calificacion);
+
+        const nombreEl = document.getElementById("modalNombre");
+        const juegoEl = document.getElementById("modalJuego");
+        const puestoEl = document.getElementById("modalPuesto");
+        const imagenEl = document.getElementById("modalImagen");
+        const cardContenedor = document.getElementById("cardContenedor");
+
+        // Limpiar clases anteriores
+        nombreEl.className = "fw-bold";
+        juegoEl.className = "";
+        puestoEl.className = "";
+        imagenEl.className = "img-fluid rounded mb-3";
+        cardContenedor.style.border = "none";
+
+        // Aplicación según puesto
+        if (puesto === 1) {
+            nombreEl.classList.add("text-oro");
+            juegoEl.classList.add("text-oro");
+            puestoEl.classList.add("text-oro");
+            imagenEl.classList.add("border-oro");
+            cardContenedor.style.border = "2px solid #ffd700";
+        }
+        else if (puesto === 2) {
+            nombreEl.classList.add("text-plata");
+            juegoEl.classList.add("text-plata");
+            puestoEl.classList.add("text-plata");
+            imagenEl.classList.add("border-plata");
+            cardContenedor.style.border = "2px solid #c0c0c0";
+        }
+        else if (puesto === 3) {
+            nombreEl.classList.add("text-bronce");
+            juegoEl.classList.add("text-bronce");
+            puestoEl.classList.add("text-bronce");
+            imagenEl.classList.add("border-bronce");
+            cardContenedor.style.border = "2px solid #cd7f32";
+        }
+
+        const modal = new bootstrap.Modal(document.getElementById("detallePersonajeModal"));
+        modal.show();
+    }
+</script>
+
+
 </div>

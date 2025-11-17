@@ -1,6 +1,7 @@
 package com.games.h.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,7 @@ public interface IPersonajeRepository extends JpaRepository<Personaje, Integer>{
 	List<Personaje> findByPuestoGreaterThanEqualOrderByPuestoAsc(Integer puesto);
 
 	List<Personaje> findAllByOrderByPuestoAsc();
+
+	Optional<Personaje> findByPuesto(Integer puesto);
 
 }

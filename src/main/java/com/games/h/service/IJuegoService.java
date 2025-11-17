@@ -15,9 +15,11 @@ public interface IJuegoService {
 	
 	Juego findByCalificacion(Integer calificacion);
 	
-	Personaje findByEnlaceAlbum(String EnlaceAlbum);
+	Juego findByEnlaceAlbum(String EnlaceAlbum);
 	
 	List<Juego> findAllOrderByCalificacion();
+	
+	void guardarConAjusteJJ(Juego nuevo);
 	
 	void delete(Integer id);
 	
@@ -28,5 +30,9 @@ public interface IJuegoService {
 	List<Correos> findByCorreo(Correos correo);
 	
 	List<Juego> findAll();
+	
+	List<Juego> findByPuesto(Integer Puesto);
+
+	Optional<Juego> findById(Integer id);
 
 }

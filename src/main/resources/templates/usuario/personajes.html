@@ -29,7 +29,7 @@
 									<th scope="col" class="text-danger">Calificación</th>
 									<th scope="col" class="text-danger">Juego</th>
 
-									<th scope="col" class="text-info">Ver</th>
+									<th scope="col" class="text-info">Detalles</th>
 									<th scope="col" class="text-warning">Editar</th>
 									<th scope="col" class="text-primary">Eliminar</th>
 								</tr>
@@ -67,6 +67,24 @@
 										th:text="${person.juego != null ? person.juego.nombre : '-'}">
 									</td>
 
+									<td>
+										<a title="Ver" class="btn btn-info" th:attr="data-id=${person.id},
+									                data-nombre=${person.nombre},
+									                data-img=${'/images/' + person.imagen},
+									                data-calificacion=${person.calificacion},
+									                data-juego=${person.juego != null ? person.juego.nombre : 'Sin juego'},
+									                data-puesto=${person.puesto + '°'},
+									                data-descripcion=${person.caracteristica}" onclick="mostrarDetalles(this)">
+											<i class="bi bi-eye-fill" style="color: aliceblue;"></i>
+										</a>
+									</td>
+
+									<td><a title="Editar" class="btn btn-warning"
+											th:href="@{/usuario/EditPerson/{id} (id = ${person.id})}"><i
+												class="bi bi-pencil-fill" style="color: aliceblue;"></i></a></td>
+									<td><a title="Eliminar" class="btn btn-primary"
+											th:href="@{/usuario/DeletePerson/{id} (id = ${person.id})}"><i
+												class="bi bi-trash-fill" style="color: aliceblue;"></i></a></td>
 
 								</tr>
 
@@ -80,7 +98,63 @@
 			<div th:insert="~{usuario/template_user.html::footer}"></div>
 		</div>
 	</div>
-	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+	<!-- Modal DETALLES PERSONAJE -->
+	<div class="modal fade" id="detallePersonajeModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content bg-dark text-white border-0">
+
+				<div class="modal-header border-secondary">
+					<h5 class="modal-title" id="modalTitulo">Detalles del personaje</h5>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+				</div>
+
+				<div class="modal-body">
+
+					<div id="cardContenedor" class="card-detalle">
+
+						<div class="row">
+							<div class="col-md-4 text-center">
+								<img id="modalImagen" src="" class="img-fluid rounded mb-3 border-0" alt="Imagen">
+							</div>
+
+							<div class="col-md-8">
+
+
+								<h3 id="modalNombre" class="fw-bold"></h3>
+
+								<p class="mt-2">
+									<strong>Calificación:</strong>
+									<span id="modalCalificacion"></span>
+								</p>
+
+								<p>
+									<strong>Juego:</strong>
+									<span id="modalJuego"></span>
+								</p>
+
+								<p>
+									<strong>Puesto:</strong>
+									<span id="modalPuesto"></span>
+								</p>
+
+								<p>
+									<strong>Descripción:</strong>
+									<span id="modalDescripcion"></span>
+								</p>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="modal-footer border-secondary">
+						<button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
 
 </body>
 

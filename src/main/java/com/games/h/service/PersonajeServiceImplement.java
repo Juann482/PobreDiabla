@@ -72,5 +72,15 @@ public class PersonajeServiceImplement implements IPersonajeService {
         personajeRepository.saveAll(personajesConPuestoMayorIgual);
         personajeRepository.save(nuevo);
     }
+
+	@Override
+	public Optional<Personaje> findByPuesto(Integer puesto) {
+		return personajeRepository.findByPuesto(puesto);
+	}
+
+	@Override
+	public Optional<Personaje> findById(Integer id) {
+		return personajeRepository.findById(id);
+	}
 		
 }

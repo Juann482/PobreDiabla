@@ -16,54 +16,207 @@
 
 			<!-- AQUI DEJAS TU CONTENIDO -->
 			<div class="container-fluid pt-4 px-4">
-				<div class="col-sm-12 ">
+				<div class="col-sm-12">
 					<div class="bg-secondary rounded h-100 p-4">
-						<div></div>
 						<h6 class="h2 text-white-50">Juegos</h6>
+
 						<table class="table table-borderless">
 							<thead>
 								<tr class="center">
-									<th scope="col" class="text-danger">Img</th>
+									<th scope="col" class="text-danger">Puesto</th>
 									<th scope="col" class="text-danger">Nombre</th>
 									<th scope="col" class="text-danger">Calificación</th>
 									<th scope="col" class="text-danger">Album</th>
 									<th scope="col" class="text-danger">Drive</th>
 									<th scope="col" class="text-danger">Correo</th>
 
-									<th scope="col" class="text-info">Ver</th>
+									<th scope="col" class="text-info">Detalles</th>
 									<th scope="col" class="text-warning">Editar</th>
 									<th scope="col" class="text-primary">Eliminar</th>
 								</tr>
 							</thead>
-							<tbody th:each="juegos: ${juegos}">
+
+							<tbody th:each="j : ${juegos}">
 								<tr class="center text-white">
 
-									<td> <img th:src="@{'/images/' + ${juegos.imagen}}" class="img-mini rounded-circle"
-											alt="img"></td>
-									<td th:text="${juegos.nombre}"></td>
+									<!-- Puesto con medallas -->
 									<td>
-										<span th:utext="${'⭐'.repeat(juegos.calificacion)}"></span>
+										<span th:switch="${j.puesto}">
+											<i th:case="1" class="bi bi-award-fill medalla-oro"
+												style="font-size: 2rem;"></i>
+
+											<i th:case="2" class="bi bi-award-fill medalla-plata"
+												style="font-size: 2rem;"></i>
+
+											<i th:case="3" class="bi bi-award-fill medalla-bronce"
+												style="font-size: 2rem;"></i>
+
+											<span th:case="*" th:text="${j.puesto}"></span>
+										</span>
 									</td>
 
-									<td> <a th:href="${juegos.enlaceAlbum}" target="_blank" class="text-light icon-link">
-											<i class="bi bi-images"></i></a></td>
-									<td> <a th:href="${juegos.enlaceDrive}" target="_blank"	class="icon-link">
-											<i class="bi bi-cloud-fill" style="color: rgb(179, 247, 247);"></i></a></td>
-									<td th:text="${juegos.correo != null ? juego.correo.email: '-'	}"></td>
+									<!-- Nombre con color según puesto -->
+									<td th:classappend="${j.puesto == 1 ? 'text-oro' : 
+													(j.puesto == 2 ? 'text-plata' :
+													(j.puesto == 3 ? 'text-bronce' : ''))}">
+										<span th:text="${j.nombre}"></span>
+									</td>
 
+									<!-- Calificación -->
+									<td><span th:utext="${'⭐'.repeat(j.calificacion)}"></span></td>
+
+									<!-- ALBUM -->
+									<td>
+									    <a th:href="${j.enlaceAlbum}" target="_blank"
+									       class="icon-link"
+									       th:classappend="${j.puesto == 1 ? ' text-oro' :
+									                        (j.puesto == 2 ? ' text-plata' :
+									                        (j.puesto == 3 ? ' text-bronce' : ''))}">
+									        <i class="bi bi-images"></i>
+									    </a>
+									</td>
+
+									<!-- DRIVE -->
+									<td>
+									    <a th:href="${j.enlaceDrive}" target="_blank"
+									       class="icon-link"
+									       th:classappend="${j.puesto == 1 ? ' text-oro' :
+									                        (j.puesto == 2 ? ' text-plata' :
+									                        (j.puesto == 3 ? ' text-bronce' : ''))}">
+									        <i class="bi bi-cloud-fill"></i>
+									    </a>
+									</td>
+
+									<!-- Correo -->
+									<td th:classappend="${j.puesto == 1 ? 'text-oro' : 
+									                    (j.puesto == 2 ? 'text-plata' : 
+									                    (j.puesto == 3 ? 'text-bronce' : ''))}"
+									    th:text="${j.correo != null ? j.correo.email : '-'}">
+									</td>
+
+									<!-- DETALLES -->
+									<td>
+										<a title="Ver" class="btn btn-info"
+											th:attr="data-id=${j.id},
+								                data-nombre=${j.nombre},
+								                data-calificacion=${j.calificacion},
+								                data-album=${j.enlaceAlbum},
+								                data-drive=${j.enlaceDrive},
+								                data-puesto=${j.puesto + '°'},
+								                data-correo=${j.correo != null ? j.correo.email : 'No asignado'}"
+											onclick="mostrarDetallesJuego(this)">
+											<i class="bi bi-eye-fill" style="color: aliceblue;"></i>
+										</a>
+									</td>
+
+									<!-- EDITAR -->
+									<td>
+										<a title="Editar" class="btn btn-warning"
+											th:href="@{/usuario/EditJuego/{id} (id = ${j.id})}">
+											<i class="bi bi-pencil-fill" style="color: aliceblue;"></i>
+										</a>
+									</td>
+
+									<!-- ELIMINAR -->
+									<td>
+										<a title="Eliminar" class="btn btn-primary"
+											th:href="@{/usuario/DeleteJuego/{id} (id = ${j.id})}">
+											<i class="bi bi-trash-fill" style="color: aliceblue;"></i>
+										</a>
+									</td>
 
 								</tr>
-
 							</tbody>
 						</table>
+
 					</div>
 				</div>
 			</div>
 
-			<!-- Footer -->
 			<div th:insert="~{usuario/template_user.html::footer}"></div>
+
 		</div>
 	</div>
+
+	<!-- ========================= -->
+	<!-- MODAL DETALLES DE JUEGO -->
+	<!-- ========================= -->
+	<div class="modal fade" id="detalleJuegoModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content bg-dark text-white border-0">
+
+				<div class="modal-header border-secondary">
+					<h5 class="modal-title">Detalles del juego</h5>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+				</div>
+
+				<div class="modal-body">
+
+					<div class="card-detalle">
+
+						<div class="row">
+
+							<div class="col-md-12">
+								<h3 id="modalNombreJuego" class="fw-bold"></h3>
+
+								<p class="mt-2">
+									<strong>Calificación:</strong>
+									<span id="modalCalificacionJuego"></span>
+								</p>
+
+								<p>
+									<strong>Puesto:</strong>
+									<span id="modalPuestoJuego"></span>
+								</p>
+
+								<p>
+									<strong>Correo:</strong>
+									<span id="modalCorreoJuego"></span>
+								</p>
+
+								<p>
+									<strong>Álbum:</strong>
+									<a id="modalAlbumJuego" href="#" target="_blank" class="text-info">
+										Ver álbum
+									</a>
+								</p>
+
+								<p>
+									<strong>Drive:</strong>
+									<a id="modalDriveJuego" href="#" target="_blank" class="text-info">
+										Ver drive
+									</a>
+								</p>
+
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+				<div class="modal-footer border-secondary">
+					<button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function mostrarDetallesJuego(btn) {
+			document.getElementById("modalNombreJuego").innerText = btn.dataset.nombre;
+			document.getElementById("modalCalificacionJuego").innerHTML = "⭐".repeat(btn.dataset.calificacion);
+			document.getElementById("modalPuestoJuego").innerText = btn.dataset.puesto;
+			document.getElementById("modalCorreoJuego").innerText = btn.dataset.correo;
+
+			document.getElementById("modalAlbumJuego").href = btn.dataset.album;
+			document.getElementById("modalDriveJuego").href = btn.dataset.drive;
+
+			new bootstrap.Modal(document.getElementById("detalleJuegoModal")).show();
+		}
+	</script>
+
 	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
 
 </body>
