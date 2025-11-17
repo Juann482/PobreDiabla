@@ -15,6 +15,7 @@ public class Personaje {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
+	private Integer puesto;
 	private Integer calificacion;
 	private String caracteristica;
 	private String imagen;
@@ -24,7 +25,7 @@ public class Personaje {
 
 	public Personaje() {}
 
-	public Personaje(Integer id, String nombre, Integer calificacion, String caracteristica, String imagen,
+	public Personaje(Integer id, String nombre, Integer calificacion, Integer puesto, String caracteristica, String imagen,
 			Juego juego) {
 		super();
 		this.id = id;
@@ -33,6 +34,7 @@ public class Personaje {
 		this.caracteristica = caracteristica;
 		this.imagen = imagen;
 		this.juego = juego;
+		this.puesto = puesto;
 	}
 
 	public Integer getId() {
@@ -41,6 +43,14 @@ public class Personaje {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getPuesto() {
+		return puesto;
+	}
+
+	public void setPuesto(Integer puesto) {
+		this.puesto = puesto;
 	}
 
 	public String getNombre() {
@@ -85,8 +95,8 @@ public class Personaje {
 
 	@Override
 	public String toString() {
-		return "Personaje [id=" + id + ", nombre=" + nombre + ", calificacion=" + calificacion + ", caracteristica="
-				+ caracteristica + ", imagen=" + imagen + ", juego=" + juego + "]";
+		return "Personaje [id=" + id + ", nombre=" + nombre + ", puesto=" + puesto + ", calificacion=" + calificacion
+				+ ", caracteristica=" + caracteristica + ", imagen=" + imagen + ", juego=" + juego + "]";
 	}
 	
 	

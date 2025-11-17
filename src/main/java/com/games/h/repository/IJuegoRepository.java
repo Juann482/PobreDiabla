@@ -20,4 +20,6 @@ public interface IJuegoRepository extends JpaRepository<Juego, Integer>{
 
 	Personaje findByEnlaceAlbum(String enlaceAlbum);
 
+	List<Juego> findAllByOrderByCalificacionDesc();
+
 }

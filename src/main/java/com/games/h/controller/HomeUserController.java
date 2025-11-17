@@ -10,4 +10,6 @@ public class HomeUserController {
 	public String HomeUser() {
 		return "usuario/dashboard";
 	}
+	
+	
 }

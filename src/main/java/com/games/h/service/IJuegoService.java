@@ -17,6 +17,8 @@ public interface IJuegoService {
 	
 	Personaje findByEnlaceAlbum(String EnlaceAlbum);
 	
+	List<Juego> findAllOrderByCalificacion();
+	
 	void delete(Integer id);
 	
 	Juego save(Juego juego);

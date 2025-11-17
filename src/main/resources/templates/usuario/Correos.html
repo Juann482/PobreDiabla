@@ -5,7 +5,7 @@
 
 <body>
 	<div class="container-fluid position-relative d-flex p-0">
-
+		
 		<div th:insert="~{usuario/template_user.html::spinner}"></div>
 
 		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
@@ -19,39 +19,27 @@
 				<div class="col-sm-12 ">
 					<div class="bg-secondary rounded h-100 p-4">
 						<div></div>
-						<h6 class="h2 text-white-50">Juegos</h6>
+						<h6 class="h2 text-white-50">Correos</h6>
 						<table class="table table-borderless">
 							<thead>
 								<tr class="center">
-									<th scope="col" class="text-danger">Img</th>
 									<th scope="col" class="text-danger">Nombre</th>
-									<th scope="col" class="text-danger">Calificación</th>
-									<th scope="col" class="text-danger">Album</th>
-									<th scope="col" class="text-danger">Drive</th>
 									<th scope="col" class="text-danger">Correo</th>
-
-									<th scope="col" class="text-info">Ver</th>
+									<th scope="col" class="text-danger">Contraseña</th>
+									
 									<th scope="col" class="text-warning">Editar</th>
 									<th scope="col" class="text-primary">Eliminar</th>
 								</tr>
 							</thead>
-							<tbody th:each="juegos: ${juegos}">
-								<tr class="center text-white">
-
-									<td> <img th:src="@{'/images/' + ${juegos.imagen}}" class="img-mini rounded-circle"
-											alt="img"></td>
-									<td th:text="${juegos.nombre}"></td>
-									<td>
-										<span th:utext="${'⭐'.repeat(juegos.calificacion)}"></span>
-									</td>
-
-									<td> <a th:href="${juegos.enlaceAlbum}" target="_blank" class="text-light icon-link">
-											<i class="bi bi-images"></i></a></td>
-									<td> <a th:href="${juegos.enlaceDrive}" target="_blank"	class="icon-link">
-											<i class="bi bi-cloud-fill" style="color: rgb(179, 247, 247);"></i></a></td>
-									<td th:text="${juegos.correo != null ? juego.correo.email: '-'	}"></td>
-
-
+							<tbody >
+								<tr class=" center text-white">
+									
+									<td th:text="${}"></td>
+									<td th:text="${}"></td>
+									<td th:text="${}"></td>
+									
+									<td th:text="${}"></td>
+									<td th:text="${}"></td>
 								</tr>
 
 							</tbody>

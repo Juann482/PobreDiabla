@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{usuario/template_user.html::head}"> </head>
+
+<body>
+	<div class="container-fluid position-relative d-flex p-0">
+
+		<div th:insert="~{usuario/template_user.html::spinner}"></div>
+
+		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
+
+		<div class="content">
+
+			<div th:insert="~{usuario/template_user.html::navbar}"></div>
+
+			<!-- AQUI DEJAS TU CONTENIDO -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="col-sm-12 ">
+					<div class="bg-secondary rounded h-100 p-4">
+						<h6 class="h2 text-white-50">Personajes</h6>
+
+						<table class="table table-borderless">
+							<thead>
+								<tr class="center">
+									<th scope="col" class="text-danger">Puesto</th>
+									<th scope="col" class="text-danger">Img</th>
+									<th scope="col" class="text-danger">Nombre</th>
+									<th scope="col" class="text-danger">Calificación</th>
+									<th scope="col" class="text-danger">Juego</th>
+
+									<th scope="col" class="text-info">Ver</th>
+									<th scope="col" class="text-warning">Editar</th>
+									<th scope="col" class="text-primary">Eliminar</th>
+								</tr>
+							</thead>
+							<tbody th:each="person : ${personajes}">
+								<tr class=" center text-white">
+
+									<td>
+										<span th:switch="${person.puesto}">
+
+											<i th:case="1" class="bi bi-award-fill  medalla-oro"
+												style="font-size: 2rem;"></i>
+
+											<i th:case="2" class="bi bi-award-fill medalla-plata"
+												style="font-size: 2rem;"></i>
+
+											<i th:case="3" class="bi bi-award-fill medalla-bronce"
+												style="font-size: 2rem;"></i>
+
+											<span th:case="*" th:text="${person.puesto}">
+											</span>
+										</span>
+									</td>
+									<td> <img th:src="@{'/images/' + ${person.imagen}}" class="img-mini rounded-circle"
+											alt="img"></td>
+									<td th:classappend="${person.puesto == 1 ? 'text-oro' : 
+														(person.puesto == 2 ? 'text-plata' : 
+														(person.puesto == 3 ? 'text-bronce' : ''))}">
+										<span th:text="${person.nombre}"></span>
+									</td>
+									<td><span th:utext="${'⭐'.repeat(person.calificacion)}"></span></td>
+									<td th:classappend="${person.puesto == 1 ? 'text-oro' : 
+																			(person.puesto == 2 ? 'text-plata' : 
+																			(person.puesto == 3 ? 'text-bronce' : ''))}"
+										th:text="${person.juego != null ? person.juego.nombre : '-'}">
+									</td>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer -->
+			<div th:insert="~{usuario/template_user.html::footer}"></div>
+		</div>
+	</div>
+	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+
+</body>
+
+</html>

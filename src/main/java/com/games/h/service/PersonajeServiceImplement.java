@@ -48,6 +48,29 @@ public class PersonajeServiceImplement implements IPersonajeService {
 
     @Override
     public List<Personaje> findAll() {
-        return personajeRepository.findAll();
+        return personajeRepository.findAllByOrderByPuestoAsc();
     }
+
+	/*@Override
+	public List<Personaje> findAllOrderByCalificacion() {
+		return personajeRepository.findAllByOrderByCalificacionDesc();
+	}*/
+
+	@Override
+	public void guardarConAjuste(Personaje nuevo) {
+		
+		// 1. Revisar si el puesto ya existe
+        List<Personaje> personajesConPuestoMayorIgual =
+                personajeRepository.findByPuestoGreaterThanEqualOrderByPuestoAsc(nuevo.getPuesto());
+
+        // 2. Recorrer puesto hacia abajo
+        for(Personaje p : personajesConPuestoMayorIgual){
+            p.setPuesto(p.getPuesto() + 1);
+        }
+
+        // 3. Guardar los cambios
+        personajeRepository.saveAll(personajesConPuestoMayorIgual);
+        personajeRepository.save(nuevo);
+    }
+		
 }

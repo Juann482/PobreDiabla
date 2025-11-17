@@ -20,6 +20,7 @@ public class Juego {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
+	private Integer puesto;
 	private String imagen;
 	private Integer calificacion;
 	private String enlaceAlbum;
@@ -37,7 +38,7 @@ public class Juego {
 
 	public Juego() {}
 
-	public Juego(Integer id, String nombre, String imagen, Integer calificacion, String enlaceAlbum, String enlaceDrive,
+	public Juego(Integer id, String nombre, String imagen, Integer calificacion, Integer puesto, String enlaceAlbum, String enlaceDrive,
 			LocalDate fechaRegistro, List<Personaje> personaje, Correos correo, Usuario usuario) {
 		super();
 		this.id = id;
@@ -53,6 +54,14 @@ public class Juego {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public Integer getPuesto() {
+		return puesto;
+	}
+
+	public void setPuesto(Integer puesto) {
+		this.puesto = puesto;
 	}
 
 	public void setId(Integer id) {
@@ -133,9 +142,10 @@ public class Juego {
 
 	@Override
 	public String toString() {
-		return "Juego [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", calificacion=" + calificacion
-				+ ", enlaceAlbum=" + enlaceAlbum + ", enlaceDrive=" + enlaceDrive + ", fechaRegistro=" + fechaRegistro
-				+ ", personaje=" + personaje + ", correo=" + correo + ", usuario=" + usuario + "]";
+		return "Juego [id=" + id + ", nombre=" + nombre + ", puesto=" + puesto + ", imagen=" + imagen
+				+ ", calificacion=" + calificacion + ", enlaceAlbum=" + enlaceAlbum + ", enlaceDrive=" + enlaceDrive
+				+ ", fechaRegistro=" + fechaRegistro + ", personaje=" + personaje + ", correo=" + correo + ", usuario="
+				+ usuario + "]";
 	}
 	
 }

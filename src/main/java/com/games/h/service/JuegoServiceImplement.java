@@ -62,4 +62,9 @@ public class JuegoServiceImplement implements IJuegoService {
     public List<Juego> findAll() {
         return juegoRepository.findAll();
     }
+
+	@Override
+	public List<Juego> findAllOrderByCalificacion() {
+		return juegoRepository.findAllByOrderByCalificacionDesc();
+	}
 }
