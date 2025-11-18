@@ -10,6 +10,7 @@
 	--plata: #c0c0c0;
 	--bronce: #cd7f32;
 	--verde-oscuro: #1f6d3b;
+	--rojo: rgb(211, 30, 3);
 	--texto-bg: rgba(255, 255, 255, 0.08);
 }
 
@@ -149,33 +150,36 @@
 }
 
 /* Brillos específicos para iconos (útiles para álbum/drive) */
+/* -------- ICONOS ESTÁTICOS ESTILO AWARDS -------- */
 .icono-brillo-oro {
-	color: var(--oro) !important;
-	filter: drop-shadow(0 0 8px var(--oro));
-	text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
-	animation: pulso-brillo 2.5s infinite;
+    color: var(--oro) !important;
+    filter: drop-shadow(0 0 6px var(--oro));
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.65);
+    animation: none !important; /* clave */
 }
 
 .icono-brillo-plata {
-	color: var(--plata) !important;
-	filter: drop-shadow(0 0 8px var(--plata));
-	text-shadow: 0 0 6px rgba(192, 192, 192, 0.45);
-	animation: pulso-brillo 2.5s infinite;
+    color: var(--plata) !important;
+    filter: drop-shadow(0 0 6px var(--plata));
+    text-shadow: 0 0 4px rgba(192, 192, 192, 0.45);
+    animation: none !important;
 }
 
 .icono-brillo-bronce {
-	color: var(--bronce) !important;
-	filter: drop-shadow(0 0 5px var(--bronce));
-	text-shadow: 0 0 6px rgba(205, 127, 50, 0.45);
-	animation: pulso-brillo 2.5s infinite;
+    color: var(--bronce) !important;
+    filter: drop-shadow(0 0 6px var(--bronce));
+    text-shadow: 0 0 4px rgba(205, 127, 50, 0.45);
+    animation: none !important;
 }
 
-/* verde para 11+ (si decides aplicarlo) */
 .icono-brillo-verde {
-	color: var(--verde-oscuro) !important;
-	filter: drop-shadow(0 0 8px rgba(31, 109, 59, 0.7));
-	animation: pulso-brillo 2s infinite;
+    color: var(--verde-oscuro) !important;
+    filter: drop-shadow(0 0 6px rgba(31, 109, 59, 0.7));
+    text-shadow: 0 0 3px rgba(31, 109, 59, 0.7);
+    animation: none !important;
 }
+
+
 
 /* Hover general para icon-link */
 .icon-link:hover i {

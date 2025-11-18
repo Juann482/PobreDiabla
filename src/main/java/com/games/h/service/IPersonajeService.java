@@ -9,25 +9,13 @@ import com.games.h.model.Usuario;
 
 public interface IPersonajeService {
 	
-	Optional<Personaje> get (Integer id);
-	
-	Personaje findByNombre(String nombre);
-	
-	Personaje findByCalificacion(Integer calificacion);
-	
-	//List<Personaje> findAllOrderByCalificacion();
-	
-	void guardarConAjuste(Personaje nuevo);
-	
 	Personaje save(Personaje personaje);
 	
 	void delete(Integer id);
 	
-	void update(Personaje personaje);
+	Personaje update(Personaje personaje);
 	
 	List<Personaje> findAll();
-
-	Optional<Personaje> findByPuesto(Integer Puesto);
 
 	Optional<Personaje> findById(Integer id);
 

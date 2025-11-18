@@ -73,20 +73,18 @@ public class UsuarioController {
 	@PostMapping("/SendJuegoEd")
 	public String crearJuego(Juego juego) {
 
-	    Integer nuevoPuesto = juego.getPuesto();
+		Juego original = juegoService.get(juego.getId())
+	            .orElseThrow(() -> new RuntimeException("Juego no encontrado"));
 
-	    // Buscar si ya existe un juego con ese puesto
-	    Optional<Juego> ocupante = juegoService.findByPuesto(nuevoPuesto);
+	    Integer puestoAnterior = original.getPuesto();
 
-	    if (ocupante.isPresent()) {
-	        // El que estaba en ese puesto baja uno
-	        Juego otro = ocupante.get();
-	        otro.setPuesto(nuevoPuesto + 1);
-	        juegoService.save(otro);
-	    }
+	    original.setNombre(juego.getNombre());
+	    original.setCalificacion(juego.getCalificacion());
+	    original.setEnlaceAlbum(juego.getEnlaceAlbum());
+	    original.setEnlaceDrive(juego.getEnlaceDrive());
+	    original.setPuesto(juego.getPuesto());
 
-	    // Guardar el nuevo juego
-	    juegoService.save(juego);
+	    juegoService.guardarEditadoConAjuste(original, puestoAnterior);
 
 	    return "redirect:/usuario/Juegos";
 	}
@@ -104,14 +102,17 @@ public class UsuarioController {
 	public String JuevoSave(Juego juego, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
 		
 		Usuario u = usuarioService.findById(1).get();
-		juego.setFechaRegistro(LocalDate.now());
-		juego.setUsuario(u);
-		if (juego.getId() == null) {
-			String nombreImagen = upload.saveImages(file, juego.getNombre());
-			juego.setImagen(nombreImagen);
-		}
-		juegoService.save(juego);
-		return "redirect:/usuario/JuegosRegistro";
+	    juego.setFechaRegistro(LocalDate.now());
+	    juego.setUsuario(u);
+
+	    if (juego.getId() == null) {
+	        String nombreImagen = upload.saveImages(file, juego.getNombre());
+	        juego.setImagen(nombreImagen);
+	    }
+
+	    juegoService.guardarNuevoConAjuste(juego);
+
+	    return "redirect:/usuario/JuegosRegistro";
 	}
 	
 	@GetMapping("/DeleteJuego/{id}")
@@ -150,14 +151,16 @@ public class UsuarioController {
 			String nombreImagen = upload.saveImages(file, person.getNombre());
 			person.setImagen(nombreImagen);
 		}
-		personajeService.guardarConAjuste(person);
+		 personajeService.save(person);
 		return "redirect:/usuario/PersonajeRegistro";
 	}
 	
 	@GetMapping("/EditPerson/{id}")
 	public String EditPerson(@PathVariable Integer id, Personaje person, Model model) {
 		
-		Personaje p = personajeService.get(id).get();
+		Personaje p = personajeService.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Personaje no encontrado"));
+
 		model.addAttribute("person", p);
 		model.addAttribute("juego", juegoService.findAll());
 		return "usuario/editarPERSONAJE";
@@ -166,7 +169,7 @@ public class UsuarioController {
 	@PostMapping("/EnviarEditP")
 	public String EnviarNP(Personaje person) {
 		
-		Personaje pr = personajeService.get(person.getId())
+		Personaje pr = personajeService.findById(person.getId())
 				.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + person.getId()));
 		
 		pr.setNombre(person.getNombre());
@@ -175,20 +178,7 @@ public class UsuarioController {
 		pr.setJuego(person.getJuego());
 		pr.setCalificacion(person.getCalificacion());
 		
-		Integer nuevoPuesto = person.getPuesto();
-
-	    // Buscar si otro personaje ya tiene ese puesto
-	    Optional<Personaje> ocupante = personajeService.findByPuesto(nuevoPuesto);
-
-	    if (ocupante.isPresent() && ocupante.get().getId() != person.getId()) {
-	        // El personaje que estaba en ese puesto pasa al puesto que tenía el editado
-	        Personaje otro = ocupante.get();
-	        otro.setPuesto(personajeService.findById(person.getId()).get().getPuesto());
-	        personajeService.save(otro);
-	    }
-
-		
-		personajeService.save(pr);
+		personajeService.update(pr);
 		LOGGER.warn("Personaje actualizado; {}", pr);
 		return "redirect:/usuario/Personajes";
 	}
@@ -196,9 +186,8 @@ public class UsuarioController {
 	@GetMapping("/DeletePerson/{id}")
     public String DeletePerson(@PathVariable Integer id) {
 		
-        Personaje u = personajeService.get(id).orElseThrow(() -> new RuntimeException("Personaje no encontrado"));
         personajeService.delete(id);
-        LOGGER.warn("Personaje eliminado: {}", u);
+        LOGGER.warn("Personaje eliminado: {}", id);
         
         return "redirect:/usuario/Personajes";
     }

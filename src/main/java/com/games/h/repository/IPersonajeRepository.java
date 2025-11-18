@@ -11,16 +11,10 @@ import com.games.h.model.Personaje;
 @Repository
 public interface IPersonajeRepository extends JpaRepository<Personaje, Integer>{
 
-	Personaje findByNombre(String nombre);
+	boolean existsByPuesto(Integer puesto);
 
-	Personaje findByCalificacion(Integer calificacion);
+    List<Personaje> findByPuestoGreaterThanOrderByPuestoAsc(Integer puesto);
 
-	//List<Personaje> findAllByOrderByCalificacionDesc();
-
-	List<Personaje> findByPuestoGreaterThanEqualOrderByPuestoAsc(Integer puesto);
-
-	List<Personaje> findAllByOrderByPuestoAsc();
-
-	Optional<Personaje> findByPuesto(Integer puesto);
+    List<Personaje> findAllByOrderByPuestoAsc();
 
 }

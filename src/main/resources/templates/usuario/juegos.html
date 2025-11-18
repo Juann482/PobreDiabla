@@ -44,15 +44,15 @@
 									    <span th:switch="true">
 
 									        <!-- Oro 1–2 -->
-									        <i th:case="${j.puesto >= 1 && j.puesto <= 2}"
+									        <i th:case="${j.puesto >= 1 && j.puesto <= 3}"
 									           class="bi bi-award-fill medalla-oro" style="font-size: 2rem;"></i>
 
 									        <!-- Plata 3–5 -->
-									        <i th:case="${j.puesto >= 3 && j.puesto <= 5}"
+									        <i th:case="${j.puesto >= 4 && j.puesto <= 10}"
 									           class="bi bi-award-fill medalla-plata" style="font-size: 2rem;"></i>
 
 									        <!-- Bronce 6–10 -->
-									        <i th:case="${j.puesto >= 6 && j.puesto <= 10}"
+									        <i th:case="${j.puesto >= 11 && j.puesto <= 15}"
 									           class="bi bi-award-fill medalla-bronce" style="font-size: 2rem;"></i>
 
 									        <!-- Verde oscuro 11+ -->
@@ -64,9 +64,9 @@
 
 									<!-- Nombre con color según puesto -->
 									<td th:classappend="${
-									        (j.puesto >= 1 && j.puesto <= 2) ? 'text-oro' :
-									        (j.puesto >= 3 && j.puesto <= 5) ? 'text-plata' :
-									        (j.puesto >= 6 && j.puesto <= 10) ? 'text-bronce' :
+									        (j.puesto >= 1 && j.puesto <= 3) ? 'text-oro' :
+									        (j.puesto >= 4 && j.puesto <= 10) ? 'text-plata' :
+									        (j.puesto >= 11 && j.puesto <= 15) ? 'text-bronce' :
 									        'text-verde-oscuro'
 									}">
 									    <span th:text="${j.nombre}"></span>
@@ -79,9 +79,9 @@
 									<!-- ALBUM -->
 									<td>
 										<a th:href="${j.enlaceAlbum}" target="_blank" class="icon-link" th:classappend="${
-										         (j.puesto >= 1 && j.puesto <= 2) ? ' icono-brillo-oro' :
-												 (j.puesto >= 3 && j.puesto <= 5) ? ' icono-brillo-plata' :
-												 (j.puesto >= 6 && j.puesto <= 10) ? ' icono-brillo-bronce' :
+										         (j.puesto >= 1 && j.puesto <= 3) ? ' icono-brillo-oro' :
+												 (j.puesto >= 4 && j.puesto <= 10) ? ' icono-brillo-plata' :
+												 (j.puesto >= 11 && j.puesto <= 15) ? ' icono-brillo-bronce' :
 												 ''}">
 											<i class="bi bi-images"></i>
 										</a>
@@ -91,20 +91,20 @@
 									<!-- DRIVE -->
 									<td>
 										<a th:href="${j.enlaceDrive}" target="_blank" class="icon-link" th:classappend="${
-												(j.puesto >= 1 && j.puesto <= 2) ? ' icono-brillo-oro' :
-												(j.puesto >= 3 && j.puesto <= 5) ? ' icono-brillo-plata' :
-												(j.puesto >= 6 && j.puesto <= 10) ? ' icono-brillo-bronce' :
+												(j.puesto >= 1 && j.puesto <= 3) ? ' icono-brillo-oro' :
+												(j.puesto >= 4 && j.puesto <= 10) ? ' icono-brillo-plata' :
+												(j.puesto >= 11 && j.puesto <= 15) ? ' icono-brillo-bronce' :
 								                 '' }">
-											<i class="bi bi-images"></i>
+											<i class="bi bi-cloudy-fill"></i>
 										</a>
 									</td>
 
 
 									<!-- Correo -->
 									<td th:classappend="${
-									        (j.puesto >= 1 && j.puesto <= 2) ? 'text-oro' :
-									        (j.puesto >= 3 && j.puesto <= 5) ? 'text-plata' :
-									        (j.puesto >= 6 && j.puesto <= 10) ? 'text-bronce' :
+									        (j.puesto >= 1 && j.puesto <= 3) ? 'text-oro' :
+									        (j.puesto >= 4 && j.puesto <= 10) ? 'text-plata' :
+									        (j.puesto >= 11 && j.puesto <= 15) ? 'text-bronce' :
 									        'text-verde-oscuro'
 									}">
 									    <span th:text="${j.correo != null ? j.correo.email : '-'}"></span>

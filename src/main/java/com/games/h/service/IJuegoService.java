@@ -9,30 +9,18 @@ import com.games.h.model.Personaje;
 
 public interface IJuegoService {
 	
-	Optional<Juego> get(Integer id);
-	
-	Juego findByNombre(String nombre);
-	
-	Juego findByCalificacion(Integer calificacion);
-	
-	Juego findByEnlaceAlbum(String EnlaceAlbum);
-	
-	List<Juego> findAllOrderByCalificacion();
-	
-	void guardarConAjusteJJ(Juego nuevo);
-	
-	void delete(Integer id);
-	
-	Juego save(Juego juego);
-	
-	void update(Juego juego);
-	
-	List<Correos> findByCorreo(Correos correo);
-	
 	List<Juego> findAll();
 	
-	Optional<Juego> findByPuesto(Integer Puesto);
+    Optional<Juego> get(Integer id);
+    
+    Juego save(Juego juego);
+    
+    void delete(Integer id);
+    
+    Optional<Juego> findByPuesto(Integer puesto);
 
-	Optional<Juego> findById(Integer id);
+    void guardarNuevoConAjuste(Juego nuevo);
+    
+    void guardarEditadoConAjuste(Juego editado, Integer puestoAnterior);
 
 }
