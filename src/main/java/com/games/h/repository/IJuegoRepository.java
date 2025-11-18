@@ -25,7 +25,7 @@ public interface IJuegoRepository extends JpaRepository<Juego, Integer>{
 
 	List<Juego> findByPuestoGreaterThanEqualOrderByPuestoAsc(Integer puesto);
 
-	List<Juego> findByPuesto(Integer puesto);
+	Optional<Juego> findByPuesto(Integer puesto);
 
 	List<Juego> findAllByOrderByPuestoAsc();
 

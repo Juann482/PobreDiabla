@@ -31,7 +31,7 @@ public interface IJuegoService {
 	
 	List<Juego> findAll();
 	
-	List<Juego> findByPuesto(Integer Puesto);
+	Optional<Juego> findByPuesto(Integer Puesto);
 
 	Optional<Juego> findById(Integer id);
 

@@ -35,60 +35,103 @@
 								</tr>
 							</thead>
 							<tbody th:each="person : ${personajes}">
-								<tr class=" center text-white">
+								<tr class="center text-white">
 
+									<!-- Puesto con colores por rangos -->
 									<td>
-										<span th:switch="${person.puesto}">
+									    <span th:switch="true">
 
-											<i th:case="1" class="bi bi-award-fill  medalla-oro"
-												style="font-size: 2rem;"></i>
+									        <!-- Oro 1–2 -->
+									        <i th:case="${person.puesto >= 1 && person.puesto <= 2}"
+									           class="bi bi-award-fill medalla-oro" style="font-size: 2rem;"></i>
 
-											<i th:case="2" class="bi bi-award-fill medalla-plata"
-												style="font-size: 2rem;"></i>
+									        <!-- Plata 3–5 -->
+									        <i th:case="${person.puesto >= 3 && person.puesto <= 5}"
+									           class="bi bi-award-fill medalla-plata" style="font-size: 2rem;"></i>
 
-											<i th:case="3" class="bi bi-award-fill medalla-bronce"
-												style="font-size: 2rem;"></i>
+									        <!-- Bronce 6–10 -->
+									        <i th:case="${person.puesto >= 6 && person.puesto <= 10}"
+									           class="bi bi-award-fill medalla-bronce" style="font-size: 2rem;"></i>
 
-											<span th:case="*" th:text="${person.puesto}">
-											</span>
-										</span>
-									</td>
-									<td> <img th:src="@{'/images/' + ${person.imagen}}" class="img-mini rounded-circle"
-											alt="img"></td>
-									<td th:classappend="${person.puesto == 1 ? 'text-oro' : 
-														(person.puesto == 2 ? 'text-plata' : 
-														(person.puesto == 3 ? 'text-bronce' : ''))}">
-										<span th:text="${person.nombre}"></span>
-									</td>
-									<td><span th:utext="${'⭐'.repeat(person.calificacion)}"></span></td>
-									<td th:classappend="${person.puesto == 1 ? 'text-oro' : 
-																			(person.puesto == 2 ? 'text-plata' : 
-																			(person.puesto == 3 ? 'text-bronce' : ''))}"
-										th:text="${person.juego != null ? person.juego.nombre : '-'}">
+									        <!-- Verde oscuro 11+ -->
+									        <span th:case="*" th:text="${person.puesto}" class="text-verde-oscuro"></span>
+
+									    </span>
 									</td>
 
+
+									<!-- Imagen -->
 									<td>
-										<a title="Ver" class="btn btn-info" th:attr="data-id=${person.id},
-									                data-nombre=${person.nombre},
-									                data-img=${'/images/' + person.imagen},
-									                data-calificacion=${person.calificacion},
-									                data-juego=${person.juego != null ? person.juego.nombre : 'Sin juego'},
-									                data-puesto=${person.puesto + '°'},
-									                data-descripcion=${person.caracteristica}" onclick="mostrarDetalles(this)">
+										<img th:src="@{'/images/' + ${person.imagen}}"
+										     class="img-mini rounded-circle"
+										     th:classappend="${
+										        (person.puesto >= 1 && person.puesto <= 2) ? ' brillo-oro' :
+										        (person.puesto >= 3 && person.puesto <= 5) ? ' brillo-plata' :
+										        (person.puesto >= 6 && person.puesto <= 10) ? ' brillo-bronce' :
+										        ' brillo-verde'
+										     }"
+										     alt="img">
+									</td>
+
+									<!-- Nombre con color según rango -->
+									<td th:classappend="${
+									        (person.puesto >= 1 && person.puesto <= 2) ? 'text-oro' :
+									        (person.puesto >= 3 && person.puesto <= 5) ? 'text-plata' :
+									        (person.puesto >= 6 && person.puesto <= 10) ? 'text-bronce' :
+									        'text-verde-oscuro'
+									}">
+									    <span th:text="${person.nombre}"></span>
+									</td>
+
+
+									<!-- Estrellas -->
+									<td>
+										<span th:utext="${'⭐'.repeat(person.calificacion)}"></span>
+									</td>
+
+									<!-- Juego con color según rango -->
+									<td th:classappend="${
+                (person.puesto >= 1 && person.puesto <= 2) ? 'text-oro' :
+                (person.puesto >= 3 && person.puesto <= 5) ? 'text-plata' :
+                (person.puesto >= 6 && person.puesto <= 10) ? 'text-bronce' :
+                'text-verde'
+            }" th:text="${person.juego != null ? person.juego.nombre : '-'}">
+									</td>
+
+									<!-- Ver detalles -->
+									<td>
+										<a title="Ver" class="btn btn-info" th:attr="
+                    data-id=${person.id},
+                    data-nombre=${person.nombre},
+                    data-img=${'/images/' + person.imagen},
+                    data-calificacion=${person.calificacion},
+                    data-juego=${person.juego != null ? person.juego.nombre : 'Sin juego'},
+                    data-puesto=${person.puesto + '°'},
+                    data-descripcion=${person.caracteristica}
+               " onclick="mostrarDetalles(this)">
 											<i class="bi bi-eye-fill" style="color: aliceblue;"></i>
 										</a>
 									</td>
 
-									<td><a title="Editar" class="btn btn-warning"
-											th:href="@{/usuario/EditPerson/{id} (id = ${person.id})}"><i
-												class="bi bi-pencil-fill" style="color: aliceblue;"></i></a></td>
-									<td><a title="Eliminar" class="btn btn-primary"
-											th:href="@{/usuario/DeletePerson/{id} (id = ${person.id})}"><i
-												class="bi bi-trash-fill" style="color: aliceblue;"></i></a></td>
+									<!-- Editar -->
+									<td>
+										<a title="Editar" class="btn btn-warning"
+											th:href="@{/usuario/EditPerson/{id}(id=${person.id})}">
+											<i class="bi bi-pencil-fill" style="color: aliceblue;"></i>
+										</a>
+									</td>
+
+									<!-- Eliminar -->
+									<td>
+										<a title="Eliminar" class="btn btn-primary"
+											th:href="@{/usuario/DeletePerson/{id}(id=${person.id})}">
+											<i class="bi bi-trash-fill" style="color: aliceblue;"></i>
+										</a>
+									</td>
 
 								</tr>
-
 							</tbody>
+
 						</table>
 					</div>
 				</div>

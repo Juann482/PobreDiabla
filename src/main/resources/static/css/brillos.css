@@ -1,0 +1,278 @@
+/* ranking-styles.css
+   Estilos para Personajes y Juegos (medallas, brillos, iconos)
+   Útil para incluir en template_user.html:
+   <link th:href="@{/css/ranking-styles.css}" rel="stylesheet">
+*/
+
+/* ---------- VARIABLES / Reset ligero ---------- */
+:root {
+	--oro: #ffd700;
+	--plata: #c0c0c0;
+	--bronce: #cd7f32;
+	--verde-oscuro: #1f6d3b;
+	--texto-bg: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- ANIMACIONES ---------- */
+@keyframes pulso-brillo {
+	0% {
+		box-shadow: 0 0 4px 0 rgba(255, 255, 255, 0.06);
+		transform: scale(1);
+	}
+
+	50% {
+		box-shadow: 0 0 20px 6px currentColor;
+		transform: scale(1.02);
+	}
+
+	100% {
+		box-shadow: 0 0 4px 0 rgba(255, 255, 255, 0.06);
+		transform: scale(1);
+	}
+}
+
+/* ---------- MEDALLAS (iconos de puesto) ---------- */
+.medalla-oro {
+	color: var(--oro) !important;
+	filter: drop-shadow(0 0 8px var(--oro));
+	transition: transform .25s ease, filter .25s ease;
+}
+
+.medalla-oro:hover {
+	transform: scale(1.12);
+	filter: drop-shadow(0 0 18px var(--oro));
+}
+
+.medalla-plata {
+	color: var(--plata) !important;
+	filter: drop-shadow(0 0 8px var(--plata));
+	transition: transform .25s ease, filter .25s ease;
+}
+
+.medalla-plata:hover {
+	transform: scale(1.12);
+	filter: drop-shadow(0 0 18px var(--plata));
+}
+
+.medalla-bronce {
+	color: var(--bronce) !important;
+	filter: drop-shadow(0 0 8px var(--bronce));
+	transition: transform .25s ease, filter .25s ease;
+}
+
+.medalla-bronce:hover {
+	transform: scale(1.12);
+	filter: drop-shadow(0 0 18px var(--bronce));
+}
+
+/* estilo para puestos 11+ */
+.text-verde {
+	color: var(--verde-oscuro) !important;
+	text-shadow: 0 0 6px rgba(31, 109, 59, 0.18);
+	font-weight: 600;
+}
+
+/* ---------- TEXTOS CON BRILLO POR RANGO ---------- */
+.text-oro {
+	color: var(--oro) !important;
+	text-shadow: 0 0 8px #ffd700 !important;
+}
+
+.text-plata {
+	color: var(--plata) !important;
+	text-shadow: 0 0 8px rgba(192, 192, 192, 0.35);
+}
+
+.text-bronce {
+	color: var(--bronce) !important;
+	text-shadow: 0 0 8px rgba(205, 127, 50, 0.35);
+}
+
+/* para el verde (11+) si quieres texto con brillo muy sutil */
+.text-verde {
+	color: var(--verde-oscuro) !important;
+	text-shadow: 0 0 6px rgba(31, 109, 59, 0.15);
+}
+
+/* ---------- IMAGENES CIRCULARES (personajes) ---------- */
+.img-mini {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 2px solid #444;
+	transition: box-shadow .25s ease, transform .25s ease, border .25s ease;
+	display: inline-block;
+}
+
+/* Brillos alrededor del circulo según rango */
+.brillo-oro {
+	color: var(--oro);
+	box-shadow: 0 0 12px 4px rgba(255, 215, 0, 0.85);
+	border: 3px solid var(--oro) !important;
+	animation: pulso-brillo 1.6s infinite;
+}
+
+.brillo-plata {
+	color: var(--plata);
+	box-shadow: 0 0 12px 4px rgba(192, 192, 192, 0.80);
+	border: 3px solid var(--plata) !important;
+	animation: pulso-brillo 1.6s infinite;
+}
+
+.brillo-bronce {
+	color: var(--bronce);
+	box-shadow: 0 0 12px 4px rgba(205, 127, 50, 0.80);
+	border: 3px solid var(--bronce) !important;
+	animation: pulso-brillo 1.6s infinite;
+}
+
+.brillo-verde {
+	color: var(--verde-oscuro);
+	box-shadow: 0 0 12px 4px rgba(31, 109, 59, 0.75);
+	border: 3px solid var(--verde-oscuro) !important;
+	animation: pulso-brillo 2s infinite;
+}
+
+/* Si quieres menos agresivo en tablas compactas, usa esta variante */
+.img-mini.suave {
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+	border: 2px solid #333;
+}
+
+/* ---------- ICON-LINKS (album / drive) ---------- */
+/* base: gira suave y escala al hover (ya tenías) */
+.icon-link i {
+	font-size: 1.5rem;
+	transition: transform .18s ease, filter .25s ease, text-shadow .25s ease;
+	display: inline-block;
+}
+
+/* Brillos específicos para iconos (útiles para álbum/drive) */
+.icono-brillo-oro {
+	color: var(--oro) !important;
+	filter: drop-shadow(0 0 8px var(--oro));
+	text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+	animation: pulso-brillo 2.5s infinite;
+}
+
+.icono-brillo-plata {
+	color: var(--plata) !important;
+	filter: drop-shadow(0 0 8px var(--plata));
+	text-shadow: 0 0 6px rgba(192, 192, 192, 0.45);
+	animation: pulso-brillo 2.5s infinite;
+}
+
+.icono-brillo-bronce {
+	color: var(--bronce) !important;
+	filter: drop-shadow(0 0 5px var(--bronce));
+	text-shadow: 0 0 6px rgba(205, 127, 50, 0.45);
+	animation: pulso-brillo 2.5s infinite;
+}
+
+/* verde para 11+ (si decides aplicarlo) */
+.icono-brillo-verde {
+	color: var(--verde-oscuro) !important;
+	filter: drop-shadow(0 0 8px rgba(31, 109, 59, 0.7));
+	animation: pulso-brillo 2s infinite;
+}
+
+/* Hover general para icon-link */
+.icon-link:hover i {
+	transform: scale(1.2);
+}
+
+/* ---------- CARD Y MODAL (detalles) ---------- */
+.card-detalle {
+	background: #1e1e1e;
+	border-radius: 12px;
+	padding: 18px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card-detalle:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 36px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- UTILS / RESPONSIVE ---------- */
+.text-center {
+	text-align: center;
+}
+
+.table .center {
+	text-align: center;
+}
+
+/* Para evitar que el glow rompa la fila en pantallas pequeñas */
+@media (max-width: 576px) {
+	.img-mini {
+		width: 40px;
+		height: 40px;
+	}
+
+	.medalla-oro,
+	.medalla-plata,
+	.medalla-bronce {
+		font-size: 1.6rem !important;
+	}
+}
+
+
+.img-mini.oro {
+	box-shadow: 0 0 12px #ffd700;
+	border-color: #ffd700;
+}
+
+.img-mini.plata {
+	box-shadow: 0 0 12px #c0c0c0;
+	border-color: #c0c0c0;
+}
+
+.img-mini.bronce {
+	box-shadow: 0 0 12px #cd7f32;
+	border-color: #cd7f32;
+}
+
+.img-mini.verde {
+	box-shadow: 0 0 10px #3fa34d;
+	border-color: #3fa34d;
+}
+
+.modal-oro {
+	color: #ffd700 !important;
+	text-shadow: 0 0 10px #ffd700;
+}
+
+.modal-plata {
+	color: #c0c0c0 !important;
+	text-shadow: 0 0 10px #c0c0c0;
+}
+
+.modal-bronce {
+	color: #cd7f32 !important;
+	text-shadow: 0 0 10px #cd7f32;
+}
+
+.modal-verde {
+	color: #1aff1a !important;
+	text-shadow: 0 0 8px #0f700f;
+}
+
+.modal-link-oro {
+	text-shadow: 0 0 10px #ffd700;
+}
+
+.modal-link-plata {
+	text-shadow: 0 0 10px #c0c0c0;
+}
+
+.modal-link-bronce {
+	text-shadow: 0 0 10px #cd7f32;
+}
+.enlace-brillante {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+}

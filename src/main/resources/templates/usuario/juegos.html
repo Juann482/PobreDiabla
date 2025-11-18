@@ -41,63 +41,79 @@
 
 									<!-- Puesto con medallas -->
 									<td>
-										<span th:switch="${j.puesto}">
-											<i th:case="1" class="bi bi-award-fill medalla-oro"
-												style="font-size: 2rem;"></i>
+									    <span th:switch="true">
 
-											<i th:case="2" class="bi bi-award-fill medalla-plata"
-												style="font-size: 2rem;"></i>
+									        <!-- Oro 1–2 -->
+									        <i th:case="${j.puesto >= 1 && j.puesto <= 2}"
+									           class="bi bi-award-fill medalla-oro" style="font-size: 2rem;"></i>
 
-											<i th:case="3" class="bi bi-award-fill medalla-bronce"
-												style="font-size: 2rem;"></i>
+									        <!-- Plata 3–5 -->
+									        <i th:case="${j.puesto >= 3 && j.puesto <= 5}"
+									           class="bi bi-award-fill medalla-plata" style="font-size: 2rem;"></i>
 
-											<span th:case="*" th:text="${j.puesto}"></span>
-										</span>
+									        <!-- Bronce 6–10 -->
+									        <i th:case="${j.puesto >= 6 && j.puesto <= 10}"
+									           class="bi bi-award-fill medalla-bronce" style="font-size: 2rem;"></i>
+
+									        <!-- Verde oscuro 11+ -->
+									        <span th:case="*" th:text="${j.puesto}" class="text-verde-oscuro"></span>
+
+									    </span>
 									</td>
+
 
 									<!-- Nombre con color según puesto -->
-									<td th:classappend="${j.puesto == 1 ? 'text-oro' : 
-													(j.puesto == 2 ? 'text-plata' :
-													(j.puesto == 3 ? 'text-bronce' : ''))}">
-										<span th:text="${j.nombre}"></span>
+									<td th:classappend="${
+									        (j.puesto >= 1 && j.puesto <= 2) ? 'text-oro' :
+									        (j.puesto >= 3 && j.puesto <= 5) ? 'text-plata' :
+									        (j.puesto >= 6 && j.puesto <= 10) ? 'text-bronce' :
+									        'text-verde-oscuro'
+									}">
+									    <span th:text="${j.nombre}"></span>
 									</td>
+
 
 									<!-- Calificación -->
 									<td><span th:utext="${'⭐'.repeat(j.calificacion)}"></span></td>
 
 									<!-- ALBUM -->
 									<td>
-									    <a th:href="${j.enlaceAlbum}" target="_blank"
-									       class="icon-link"
-									       th:classappend="${j.puesto == 1 ? ' text-oro' :
-									                        (j.puesto == 2 ? ' text-plata' :
-									                        (j.puesto == 3 ? ' text-bronce' : ''))}">
-									        <i class="bi bi-images"></i>
-									    </a>
+										<a th:href="${j.enlaceAlbum}" target="_blank" class="icon-link" th:classappend="${
+										         (j.puesto >= 1 && j.puesto <= 2) ? ' icono-brillo-oro' :
+												 (j.puesto >= 3 && j.puesto <= 5) ? ' icono-brillo-plata' :
+												 (j.puesto >= 6 && j.puesto <= 10) ? ' icono-brillo-bronce' :
+												 ''}">
+											<i class="bi bi-images"></i>
+										</a>
 									</td>
+
 
 									<!-- DRIVE -->
 									<td>
-									    <a th:href="${j.enlaceDrive}" target="_blank"
-									       class="icon-link"
-									       th:classappend="${j.puesto == 1 ? ' text-oro' :
-									                        (j.puesto == 2 ? ' text-plata' :
-									                        (j.puesto == 3 ? ' text-bronce' : ''))}">
-									        <i class="bi bi-cloud-fill"></i>
-									    </a>
+										<a th:href="${j.enlaceDrive}" target="_blank" class="icon-link" th:classappend="${
+												(j.puesto >= 1 && j.puesto <= 2) ? ' icono-brillo-oro' :
+												(j.puesto >= 3 && j.puesto <= 5) ? ' icono-brillo-plata' :
+												(j.puesto >= 6 && j.puesto <= 10) ? ' icono-brillo-bronce' :
+								                 '' }">
+											<i class="bi bi-images"></i>
+										</a>
 									</td>
 
+
 									<!-- Correo -->
-									<td th:classappend="${j.puesto == 1 ? 'text-oro' : 
-									                    (j.puesto == 2 ? 'text-plata' : 
-									                    (j.puesto == 3 ? 'text-bronce' : ''))}"
-									    th:text="${j.correo != null ? j.correo.email : '-'}">
+									<td th:classappend="${
+									        (j.puesto >= 1 && j.puesto <= 2) ? 'text-oro' :
+									        (j.puesto >= 3 && j.puesto <= 5) ? 'text-plata' :
+									        (j.puesto >= 6 && j.puesto <= 10) ? 'text-bronce' :
+									        'text-verde-oscuro'
+									}">
+									    <span th:text="${j.correo != null ? j.correo.email : '-'}"></span>
 									</td>
+
 
 									<!-- DETALLES -->
 									<td>
-										<a title="Ver" class="btn btn-info"
-											th:attr="data-id=${j.id},
+										<a title="Ver" class="btn btn-info" th:attr="data-id=${j.id},
 								                data-nombre=${j.nombre},
 								                data-calificacion=${j.calificacion},
 								                data-album=${j.enlaceAlbum},
@@ -157,37 +173,32 @@
 						<div class="row">
 
 							<div class="col-md-12">
+								
 								<h3 id="modalNombreJuego" class="fw-bold"></h3>
 
-								<p class="mt-2">
-									<strong>Calificación:</strong>
-									<span id="modalCalificacionJuego"></span>
+								<p>
+								    <strong>Puesto:</strong>
+								    <span id="modalPuestoJuego" class="fw-bold"></span>
+								</p>
+								<p>
+								    <strong>Calificación:</strong>
+								    <span id="modalCalificacionJuego"></span>
 								</p>
 
 								<p>
-									<strong>Puesto:</strong>
-									<span id="modalPuestoJuego"></span>
+								    <strong>Correo:</strong>
+								    <span id="modalCorreoJuego"></span>
 								</p>
 
 								<p>
-									<strong>Correo:</strong>
-									<span id="modalCorreoJuego"></span>
+								    <strong>Álbum:</strong>
+								    <a id="modalAlbumJuego" href="#">Ver álbum</a>
 								</p>
 
 								<p>
-									<strong>Álbum:</strong>
-									<a id="modalAlbumJuego" href="#" target="_blank" class="text-info">
-										Ver álbum
-									</a>
+								    <strong>Drive:</strong>
+								    <a id="modalDriveJuego" href="#">Ver drive</a>
 								</p>
-
-								<p>
-									<strong>Drive:</strong>
-									<a id="modalDriveJuego" href="#" target="_blank" class="text-info">
-										Ver drive
-									</a>
-								</p>
-
 							</div>
 
 						</div>

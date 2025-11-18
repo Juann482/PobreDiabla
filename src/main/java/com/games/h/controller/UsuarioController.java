@@ -2,6 +2,7 @@ package com.games.h.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 //import org.apache.tomcat.util.http.fileupload.UploadContext;
@@ -69,6 +70,27 @@ public class UsuarioController {
 		return "usuario/registroJUEGOS";
 	}
 	
+	@PostMapping("/SendJuegoEd")
+	public String crearJuego(Juego juego) {
+
+	    Integer nuevoPuesto = juego.getPuesto();
+
+	    // Buscar si ya existe un juego con ese puesto
+	    Optional<Juego> ocupante = juegoService.findByPuesto(nuevoPuesto);
+
+	    if (ocupante.isPresent()) {
+	        // El que estaba en ese puesto baja uno
+	        Juego otro = ocupante.get();
+	        otro.setPuesto(nuevoPuesto + 1);
+	        juegoService.save(otro);
+	    }
+
+	    // Guardar el nuevo juego
+	    juegoService.save(juego);
+
+	    return "redirect:/usuario/Juegos";
+	}
+	
 	@GetMapping("/EditJuego/{id}")
 	public String EditarJuego(@PathVariable Integer id, Juego juego, Model model) {
 		
@@ -76,36 +98,7 @@ public class UsuarioController {
 		model.addAttribute("game", j);
 		model.addAttribute("correo", correoService.findAll());
 		return "usuario/editarJUEGOS";
-	}
-	
-	@PostMapping("/SendJuegoEd")
-	public String EnvioActJ(Juego juego) {
-		
-		Juego jg = juegoService.get(juego.getId())
-				.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + juego.getId()));
-		
-		jg.setEnlaceAlbum(juego.getEnlaceAlbum());
-		jg.setEnlaceDrive(juego.getEnlaceDrive());
-		jg.setNombre(juego.getNombre());
-		jg.setPuesto(juego.getPuesto());
-		jg.setCalificacion(juego.getCalificacion());
-		jg.setCorreo(juego.getCorreo());
-		
-		Integer nuevoPuesto = juego.getPuesto();
-		  // Buscar si otro personaje ya tiene ese puesto
-	    Optional<Juego> ocupante = juegoService.findByPuesto(nuevoPuesto);
-
-	    if (ocupante.isPresent() && ocupante.get().getId() != juego.getId()) {
-	        // El personaje que estaba en ese puesto pasa al puesto que tenía el editado
-	        Juego otro = ocupante.get();
-	        otro.setPuesto(juegoService.findById(juego.getId()).get().getPuesto());
-	        juegoService.save(otro);
-	    }
-	    juegoService.save(juego);
-		return "redirect:/usuario/Juegos";
-	    
-	}
-		
+	}		
 	
 	@PostMapping("/JuegoSave")
 	public String JuevoSave(Juego juego, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
@@ -118,7 +111,7 @@ public class UsuarioController {
 			juego.setImagen(nombreImagen);
 		}
 		juegoService.save(juego);
-		return "redirect:/usuario/Juegos";
+		return "redirect:/usuario/JuegosRegistro";
 	}
 	
 	@GetMapping("/DeleteJuego/{id}")
@@ -158,7 +151,7 @@ public class UsuarioController {
 			person.setImagen(nombreImagen);
 		}
 		personajeService.guardarConAjuste(person);
-		return "redirect:/usuario/Personajes";
+		return "redirect:/usuario/PersonajeRegistro";
 	}
 	
 	@GetMapping("/EditPerson/{id}")

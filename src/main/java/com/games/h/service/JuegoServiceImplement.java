@@ -71,22 +71,27 @@ public class JuegoServiceImplement implements IJuegoService {
 	@Override
 	public void guardarConAjusteJJ(Juego nuevo) {
 		
-		// Buscar si existe alguien ocupando el puesto del nuevo
-	    List<Juego> ocupantes = juegoRepository.findByPuesto(nuevo.getPuesto());
+		// Buscar si existe alguien con ese puesto
+	    Optional<Juego> ocupante = juegoRepository.findByPuesto(nuevo.getPuesto());
 
-	    if (!ocupantes.isEmpty()) {
-	        Juego antiguo = ocupantes.get(0); // Tomamos el que tiene ese puesto
-	        antiguo.setPuesto(antiguo.getPuesto() + 1); // Lo bajamos un puesto
-	        juegoRepository.save(antiguo);
+	    if (ocupante.isPresent()) {
+
+	        Juego antiguo = ocupante.get();
+
+	        // Si el ID es diferente (solo en caso de ACTUALIZAR)
+	        if (antiguo.getId() != nuevo.getId()) {
+	            antiguo.setPuesto(antiguo.getPuesto() + 1);
+	            juegoRepository.save(antiguo);
+	        }
 	    }
 
-	    // Guardamos el nuevo ocupando su puesto
+	    // Guardar el nuevo o actualizado
 	    juegoRepository.save(nuevo);
     }
 	
 
 	@Override
-	public List<Juego> findByPuesto(Integer puesto) {
+	public Optional<Juego> findByPuesto(Integer puesto) {
 		return juegoRepository.findByPuesto(puesto);
 	}
 
