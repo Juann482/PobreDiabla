@@ -6,109 +6,94 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.games.h.model.Juego;
 import com.games.h.model.Personaje;
 import com.games.h.repository.IPersonajeRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class PersonajeServiceImplement implements IPersonajeService {
 
     @Autowired
-    private IPersonajeRepository personajeRepository;
+    private IPersonajeRepository repo;
 
- // -----------------------------
-    // Obtener todos ordenados
-    // -----------------------------
     @Override
     public List<Personaje> findAll() {
-        return personajeRepository.findAllByOrderByPuestoAsc();
+        return repo.findAll();
     }
 
-    // -----------------------------
-    // Crear personaje (sin repetir puesto)
-    // -----------------------------
+    @Override
+    public Optional<Personaje> get(Integer id) {
+        return repo.findById(id);
+    }
+
+    @Override
+    public Optional<Personaje> findById(Integer id) {
+        return repo.findById(id);
+    }
+
+    @Override
+    public Optional<Personaje> findByPuesto(Integer puesto) {
+        return repo.findByPuesto(puesto);
+    }
+
+    /**
+     * Guarda un personaje nuevo:
+     * - Recalcula total con la fórmula de la entidad
+     * - Lo guarda
+     * - Reajusta los puestos de todos
+     */
     @Override
     public Personaje save(Personaje personaje) {
 
-        // Si ya existe alguien con ese puesto → mover hacia abajo
-        if (personajeRepository.existsByPuesto(personaje.getPuesto())) {
-            desplazarHaciaAbajo(personaje.getPuesto());
-        }
+        personaje.recalcularTotal();
+        Personaje saved = repo.save(personaje);
 
-        return personajeRepository.save(personaje);
+        reajustarPuestos();
+        return saved;
     }
 
-    // -----------------------------
-    // Editar personaje
-    // -----------------------------
+    /**
+     * Actualiza un personaje existente:
+     * - Recalcula total
+     * - Guarda
+     * - Reajusta puestos
+     */
     @Override
     public Personaje update(Personaje personaje) {
-        Personaje original = personajeRepository.findById(personaje.getId())
-                .orElseThrow(() -> new RuntimeException("Personaje no encontrado"));
 
-        Integer puestoOriginal = original.getPuesto();
-        Integer nuevoPuesto = personaje.getPuesto();
-
-        // Si cambió el puesto
-        if (!puestoOriginal.equals(nuevoPuesto)) {
-
-            // Si el nuevo puesto está ocupado → desplazar hacia abajo
-            if (personajeRepository.existsByPuesto(nuevoPuesto)) {
-                desplazarHaciaAbajo(nuevoPuesto);
-            }
+        if (personaje.getNombre() == null || personaje.getNombre().trim().isEmpty()) {
+            personaje.setNombre("???");
         }
 
-        return personajeRepository.save(personaje);
+        personaje.recalcularTotal();
+        Personaje saved = repo.save(personaje);
+
+        reajustarPuestos();
+        return saved;
     }
 
-    // -----------------------------
-    // Eliminar personaje (suben todos los de abajo)
-    // -----------------------------
     @Override
-    @Transactional
     public void delete(Integer id) {
-
-        Personaje eliminado = personajeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Personaje no encontrado"));
-
-        Integer puestoEliminado = eliminado.getPuesto();
-
-        personajeRepository.delete(eliminado);
-
-        // Todos los que tienen puesto mayor suben
-        List<Personaje> lista = personajeRepository
-                .findByPuestoGreaterThanOrderByPuestoAsc(puestoEliminado);
-
-        for (Personaje p : lista) {
-            p.setPuesto(p.getPuesto() - 1);
-        }
-
-        personajeRepository.saveAll(lista);
+        repo.deleteById(id);
+        reajustarPuestos();
     }
 
-    // -----------------------------
-    // FUNCION EXTRA → desplazamiento hacia abajo
-    // -----------------------------
-    private void desplazarHaciaAbajo(Integer puestoInicial) {
-
-        List<Personaje> lista = personajeRepository.findAllByOrderByPuestoAsc();
-
-        // Recorre de abajo hacia arriba para evitar conflictos
-        for (int i = lista.size() - 1; i >= 0; i--) {
-            Personaje p = lista.get(i);
-
-            if (p.getPuesto() >= puestoInicial) {
-                p.setPuesto(p.getPuesto() + 1);
-            }
+    /**
+     * Reasigna puestos a todos:
+     * total alto = puesto 1
+     */
+    @Override
+    public void reajustarPuestos() {
+        List<Personaje> ordenados = repo.findAllByOrderByTotalDesc();
+        int pos = 1;
+        for (Personaje p : ordenados) {
+            p.setPuesto(pos++);
+            repo.save(p);
         }
-
-        personajeRepository.saveAll(lista);
     }
 
-	@Override
-	public Optional<Personaje> findById(Integer id) {
-		return personajeRepository.findById(id);
-	}
+    @Override
+    public void guardarConAjuste(Personaje personaje) {
+        // Este método ahora solo llama a save(), ya que save incluye toda la lógica
+        save(personaje);
+    }
 }

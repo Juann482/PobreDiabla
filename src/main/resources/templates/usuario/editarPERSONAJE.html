@@ -25,58 +25,69 @@
 							<h6 class="h2 text-white-50">Edición de personajes</h6>
 
 							<form th:action="@{/usuario/EnviarEditP}" method="post" enctype="multipart/form-data">
-								
+
 								<div>
 									<input type="hidden" id="id" name="id" th:value="${person.id}">
 								</div>
 
 								<div class="row g-3">
-									<div class="col-md-6">
-										<label for="exampleInputEmail1" class="form-label">Nombre</label>
-										<input type="text" class="form-control" id="nombre" name="nombre" th:value="${person.nombre}"required
-											aria-describedby="emailHelp">
-									</div>
-									<div class="col-xl-4">
-										<label class="form-label">Calificación</label>
-										<select class="form-select col-lg-4" aria-label="Default select example"
-											id="calificacion" name="calificacion" th:value="${person.calificacion}" required>
-											<option selected>Seleccione una calificación</option>
-											<option value="5">⭐⭐⭐⭐⭐</option>
-											<option value="4">⭐⭐⭐⭐</option>
-											<option value="3">⭐⭐⭐</option>
-											<option value="2">⭐⭐</option>
-											<option value="1">💀</option>
-										</select>
-									</div>
-									<div class="col-md-2">
-										<Label class="form-label">Puesto</Label>
-										<input type="number" class="form-control" id="puesto" name="puesto" th:value="${person.puesto}"required>
-									</div>
-									<div class="col-md-6">
 
+									<!-- Nombre -->
+									<div class="col-md-6">
+										<label class="form-label">Nombre</label>
+										<input type="text" class="form-control" id="nombre" name="nombre" th:value="${person.nombre}">
+									</div>
+
+									<!-- Selección del juego -->
+									<div class="col-md-6">
 										<label class="form-label">Juego</label>
-										<select class="form-select col-lg-6" id="Juego" name="Juego.id" th:value="${person.juego.id}"required>
+										<select class="form-select" id="Juego" name="Juego.id" required>
 											<option selected>Seleccione un juego</option>
-											<option th:each="juego : ${juego}"
-											th:value="${juego.id}" th:text="${juego.nombre}"></option>
+											<option th:each="juego : ${juego}" th:value="${juego.id}"
+												th:text="${juego.nombre}">
+											</option>
 										</select>
-										
 									</div>
-									<div class="col-md-6">
 
-										<label for="exampleInputPassword1" class="form-label">Descripción</label>
-										<input type="text" class="form-control" id="caracteristica" name="caracteristica" th:value="${person.caracteristica}"
-											required>
+									<!-- Atributos porcentuales -->
+
+									<div class="col-md-4">
+										<label class="form-label">
+											Calidad (20%)
+										</label>
+										<input type="number" class="form-control" id="valor1" name="valor1" min="1" th:value="${person.valor1}"
+											max="100" required>
 									</div>
-									
+
+									<div class="col-md-4">
+										<label class="form-label">
+											Cuerpo (30%)
+										</label>
+										<input type="number" class="form-control" id="valor2" name="valor2" min="1" th:value="${person.valor2}"
+											max="100" required>
+									</div>
+
+									<div class="col-md-4">
+										<label class="form-label">
+											Sexo (50%)
+										</label>
+										<input type="number" class="form-control" id="valor3" name="valor3" min="1" th:value="${person.valor3}"
+											max="100" required>
+									</div>
+
+									<!-- Descripción -->
+									<div class="col-md-12">
+										<label class="form-label">Descripción</label>
+										<input type="text" class="form-control" id="caracteristica" th:value="${person.caracteristica}"
+											name="caracteristica" >
+									</div>
+
+							
 									<div class="col-12 text-center">
-
-										<a class="btn btn-info" th:href="@{/usuario/Personajes}">Volver</a>
-										<button type="submit" class="btn btn-primary">Actualizar</button>
-
+										<button type="submit" class="btn btn-primary">Ingresar</button>
 									</div>
 
-								</div>
+								</div><!-- row -->
 							</form>
 						</div>
 					</div>
@@ -89,6 +100,24 @@
 		</div>
 	</div>
 	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script>
+	    // Error al no seleccionar juego
+	    const errorJuego = /*[[${errorJuego}]]*/ null;
+
+	    if (errorJuego !== null) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: 'Falta un dato',
+	            text: errorJuego,
+	            confirmButtonColor: '#3085d6',
+	            confirmButtonText: 'Entendido'
+	        });
+	    }
+	</script>
+
 
 </body>
 

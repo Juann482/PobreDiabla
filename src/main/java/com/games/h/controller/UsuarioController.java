@@ -2,8 +2,8 @@ package com.games.h.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 //import org.apache.tomcat.util.http.fileupload.UploadContext;
 import org.slf4j.Logger;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.games.h.model.Juego;
 import com.games.h.model.Personaje;
@@ -46,7 +47,7 @@ public class UsuarioController {
 
 	@Autowired
 	private IPersonajeService personajeService;
-	
+
 	@Autowired
 	private IUsuarioService usuarioService;
 
@@ -69,152 +70,199 @@ public class UsuarioController {
 		model.addAttribute("correo", correoService.findAll());
 		return "usuario/registroJUEGOS";
 	}
-	
+
 	@PostMapping("/SendJuegoEd")
 	public String crearJuego(Juego juego) {
 
-		Juego original = juegoService.get(juego.getId())
-	            .orElseThrow(() -> new RuntimeException("Juego no encontrado"));
+		Juego original = juegoService.get(juego.getId()).orElseThrow(() -> new RuntimeException("Juego no encontrado"));
 
-	    Integer puestoAnterior = original.getPuesto();
+		Integer puestoAnterior = original.getPuesto();
 
-	    original.setNombre(juego.getNombre());
-	    original.setCalificacion(juego.getCalificacion());
-	    original.setEnlaceAlbum(juego.getEnlaceAlbum());
-	    original.setEnlaceDrive(juego.getEnlaceDrive());
-	    original.setPuesto(juego.getPuesto());
+		original.setNombre(juego.getNombre());
+		original.setCalificacion(juego.getCalificacion());
+		original.setEnlaceAlbum(juego.getEnlaceAlbum());
+		original.setEnlaceDrive(juego.getEnlaceDrive());
+		original.setPuesto(juego.getPuesto());
 
-	    juegoService.guardarEditadoConAjuste(original, puestoAnterior);
+		juegoService.guardarEditadoConAjuste(original, puestoAnterior);
 
-	    return "redirect:/usuario/Juegos";
+		return "redirect:/usuario/Juegos";
 	}
-	
+
 	@GetMapping("/EditJuego/{id}")
 	public String EditarJuego(@PathVariable Integer id, Juego juego, Model model) {
-		
+
 		Juego j = juegoService.get(id).get();
 		model.addAttribute("game", j);
 		model.addAttribute("correo", correoService.findAll());
 		return "usuario/editarJUEGOS";
-	}		
-	
-	@PostMapping("/JuegoSave")
-	public String JuevoSave(Juego juego, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
-		
-		Usuario u = usuarioService.findById(1).get();
-	    juego.setFechaRegistro(LocalDate.now());
-	    juego.setUsuario(u);
-
-	    if (juego.getId() == null) {
-	        String nombreImagen = upload.saveImages(file, juego.getNombre());
-	        juego.setImagen(nombreImagen);
-	    }
-
-	    juegoService.guardarNuevoConAjuste(juego);
-
-	    return "redirect:/usuario/JuegosRegistro";
 	}
-	
+
+	@PostMapping("/JuegoSave")
+	public String JuevoSave(Juego juego, @RequestParam("img") MultipartFile file, HttpSession session)
+			throws IOException {
+
+		Usuario u = usuarioService.findById(1).get();
+		juego.setFechaRegistro(LocalDate.now());
+		juego.setUsuario(u);
+
+		if (juego.getId() == null) {
+			String nombreImagen = upload.saveImages(file, juego.getNombre());
+			juego.setImagen(nombreImagen);
+		}
+
+		juegoService.guardarNuevoConAjuste(juego);
+
+		return "redirect:/usuario/JuegosRegistro";
+	}
+
 	@GetMapping("/DeleteJuego/{id}")
-    public String DeleteJuego(@PathVariable Integer id) {
-		
-        Juego c = juegoService.get(id).orElseThrow(() -> new RuntimeException("Juego no encontrado"));
-        juegoService.delete(id);
-        LOGGER.warn("Juego eliminado: {}", c);
-        
-        return "redirect:/usuario/Juegos";
-    }
-	
+	public String DeleteJuego(@PathVariable Integer id) {
+
+		Juego c = juegoService.get(id).orElseThrow(() -> new RuntimeException("Juego no encontrado"));
+		juegoService.delete(id);
+		LOGGER.warn("Juego eliminado: {}", c);
+
+		return "redirect:/usuario/Juegos";
+	}
+
 	// ========================= PERSONAJE ============================
 
 	@GetMapping("/Personajes")
 	public String Personajes(Personaje personaje, Model model) {
-		
-		model.addAttribute("personajes", personajeService.findAll());
-		
-		return "usuario/personajes";
+
+	    List<Personaje> personajes = personajeService.findAll();
+
+	    // Ordenar por total (Double) de mayor a menor
+	    personajes.sort(Comparator.comparing(Personaje::getTotal, Comparator.nullsLast(Double::compare)).reversed());
+
+	    model.addAttribute("personajes", personajes);
+	    return "usuario/personajes";
 	}
-	
+
 	@GetMapping("/PersonajeRegistro")
 	public String PersonajeRegistro(Personaje personaje, Model model) {
-		
-		model.addAttribute("juego", juegoService.findAll());
-		
-		return "usuario/registroPERSONAJE";
+	    model.addAttribute("juego", juegoService.findAll());
+	    return "usuario/registroPERSONAJE";
 	}
-	
+
 	@PostMapping("/PersonSave")
-	public String PersonSave(Personaje person, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
-		
-		Usuario u = usuarioService.findById(1).get();
-		if (person.getId() == null) {
-			String nombreImagen = upload.saveImages(file, person.getNombre());
-			person.setImagen(nombreImagen);
-		}
-		 personajeService.save(person);
-		return "redirect:/usuario/PersonajeRegistro";
+	public String PersonSave(Personaje person,
+	                         @RequestParam("img") MultipartFile file,
+	                         RedirectAttributes redirectAttributes) throws IOException {
+
+	    // Nombre vacío => ??? 
+	    if (person.getNombre() == null || person.getNombre().trim().isEmpty()) {
+	        person.setNombre("???");
+	    }
+
+	    // Característica vacía => "Sin descripción."
+	    if (person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty()) {
+	        person.setCaracteristica("Sin descripción.");
+	    }
+
+	    // Imagen solo en nuevos
+	    if (person.getId() == null) {
+	        String nombreImagen = upload.saveImages(file, person.getNombre());
+	        person.setImagen(nombreImagen);
+	    }
+
+	    personajeService.guardarConAjuste(person);
+
+	    redirectAttributes.addFlashAttribute("mensaje", "guardado");
+	    return "redirect:/usuario/PersonajeRegistro";
 	}
-	
+
 	@GetMapping("/EditPerson/{id}")
 	public String EditPerson(@PathVariable Integer id, Personaje person, Model model) {
-		
-		Personaje p = personajeService.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Personaje no encontrado"));
 
-		model.addAttribute("person", p);
-		model.addAttribute("juego", juegoService.findAll());
-		return "usuario/editarPERSONAJE";
+	    Personaje p = personajeService.get(id).orElseThrow(
+	            () -> new RuntimeException("Personaje no encontrado")
+	    );
+
+	    model.addAttribute("person", p);
+	    model.addAttribute("juego", juegoService.findAll());
+	    return "usuario/editarPERSONAJE";
 	}
+
+		@PostMapping("/EnviarEditP")
+		public String EnviarNP(Personaje person ,RedirectAttributes redirectAttributes) {
+			
+
+		    // Validación: ¿escogió el juego?
+		    if (person.getJuego() == null || person.getJuego().getId() == null) {
+		        redirectAttributes.addFlashAttribute("errorJuego", "Debes seleccionar un juego.");
+		        return "redirect:/usuario/EditarP/" + person.getId(); // vuelve a la misma página
+		    }
 	
-	@PostMapping("/EnviarEditP")
-	public String EnviarNP(Personaje person) {
-		
-		Personaje pr = personajeService.findById(person.getId())
-				.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + person.getId()));
-		
-		pr.setNombre(person.getNombre());
-		pr.setPuesto(person.getPuesto());
-		pr.setCaracteristica(person.getCaracteristica());
-		pr.setJuego(person.getJuego());
-		pr.setCalificacion(person.getCalificacion());
-		
-		personajeService.update(pr);
-		LOGGER.warn("Personaje actualizado; {}", pr);
-		return "redirect:/usuario/Personajes";
-	}
+		    Personaje pr = personajeService.get(person.getId())
+		            .orElseThrow(() -> new RuntimeException("Personaje no encontrado con ID: " + person.getId()));
+	
+		    // Nombre
+		    if (person.getNombre() == null || person.getNombre().trim().isEmpty()) {
+		        pr.setNombre("???");
+		    } else {
+		        pr.setNombre(person.getNombre());
+		    }
+	
+		    // Valores
+		    pr.setValor1(person.getValor1());
+		    pr.setValor2(person.getValor2());
+		    pr.setValor3(person.getValor3());
+	
+		    // Descripción
+		    pr.setCaracteristica(
+		            (person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty())
+		                    ? "Sin descripción."
+		                    : person.getCaracteristica()
+		    );
+	
+		    // Juego
+		    pr.setJuego(person.getJuego());
+	
+		    // Guardar + reajustar puestos
+		    personajeService.guardarConAjuste(pr);
+	
+		    redirectAttributes.addFlashAttribute("mensaje", "editado");
+		    LOGGER.warn("Personaje actualizado: {}", pr);
+	
+		    return "redirect:/usuario/Personajes";
+		}
 	
 	@GetMapping("/DeletePerson/{id}")
-    public String DeletePerson(@PathVariable Integer id) {
-		
-        personajeService.delete(id);
-        LOGGER.warn("Personaje eliminado: {}", id);
-        
-        return "redirect:/usuario/Personajes";
-    }
-	
-	//============================== CORREOS ===================================
-	
+	public String DeletePerson(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+
+	    personajeService.delete(id);
+	    personajeService.reajustarPuestos(); // recalcular ranking
+
+	    redirectAttributes.addFlashAttribute("mensaje", "eliminado");
+
+	    return "redirect:/usuario/Personajes";
+	}
+
+	// ============================== CORREOS ===================================
+
 	@GetMapping("/Correos")
 	public String Correos(Model model) {
-		
+
 		model.addAttribute("correo", correoService.findAll());
-		
+
 		return "usuario/correos";
 	}
-	
+
 	@PostMapping("/GuardarCorreo")
 	public String CorreoSave(Correos correo) {
 		correoService.save(correo);
 		return "redirect:/usuario/Correos";
 	}
-	
+
 	@GetMapping("/DeleteCorreo/{id}")
-    public String DeleteCorreo(@PathVariable Integer id) {
-		
-        Correos c = correoService.get(id).orElseThrow(() -> new RuntimeException("Correo no encontrado"));
-        correoService.delete(id);
-        LOGGER.warn("Correo eliminado: {}", c);
-        
-        return "redirect:/usuario/Personajes";
-    }
+	public String DeleteCorreo(@PathVariable Integer id) {
+
+		Correos c = correoService.get(id).orElseThrow(() -> new RuntimeException("Correo no encontrado"));
+		correoService.delete(id);
+		LOGGER.warn("Correo eliminado: {}", c);
+
+		return "redirect:/usuario/Correos";
+	}
 }

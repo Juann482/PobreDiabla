@@ -9,14 +9,13 @@ import com.games.h.model.Usuario;
 
 public interface IPersonajeService {
 	
-	Personaje save(Personaje personaje);
-	
-	void delete(Integer id);
-	
-	Personaje update(Personaje personaje);
-	
 	List<Personaje> findAll();
-
+    Optional<Personaje> get(Integer id);
+    Personaje save(Personaje personaje);
+    void delete(Integer id);
+    Optional<Personaje> findByPuesto(Integer puesto);
+    void guardarConAjuste(Personaje personaje); // guarda y reajusta puestos
+    void reajustarPuestos(); // recalcula puestos de todos (usar después de delete)
 	Optional<Personaje> findById(Integer id);
-
+	Personaje update(Personaje personaje);
 }

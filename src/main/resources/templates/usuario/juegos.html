@@ -41,24 +41,25 @@
 
 									<!-- Puesto con medallas -->
 									<td>
-									    <span th:switch="true">
+									    
 
-									        <!-- Oro 1–2 -->
-									        <i th:case="${j.puesto >= 1 && j.puesto <= 3}"
+									        <!-- Oro 1–3 -->
+									        <i th:if="${j.puesto >= 1 && j.puesto <= 3}"
 									           class="bi bi-award-fill medalla-oro" style="font-size: 2rem;"></i>
 
-									        <!-- Plata 3–5 -->
-									        <i th:case="${j.puesto >= 4 && j.puesto <= 10}"
+									        <!-- Plata 4–10 -->
+									        <i th:if="${j.puesto >= 4 && j.puesto <= 10}"
 									           class="bi bi-award-fill medalla-plata" style="font-size: 2rem;"></i>
 
-									        <!-- Bronce 6–10 -->
-									        <i th:case="${j.puesto >= 11 && j.puesto <= 15}"
+									        <!-- Bronce 10–15 -->
+									        <i th:if="${j.puesto >= 11 && j.puesto <= 15}"
 									           class="bi bi-award-fill medalla-bronce" style="font-size: 2rem;"></i>
 
 									        <!-- Verde oscuro 11+ -->
-									        <span th:case="*" th:text="${j.puesto}" class="text-verde-oscuro"></span>
+									        <span th:if="${j.puesto >= 16}"
+												 th:text="${j.puesto}" class="bi bi-award-fill text-verde-oscuro"></span>
 
-									    </span>
+									   
 									</td>
 
 
@@ -134,9 +135,9 @@
 									</td>
 
 									<!-- ELIMINAR -->
-									<td>
-										<a title="Eliminar" class="btn btn-primary"
-											th:href="@{/usuario/DeleteJuego/{id} (id = ${j.id})}">
+									<td>								
+										<a href="#" title="Eliminar" class="btn btn-primary btnEliminarJuego"
+											 th:data-url="@{/usuario/DeleteJuego/{id}(id=${juego.id})}">
 											<i class="bi bi-trash-fill" style="color: aliceblue;"></i>
 										</a>
 									</td>
@@ -228,7 +229,11 @@
 		}
 	</script>
 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
 	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+	
+	<div th:insert="~{usuario/template_user.html::BtnEliminar}"></div>
 
 </body>
 

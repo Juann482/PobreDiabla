@@ -1,97 +1,145 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{usuario/template_user.html::head}"> </head>
-
+<head th:insert="~{usuario/template_user.html::head}"></head>
 
 <body>
-	<div class="container-fluid position-relative d-flex p-0">
+    <div class="container-fluid position-relative d-flex p-0">
 
-		<div th:insert="~{usuario/template_user.html::spinner}"></div>
+        <div th:insert="~{usuario/template_user.html::spinner}"></div>
+        <div th:insert="~{usuario/template_user.html::sidebar}"></div>
 
-		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
+        <!-- Content Start -->
+        <div class="content">
+
+            <div th:insert="~{usuario/template_user.html::navbar}"></div>
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row vh-210 bg-secondary rounded justify-content-center mx-0">
+                    <div class="col-lg-12">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="h2 text-white-50">Registro de personajes</h6>
+
+                            <form th:action="@{/usuario/PersonSave}" method="post" enctype="multipart/form-data">
+
+                                <div class="row g-3">
+
+                                    <!-- Nombre -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre">
+                                    </div>
+
+                                    <!-- Selección del juego -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">Juego</label>
+                                        <select class="form-select" id="Juego" name="Juego.id" required>
+                                            <option selected>Seleccione un juego</option>
+                                            <option th:each="juego : ${juego}"
+                                                    th:value="${juego.id}"
+                                                    th:text="${juego.nombre}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Atributos porcentuales -->
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">
+                                            Calidad (20%)
+                                        </label>
+                                        <input type="number" class="form-control" id="valor1" name="valor1"
+                                               min="1" max="100" required>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">
+                                            Cuerpo (30%)
+                                        </label>
+                                        <input type="number" class="form-control" id="valor2" name="valor2"
+                                               min="1" max="100" required>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">
+                                            Sexo (50%)
+                                        </label>
+                                        <input type="number" class="form-control" id="valor3" name="valor3"
+                                               min="1" max="100" required>
+                                    </div>
+
+                                    <!-- Descripción -->
+                                    <div class="col-md-12">
+                                        <label class="form-label">Descripción</label>
+                                        <input type="text" class="form-control" id="caracteristica" name="caracteristica">
+                                    </div>
+
+                                    <!-- Imagen -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Foto del personaje</label>
+                                        <input class="form-control bg-dark" type="file" id="img" name="img">
+                                    </div>
+
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-primary">Ingresar</button>
+                                    </div>
+
+                                </div><!-- row -->
+                            </form>
+
+                        </div><!-- card -->
+                    </div>
+                </div>
+            </div>
+
+            <div th:insert="~{usuario/template_user.html::footer}"></div>
+
+        </div><!-- content -->
+    </div>
 
 
-		<!-- Content Start -->
-		<div class="content">
+	<!-- SWEETALERT2 VALIDACIÓN -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	<script th:if="${mensaje != null}">
+	    let tipo = /*[[${mensaje}]]*/ '';
 
-			<div th:insert="~{usuario/template_user.html::navbar}"></div>
+	    if (tipo === 'guardado') {
+	        Swal.fire({
+	            icon: "success",
+	            title: "Personaje guardado",
+	            text: "El personaje fue registrado correctamente.",
+	            background: "#1e1e2f",
+	            color: "white",
+	            confirmButtonColor: "#0dcaf0"
+	        });
+	    }
 
-			<!-- Blank Start -->
-			<div class="container-fluid pt-4 px-4">
-				<div class="row vh-210 bg-secondary rounded  justify-content-center mx-0">
-					<div class="col-lg-12">
-						<div class="bg-secondary rounded h-100 p-4">
-							<h6 class="h2 text-white-50">Registro de personajes</h6>
+	    if (tipo === 'editado') {
+	        Swal.fire({
+	            icon: "info",
+	            title: "Personaje actualizado",
+	            text: "Los datos se guardaron correctamente.",
+	            background: "#1e1e2f",
+	            color: "white",
+	            confirmButtonColor: "#0dcaf0"
+	        });
+	    }
 
-							<form th:action="@{/usuario/PersonSave}" method="post" enctype="multipart/form-data">
+	    if (tipo === 'eliminado') {
+	        Swal.fire({
+	            icon: "warning",
+	            title: "Personaje eliminado",
+	            text: "El personaje fue removido correctamente.",
+	            background: "#1e1e2f",
+	            color: "white",
+	            confirmButtonColor: "#0dcaf0"
+	        });
+	    }
+	</script>
 
-								<div class="row g-3">
-									<div class="col-md-6">
-										<label for="exampleInputEmail1" class="form-label">Nombre</label>
-										<input type="text" class="form-control" id="nombre" name="nombre" required
-											aria-describedby="emailHelp">
-									</div>
-									<div class="col-xl-4">
-										<label class="form-label">Calificación</label>
-										<select class="form-select col-lg-4" aria-label="Default select example"
-											id="calificacion" name="calificacion" required>
-											<option selected>Seleccione una calificación</option>
-											<option value="5">⭐⭐⭐⭐⭐</option>
-											<option value="4">⭐⭐⭐⭐</option>
-											<option value="3">⭐⭐⭐</option>
-											<option value="2">⭐⭐</option>
-											<option value="1">💀</option>
-										</select>
-									</div>
-									<div class="col-md-2">
-										<Label class="form-label">Puesto</Label>
-										<input type="number" class="form-control" id="puesto" name="puesto" required>
-									</div>
-									<div class="col-md-6">
+    <div th:insert="~{usuario/template_user.html::jsFiles}"></div>
 
-										<label class="form-label">Juego</label>
-										<select class="form-select col-lg-6" id="Juego" name="Juego.id" required>
-											<option selected>Seleccione un juego</option>
-											<option th:each="juego : ${juego}"
-											th:value="${juego.id}" th:text="${juego.nombre}"></option>
-										</select>
-										
-									</div>
-									<div class="col-md-6">
-
-										<label for="exampleInputPassword1" class="form-label">Descripción</label>
-										<input type="text" class="form-control" id="caracteristica" name="caracteristica"
-											required>
-									</div>
-									<div class="mb-3">
-
-										<label for="formFileMultiple" class="form-label">Foto del personaje</label>
-										<input class="form-control bg-dark" type="file" id="img" name="img" multiple>
-
-									</div>
-									<div class="col-12 text-center">
-
-										<button type="submit" class="btn btn-primary">Ingresar</button>
-
-									</div>
-
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Blank End -->
-			<div th:insert="~{usuario/template_user.html::footer}">
-
-			</div>
-		</div>
-	</div>
-	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
-
+	<div th:insert="~{usuario/template_user.html::sweetpositions}"></div>
 </body>
-
-</html>
-
 </html>
