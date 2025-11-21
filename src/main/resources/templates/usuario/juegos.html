@@ -44,20 +44,20 @@
 									    
 
 									        <!-- Oro 1–3 -->
-									        <i th:if="${j.puesto >= 1 && j.puesto <= 3}"
-									           class="bi bi-award-fill medalla-oro" style="font-size: 2rem;"></i>
+									        <span th:if="${j.puesto >= 1 && j.puesto <= 3}" th:text="${j.puesto}" 
+									           class="bi bi-award-fill medalla-oro"></span>
 
 									        <!-- Plata 4–10 -->
-									        <i th:if="${j.puesto >= 4 && j.puesto <= 10}"
-									           class="bi bi-award-fill medalla-plata" style="font-size: 2rem;"></i>
+									        <span th:if="${j.puesto >= 4 && j.puesto <= 10}" th:text="${j.puesto}"
+									           class="bi bi-award-fill medalla-plata"></span>
 
 									        <!-- Bronce 10–15 -->
-									        <i th:if="${j.puesto >= 11 && j.puesto <= 15}"
-									           class="bi bi-award-fill medalla-bronce" style="font-size: 2rem;"></i>
+									        <span th:if="${j.puesto >= 11 && j.puesto <= 15}" th:text="${j.puesto}"
+									           class="bi bi-award-fill medalla-bronce"></span>
 
 									        <!-- Verde oscuro 11+ -->
 									        <span th:if="${j.puesto >= 16}"
-												 th:text="${j.puesto}" class="bi bi-award-fill text-verde-oscuro"></span>
+												 th:text="${j.puesto}" class="text-verde-oscuro"></span>
 
 									   
 									</td>

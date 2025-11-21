@@ -22,7 +22,7 @@
 						<table class="table table-borderless">
 							<thead>
 								<tr class="center">
-									<th scope="col" class="text-danger">Puesto</th>
+									<th scope="col" class="text-danger">Top</th>
 									<th scope="col" class="text-danger">Img</th>
 									<th scope="col" class="text-danger">Nombre</th>
 									<th scope="col" class="text-danger">Calificación</th>
@@ -44,7 +44,8 @@
 									        <!-- Mostrar medalla SOLO si el puesto está entre 1 y 30 -->
 									        <i th:case="${person.puesto >= 1 && person.puesto <= 30}"
 									           class="bi bi-award-fill"
-									           style="font-size: 2rem;"
+											   style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+											   th:text="${person.puesto}"
 									           th:classappend="${
 									                person.puesto >= 1 && person.puesto <= 10 ? ' medalla-oro' :
 									                person.puesto >= 11 && person.puesto <= 20 ? ' medalla-plata' :
@@ -181,7 +182,7 @@
 								</p>
 
 								<p>
-									<strong>Puesto:</strong>
+									<strong>Top:</strong>
 									<span id="modalPuesto"></span>
 								</p>
 

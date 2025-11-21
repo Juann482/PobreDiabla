@@ -194,6 +194,7 @@ public class UsuarioController {
 		pr.setValor3(person.getValor3());
 		
 		pr.setNombre(person.getNombre());
+		pr.setTotal(person.getTotal());
 
 		// Descripción
 		pr.setCaracteristica(

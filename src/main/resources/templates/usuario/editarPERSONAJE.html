@@ -33,17 +33,21 @@
 								<div class="row g-3">
 
 									<!-- Nombre -->
-									<div class="col-md-12">
-										<label class="form-label">Nombre</label>
+									<div class="col-md-9">
+										<label class="form-label medalla-plata">Nombre</label>
 										<input type="text" class="form-control" id="nombre" name="nombre" th:value="${person.nombre}">
 									</div>
-
 									
+									<!-- Total de puntos -->
+									<div class="col-md-3">
+										<label class="form-label medalla-plata">Top</label>
+										<input type="number" class="form-control" id="total" name="total" th:value="${person.total}">
+									</div>
 
 									<!-- Atributos porcentuales -->
 
 									<div class="col-md-4">
-										<label class="form-label">
+										<label class="form-label medalla-plata">
 											Calidad (20%)
 										</label>
 										<input type="number" class="form-control" id="valor1" name="valor1" min="1" th:value="${person.valor1}"
@@ -51,7 +55,7 @@
 									</div>
 
 									<div class="col-md-4">
-										<label class="form-label">
+										<label class="form-label medalla-plata">
 											Cuerpo (35%)
 										</label>
 										<input type="number" class="form-control" id="valor2" name="valor2" min="1" th:value="${person.valor2}"
@@ -59,7 +63,7 @@
 									</div>
 
 									<div class="col-md-4">
-										<label class="form-label">
+										<label class="form-label medalla-plata">
 											Sexo (45%)
 										</label>
 										<input type="number" class="form-control" id="valor3" name="valor3" min="1" th:value="${person.valor3}"
@@ -68,13 +72,15 @@
 
 									<!-- Descripción -->
 									<div class="col-md-12">
-										<label class="form-label">Descripción</label>
+										<label class="form-label medalla-plata">Descripción</label>
 										<input type="text" class="form-control" id="caracteristica" th:value="${person.caracteristica}"
 											name="caracteristica" >
 									</div>
 
 							
 									<div class="col-12 text-center">
+										<a class="btn btn-info" style="color: aliceblue;" th:href="@{/usuario/Personajes}">Volver</a>
+										
 										<button type="submit" class="btn btn-primary">Ingresar</button>
 									</div>
 
