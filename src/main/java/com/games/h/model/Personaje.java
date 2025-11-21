@@ -23,8 +23,8 @@ public class Personaje {
 
     // Tres valores (1..100)
     private Integer valor1; // 20%
-    private Integer valor2; // 30%
-    private Integer valor3; // 50%
+    private Integer valor2; // 35%
+    private Integer valor3; // 45%
 
     // Total calculado (0..100)
     private Double total;
@@ -95,7 +95,7 @@ public class Personaje {
         double v2 = (valor2 == null) ? 0 : valor2;
         double v3 = (valor3 == null) ? 0 : valor3;
 
-        this.total = v1 * 0.20 + v2 * 0.30 + v3 * 0.50;
+        this.total = v1 * 0.20 + v2 * 0.35 + v3 * 0.45;
     }
 
     @Transient

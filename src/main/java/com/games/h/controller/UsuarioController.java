@@ -131,113 +131,94 @@ public class UsuarioController {
 	@GetMapping("/Personajes")
 	public String Personajes(Personaje personaje, Model model) {
 
-	    List<Personaje> personajes = personajeService.findAll();
+		List<Personaje> personajes = personajeService.findAll();
 
-	    // Ordenar por total (Double) de mayor a menor
-	    personajes.sort(Comparator.comparing(Personaje::getTotal, Comparator.nullsLast(Double::compare)).reversed());
+		// Ordenar por total (Double) de mayor a menor
+		personajes.sort(Comparator.comparing(Personaje::getTotal, Comparator.nullsLast(Double::compare)).reversed());
 
-	    model.addAttribute("personajes", personajes);
-	    return "usuario/personajes";
+		model.addAttribute("personajes", personajes);
+		return "usuario/personajes";
 	}
 
 	@GetMapping("/PersonajeRegistro")
 	public String PersonajeRegistro(Personaje personaje, Model model) {
-	    model.addAttribute("juego", juegoService.findAll());
-	    return "usuario/registroPERSONAJE";
+		model.addAttribute("juego", juegoService.findAll());
+		return "usuario/registroPERSONAJE";
 	}
 
 	@PostMapping("/PersonSave")
-	public String PersonSave(Personaje person,
-	                         @RequestParam("img") MultipartFile file,
-	                         RedirectAttributes redirectAttributes) throws IOException {
+	public String PersonSave(Personaje person, @RequestParam("img") MultipartFile file,
+			RedirectAttributes redirectAttributes) throws IOException {
 
-	    // Nombre vacío => ??? 
-	    if (person.getNombre() == null || person.getNombre().trim().isEmpty()) {
-	        person.setNombre("???");
-	    }
+		// Nombre vacío => ???
+		if (person.getNombre() == null || person.getNombre().trim().isEmpty()) {
+			person.setNombre("???");
+		}
 
-	    // Característica vacía => "Sin descripción."
-	    if (person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty()) {
-	        person.setCaracteristica("Sin descripción.");
-	    }
+		// Característica vacía => "Sin descripción."
+		if (person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty()) {
+			person.setCaracteristica("Sin descripción.");
+		}
 
-	    // Imagen solo en nuevos
-	    if (person.getId() == null) {
-	        String nombreImagen = upload.saveImages(file, person.getNombre());
-	        person.setImagen(nombreImagen);
-	    }
+		// Imagen solo en nuevos
+		if (person.getId() == null) {
+			String nombreImagen = upload.saveImages(file, person.getNombre());
+			person.setImagen(nombreImagen);
+		}
 
-	    personajeService.guardarConAjuste(person);
+		personajeService.guardarConAjuste(person);
 
-	    redirectAttributes.addFlashAttribute("mensaje", "guardado");
-	    return "redirect:/usuario/PersonajeRegistro";
+		redirectAttributes.addFlashAttribute("mensaje", "guardado");
+		return "redirect:/usuario/PersonajeRegistro";
 	}
 
 	@GetMapping("/EditPerson/{id}")
 	public String EditPerson(@PathVariable Integer id, Personaje person, Model model) {
 
-	    Personaje p = personajeService.get(id).orElseThrow(
-	            () -> new RuntimeException("Personaje no encontrado")
-	    );
+		Personaje p = personajeService.get(id).orElseThrow(() -> new RuntimeException("Personaje no encontrado"));
 
-	    model.addAttribute("person", p);
-	    model.addAttribute("juego", juegoService.findAll());
-	    return "usuario/editarPERSONAJE";
+		model.addAttribute("person", p);
+		model.addAttribute("juego", juegoService.findAll());
+		return "usuario/editarPERSONAJE";
 	}
 
-		@PostMapping("/EnviarEditP")
-		public String EnviarNP(Personaje person ,RedirectAttributes redirectAttributes) {
-			
+	@PostMapping("/EnviarEditP")
+	public String EnviarNP(Personaje person, RedirectAttributes redirectAttributes) {
 
-		    // Validación: ¿escogió el juego?
-		    if (person.getJuego() == null || person.getJuego().getId() == null) {
-		        redirectAttributes.addFlashAttribute("errorJuego", "Debes seleccionar un juego.");
-		        return "redirect:/usuario/EditarP/" + person.getId(); // vuelve a la misma página
-		    }
-	
-		    Personaje pr = personajeService.get(person.getId())
-		            .orElseThrow(() -> new RuntimeException("Personaje no encontrado con ID: " + person.getId()));
-	
-		    // Nombre
-		    if (person.getNombre() == null || person.getNombre().trim().isEmpty()) {
-		        pr.setNombre("???");
-		    } else {
-		        pr.setNombre(person.getNombre());
-		    }
-	
-		    // Valores
-		    pr.setValor1(person.getValor1());
-		    pr.setValor2(person.getValor2());
-		    pr.setValor3(person.getValor3());
-	
-		    // Descripción
-		    pr.setCaracteristica(
-		            (person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty())
-		                    ? "Sin descripción."
-		                    : person.getCaracteristica()
-		    );
-	
-		    // Juego
-		    pr.setJuego(person.getJuego());
-	
-		    // Guardar + reajustar puestos
-		    personajeService.guardarConAjuste(pr);
-	
-		    redirectAttributes.addFlashAttribute("mensaje", "editado");
-		    LOGGER.warn("Personaje actualizado: {}", pr);
-	
-		    return "redirect:/usuario/Personajes";
-		}
-	
+		Personaje pr = personajeService.get(person.getId())
+				.orElseThrow(() -> new RuntimeException("Personaje no encontrado con ID: " + person.getId()));
+
+		// Valores
+		pr.setValor1(person.getValor1());
+		pr.setValor2(person.getValor2());
+		pr.setValor3(person.getValor3());
+		
+		pr.setNombre(person.getNombre());
+
+		// Descripción
+		pr.setCaracteristica(
+				(person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty()) ? "Sin descripción."
+						: person.getCaracteristica());
+
+
+		// Guardar + reajustar puestos
+		personajeService.guardarConAjuste(pr);
+
+		redirectAttributes.addFlashAttribute("mensaje", "editado");
+		LOGGER.warn("Personaje actualizado: {}", pr);
+
+		return "redirect:/usuario/Personajes";
+	}
+
 	@GetMapping("/DeletePerson/{id}")
 	public String DeletePerson(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
 
-	    personajeService.delete(id);
-	    personajeService.reajustarPuestos(); // recalcular ranking
+		personajeService.delete(id);
+		personajeService.reajustarPuestos(); // recalcular ranking
 
-	    redirectAttributes.addFlashAttribute("mensaje", "eliminado");
+		redirectAttributes.addFlashAttribute("mensaje", "eliminado");
 
-	    return "redirect:/usuario/Personajes";
+		return "redirect:/usuario/Personajes";
 	}
 
 	// ============================== CORREOS ===================================

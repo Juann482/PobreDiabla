@@ -60,9 +60,6 @@ public class PersonajeServiceImplement implements IPersonajeService {
     @Override
     public Personaje update(Personaje personaje) {
 
-        if (personaje.getNombre() == null || personaje.getNombre().trim().isEmpty()) {
-            personaje.setNombre("???");
-        }
 
         personaje.recalcularTotal();
         Personaje saved = repo.save(personaje);

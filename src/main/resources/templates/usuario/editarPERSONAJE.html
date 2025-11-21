@@ -33,21 +33,12 @@
 								<div class="row g-3">
 
 									<!-- Nombre -->
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<label class="form-label">Nombre</label>
 										<input type="text" class="form-control" id="nombre" name="nombre" th:value="${person.nombre}">
 									</div>
 
-									<!-- Selección del juego -->
-									<div class="col-md-6">
-										<label class="form-label">Juego</label>
-										<select class="form-select" id="Juego" name="Juego.id" required>
-											<option selected>Seleccione un juego</option>
-											<option th:each="juego : ${juego}" th:value="${juego.id}"
-												th:text="${juego.nombre}">
-											</option>
-										</select>
-									</div>
+									
 
 									<!-- Atributos porcentuales -->
 
@@ -61,7 +52,7 @@
 
 									<div class="col-md-4">
 										<label class="form-label">
-											Cuerpo (30%)
+											Cuerpo (35%)
 										</label>
 										<input type="number" class="form-control" id="valor2" name="valor2" min="1" th:value="${person.valor2}"
 											max="100" required>
@@ -69,7 +60,7 @@
 
 									<div class="col-md-4">
 										<label class="form-label">
-											Sexo (50%)
+											Sexo (45%)
 										</label>
 										<input type="number" class="form-control" id="valor3" name="valor3" min="1" th:value="${person.valor3}"
 											max="100" required>
