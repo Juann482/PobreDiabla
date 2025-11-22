@@ -3,6 +3,8 @@ package com.games.h.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,7 @@ public class Correos {
 	private String contraseña;
 	
 	@OneToMany(mappedBy = "correo")
+	@JsonIgnore
 	private List<Juego> juegos = new ArrayList<>();
 
 	public Correos() {}

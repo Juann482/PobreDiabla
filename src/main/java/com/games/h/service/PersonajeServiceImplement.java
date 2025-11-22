@@ -2,6 +2,7 @@ package com.games.h.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,4 +94,48 @@ public class PersonajeServiceImplement implements IPersonajeService {
         // Este método ahora solo llama a save(), ya que save incluye toda la lógica
         save(personaje);
     }
+    
+    @Override
+    public List<Personaje> buscar(String nombre, String juego, Integer puesto, Integer estrellas) {
+        
+        System.out.println("🔍 Buscando personajes con parámetros:");
+        System.out.println("   - nombre: " + nombre);
+        System.out.println("   - juego: " + juego);
+        System.out.println("   - puesto: " + puesto);
+        System.out.println("   - estrellas: " + estrellas);
+
+        List<Personaje> resultados = repo.findAll().stream()
+            // FILTRAR por nombre
+            .filter(p -> nombre == null || nombre.isEmpty() || 
+                    (p.getNombre() != null && 
+                     p.getNombre().toLowerCase().contains(nombre.toLowerCase())))
+            
+            // FILTRAR por juego (relación ManyToOne)
+            .filter(p -> juego == null || juego.isEmpty() || 
+                    (p.getJuego() != null && 
+                     p.getJuego().getNombre() != null &&
+                     p.getJuego().getNombre().toLowerCase().contains(juego.toLowerCase())))
+            
+            // FILTRAR por puesto (TOP)
+            .filter(p -> puesto == null || (p.getPuesto() != null && p.getPuesto().equals(puesto)))
+            
+            // FILTRAR por estrellas (usando el método getEstrellas() transiente)
+            .filter(p -> estrellas == null || p.getEstrellas() == estrellas)
+            
+            .collect(Collectors.toList());
+
+        System.out.println("✅ Resultados encontrados: " + resultados.size());
+        
+        // Debug: mostrar detalles de cada resultado
+        resultados.forEach(p -> {
+            System.out.println("   - " + p.getNombre() + 
+                             " | Puesto: " + p.getPuesto() + 
+                             " | Total: " + p.getTotal() +
+                             " | Estrellas: " + p.getEstrellas());
+        });
+        
+        return resultados;
+    }
+    
+
 }

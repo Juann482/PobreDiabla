@@ -2,6 +2,8 @@ package com.games.h.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -19,6 +21,7 @@ public class Usuario {
 	private String rol;
 	
 	@OneToMany(mappedBy = "usuario")
+	@JsonIgnore
 	private List<Juego> juego;
 
 	public Usuario() {}

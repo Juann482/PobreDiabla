@@ -1,11 +1,13 @@
+<!-- ======================= -->
+<!--       HEAD              -->
+<!-- ======================= -->
+
 <head th:fragment="head">
 
 	<meta charset="utf-8">
 	<title>Shame</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<meta content="" name="keywords">
-	<meta content="" name="description">
-	<!-- Favicon -->
+
 	<link th:href="@{/images/Logo.png}" rel="icon">
 
 	<!-- Google Fonts -->
@@ -28,16 +30,37 @@
 	<!-- Template Styles -->
 	<link th:href="@{/css/style.css}" rel="stylesheet">
 	<link th:href="@{/css/brillos.css}" rel="stylesheet">
-	
+
 	<style>
-		.center{
+		.center {
 			justify-content: center;
 			text-align: center;
+		}
+
+		.fade {
+			transition: opacity 0.25s ease-in-out;
+			opacity: 1;
+		}
+
+		.fade.hide {
+			opacity: 0;
+		}
+
+		.debug-border {
+			border: 2px solid red !important;
+		}
+
+		.debug-visible {
+			opacity: 1 !important;
+			display: table-row !important;
 		}
 	</style>
 
 </head>
 
+<!-- ======================= -->
+<!--       SPINNER           -->
+<!-- ======================= -->
 <div th:fragment="spinner">
 	<div id="spinner"
 		class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -45,6 +68,9 @@
 	</div>
 </div>
 
+<!-- ======================= -->
+<!--       SIDEBAR           -->
+<!-- ======================= -->
 <div th:fragment="sidebar">
 	<div class="sidebar pe-4 pb-3">
 		<nav class="navbar bg-secondary navbar-dark">
@@ -62,7 +88,7 @@
 					</div>
 				</div>
 				<div class="ms-3">
-					<h6 class="mb-0">Juanito</h6> <!-- Puedes poner th:text si quieres dinámico -->
+					<h6 class="mb-0">Juanito</h6>
 					<span>Admin</span>
 				</div>
 			</div>
@@ -82,6 +108,7 @@
 						<a th:href="@{/usuario/Correos}" class="dropdown-item">Correos</a>
 					</div>
 				</div>
+
 				<div class="nav-item dropdown">
 					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 						<i class="fa fa-laptop me-2"></i>Formularios
@@ -92,10 +119,14 @@
 					</div>
 				</div>
 			</div>
+
 		</nav>
 	</div>
 </div>
 
+<!-- ======================= -->
+<!--   NAVBAR                -->
+<!-- ======================= -->
 <div th:fragment="navbar">
 	<nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
 		<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
@@ -104,10 +135,13 @@
 		<a href="#" class="sidebar-toggler flex-shrink-0">
 			<i class="fa fa-bars"></i>
 		</a>
+
 		<form class="d-none d-md-flex ms-4">
 			<input class="form-control bg-dark border-0" type="search" placeholder="Buscar">
 		</form>
+
 		<div class="navbar-nav align-items-center ms-auto">
+
 			<div class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 					<i class="fa fa-envelope me-lg-2"></i>
@@ -124,67 +158,30 @@
 						</div>
 					</a>
 					<hr class="dropdown-divider">
-					<a href="#" class="dropdown-item">
-						<div class="d-flex align-items-center">
-							<img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-							<div class="ms-2">
-								<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-								<small>15 minutes ago</small>
-							</div>
-						</div>
-					</a>
-					<hr class="dropdown-divider">
-					<a href="#" class="dropdown-item">
-						<div class="d-flex align-items-center">
-							<img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-							<div class="ms-2">
-								<h6 class="fw-normal mb-0">Jhon send you a message</h6>
-								<small>15 minutes ago</small>
-							</div>
-						</div>
-					</a>
-					<hr class="dropdown-divider">
-					<a href="#" class="dropdown-item text-center">See all message</a>
+
+					<a href="#" class="dropdown-item text-center">See all messages</a>
 				</div>
 			</div>
+
 			<div class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 					<i class="fa fa-bell me-lg-2"></i>
 					<span class="d-none d-lg-inline-flex">Notificaciones</span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-					<a href="#" class="dropdown-item">
-						<h6 class="fw-normal mb-0">Profile updated</h6>
-						<small>15 minutes ago</small>
-					</a>
-					<hr class="dropdown-divider">
-					<a href="#" class="dropdown-item">
-						<h6 class="fw-normal mb-0">New user added</h6>
-						<small>15 minutes ago</small>
-					</a>
-					<hr class="dropdown-divider">
-					<a href="#" class="dropdown-item">
-						<h6 class="fw-normal mb-0">Password changed</h6>
-						<small>15 minutes ago</small>
-					</a>
-					<hr class="dropdown-divider">
-					<a href="#" class="dropdown-item text-center">See all notifications</a>
+
+					<a href="#" class="dropdown-item text-center">Ver todas</a>
+
 				</div>
 			</div>
-			<div class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-					<img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-					<span class="d-none d-lg-inline-flex">John Doe</span>
-				</a>
-				<div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-					<a href="#" class="dropdown-item">My Profile</a>
-					<a href="#" class="dropdown-item">Settings</a>
-					<a href="#" class="dropdown-item">Log Out</a>
-				</div>
-			</div>
+
 		</div>
 	</nav>
 </div>
+
+<!-- ======================= -->
+<!--   FOOTER                -->
+<!-- ======================= -->
 <div th:fragment="footer">
 	<div class="container-fluid pt-4 px-4">
 		<div class="bg-secondary rounded-top p-4">
@@ -193,19 +190,22 @@
 					&copy; <a href="#">Shame</a>, Todos los derechos reservados.
 				</div>
 				<div class="col-12 col-sm-6 text-center text-sm-end">
-					<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-					Diseñado por: <a href="https://htmlcodex.com">Anónimo</a>
-					<br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+					Diseñado por: Anónimo<br>
+					Distribuido por ThemeWagon
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<!-- ======================= -->
+<!--   JS FILES              -->
+<!-- ======================= -->
 <div th:fragment="jsFiles">
 
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
 	<script th:src="@{/lib/chart/chart.min.js}"></script>
 	<script th:src="@{/lib/easing/easing.min.js}"></script>
 	<script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
@@ -216,36 +216,20 @@
 
 	<!-- Template Javascript -->
 	<script th:src="@{/js/main.js}"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", () => {
-			function actualizarFechaHora() {
-				const ahora = new Date();
-				const formatoVisible = ahora.toLocaleString('es-CO', {
-					year: 'numeric',
-					month: '2-digit',
-					day: '2-digit',
-					hour: '2-digit',
-					minute: '2-digit',
-					second: '2-digit'
-				});
 
-				document.getElementById('fecha-hora').textContent = formatoVisible;
-				document.getElementById('fecha-hora-input').value = ahora.toISOString();
-			}
 
-			actualizarFechaHora();
-			setInterval(actualizarFechaHora, 1000);
-		});
-	</script>
+	<!-- ========================== -->
+	<!--  🔥 MOSTRAR DETALLES       -->
+	<!-- ========================== -->
 	<script>
 		function mostrarDetalles(btn) {
 
-			const nombre = btn.getAttribute("data-nombre");
-			const img = btn.getAttribute("data-img");
-			const calificacion = btn.getAttribute("data-calificacion");
-			const juego = btn.getAttribute("data-juego");
-			const puesto = parseInt(btn.getAttribute("data-puesto"));
-			const descripcion = btn.getAttribute("data-descripcion");
+			const nombre = btn.dataset.nombre;
+			const img = btn.dataset.img;
+			const calificacion = btn.dataset.calificacion;
+			const juego = btn.dataset.juego;
+			const puesto = parseInt(btn.dataset.puesto);
+			const descripcion = btn.dataset.descripcion;
 
 			let colorClass = "";
 			let imgGlow = "";
@@ -262,12 +246,9 @@
 			} else if (puesto <= 10) {
 				colorClass = "text-verde";
 				imgGlow = "brillo-img-verde";
-			} else {
-				colorClass = "";
-				imgGlow = "";
 			}
 
-			document.getElementById("modalNombre").innerHTML = nombre;
+			document.getElementById("modalNombre").textContent = nombre;
 			document.getElementById("modalNombre").className = colorClass;
 
 			const imgTag = document.getElementById("modalImg");
@@ -275,280 +256,168 @@
 			imgTag.className = "rounded-circle img-fluid";
 			if (imgGlow) imgTag.classList.add(imgGlow);
 
-			document.getElementById("modalPuesto").innerHTML = puesto + "°";
+			document.getElementById("modalPuesto").textContent = puesto + "°";
 			document.getElementById("modalPuesto").className = colorClass;
 
 			document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(calificacion);
-			document.getElementById("modalJuego").innerHTML = juego;
-			document.getElementById("modalDescripcion").innerHTML = descripcion;
+			document.getElementById("modalJuego").textContent = juego;
+			document.getElementById("modalDescripcion").textContent = descripcion;
 
 			new bootstrap.Modal(document.getElementById("DetallesPersonajes")).show();
 		}
-
-
-		const nombre = btn.getAttribute("data-nombre");
-		const img = btn.getAttribute("data-img");
-		const calificacion = btn.getAttribute("data-calificacion");
-		const juego = btn.getAttribute("data-juego");
-		const puesto = parseInt(btn.getAttribute("data-puesto"));
-		const descripcion = btn.getAttribute("data-descripcion");
-
-		// Determinar color por puesto
-		let colorClass = "";
-		let imgGlow = "";
-
-		if (puesto <= 4) {
-			colorClass = "text-oro";
-			imgGlow = "brillo-img-oro";
-		}
-		else if (puesto <= 8) {
-			colorClass = "text-plata";
-			imgGlow = "brillo-img-plata";
-		}
-		else if (puesto <= 14) {
-			colorClass = "text-bronce";
-			imgGlow = "brillo-img-bronce";
-		}
-		else {
-			colorClass = "text-verde";
-			imgGlow = "brillo-img-verde";
-		}
-
-		document.getElementById("modalNombre").innerHTML = nombre;
-		document.getElementById("modalNombre").className = colorClass;
-
-		const imgTag = document.getElementById("modalImg");
-		imgTag.src = img;
-
-		// limpiar clases previas primero
-		imgTag.className = "rounded-circle img-fluid";
-
-		// aplicar brillo nuevo
-		imgTag.classList.add(imgGlow);
-
-		document.getElementById("modalPuesto").innerHTML = puesto + "°";
-		document.getElementById("modalPuesto").className = colorClass;
-
-		document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(calificacion);
-		document.getElementById("modalJuego").innerHTML = juego;
-		document.getElementById("modalDescripcion").innerHTML = descripcion;
-
-		const myModal = new bootstrap.Modal(document.getElementById("DetallesPersonajes"));
-		myModal.show();
-
 	</script>
 
-	<script>
-		function mostrarJuego(btn) {
-			const nombre = btn.getAttribute("data-nombre");
-			const calificacion = btn.getAttribute("data-calificacion");
-			const puesto = parseInt(btn.getAttribute("data-puesto"));
-			const notas = btn.getAttribute("data-notas");
-			const icono = btn.getAttribute("data-icon");
 
-			let color = "";
-
-			if (puesto === 1) color = "text-oro";
-			else if (puesto === 2) color = "text-plata";
-			else if (puesto === 3) color = "text-bronce";
-			else if (puesto <= 10) color = "text-verde";
-			else color = "";
-
-			document.getElementById("modalJuegoNombre").innerHTML = nombre;
-			document.getElementById("modalJuegoNombre").className = color;
-
-			const icon = document.getElementById("modalJuegoIcon");
-			icon.className = icono;
-			if (color) icon.classList.add(color);
-
-			document.getElementById("modalJuegoPuesto").innerHTML = puesto + "°";
-			document.getElementById("modalJuegoCalificacion").innerHTML = "⭐".repeat(calificacion);
-			document.getElementById("modalJuegoNotas").innerHTML = notas;
-
-			new bootstrap.Modal(document.getElementById("DetallesJuego")).show();
-		}
-
-	</script>
-	<script>
-		function mostrarDetallesJuego(btn) {
-
-			// Datos
-			const nombre = btn.dataset.nombre;
-			const calif = btn.dataset.calificacion;
-			const puesto = parseInt(btn.dataset.puesto);
-			const correo = btn.dataset.correo;
-
-			// Elementos
-			const nombreEl = document.getElementById("modalNombreJuego");
-			const califEl = document.getElementById("modalCalificacionJuego");
-			const puestoEl = document.getElementById("modalPuestoJuego");
-			const correoEl = document.getElementById("modalCorreoJuego");
-			const albumEl = document.getElementById("modalAlbumJuego");
-			const driveEl = document.getElementById("modalDriveJuego");
-
-			// Asignación de datos
-			nombreEl.textContent = nombre;
-			califEl.innerHTML = "⭐".repeat(calif);
-			puestoEl.textContent = puesto + "°";
-			correoEl.textContent = correo;
-			albumEl.href = btn.dataset.album;
-			driveEl.href = btn.dataset.drive;
-
-			// Reset estilos
-			nombreEl.className = "fw-bold";
-			puestoEl.className = "fw-bold";
-			albumEl.className = "";
-			driveEl.className = "";
-
-			// Estilos por puesto
-			if (puesto >= 1 && puesto <= 2) {
-				nombreEl.classList.add("text-oro");
-				puestoEl.classList.add("text-oro");
-				albumEl.classList.add("icono-brillo-oro", "enlace-brillante");
-				driveEl.classList.add("icono-brillo-oro", "enlace-brillante");
-
-			}
-			else if (puesto >= 3 && puesto <= 5) {
-				nombreEl.classList.add("text-plata");
-				puestoEl.classList.add("text-plata");
-				albumEl.classList.add("icono-brillo-plata", "enlace-brillante");
-				driveEl.classList.add("icono-brillo-plata", "enlace-brillante");
-
-			}
-			else if (puesto >= 6 && puesto <= 10) {
-				nombreEl.classList.add("text-bronce");
-				puestoEl.classList.add("text-bronce");
-				albumEl.classList.add("icono-brillo-bronce", "enlace-brillante");
-				driveEl.classList.add("icono-brillo-bronce", "enlace-brillante");
-
-			}
-			else {
-				nombreEl.classList.add("text-verde-oscuro");
-				puestoEl.classList.add("text-verde-oscuro");
-			}
-
-			new bootstrap.Modal(document.getElementById("detalleJuegoModal")).show();
-		}
-	</script>
-	<div th:fragment="sweetpositions">
+	<!-- ========================== -->
+	<!--  🔥 FILTRO + AJAX         -->
+	<!-- ========================== -->
+	<div th:fragment="EfectosPersonajes">
 		<script>
-			document.getElementById("personajeForm").addEventListener("submit", function (e) {
-				let nombre = document.getElementById("nombre").value.trim();
-				let juego = document.getElementById("Juego").value;
-				let ataque = parseInt(document.getElementById("ataque").value);
-				let defensa = parseInt(document.getElementById("defensa").value);
-				let habilidad = parseInt(document.getElementById("habilidad").value);
-				let descripcion = document.getElementById("caracteristica").value.trim();
+			let debounceTimer;
 
-				// Función rápida para lanzar alertas
-				function alerta(msg) {
-					Swal.fire({
-						icon: "info",
-						title: "Verifica los datos",
-						html: msg,
-						confirmButtonColor: "#0dcaf0", /* Celeste */
-						background: "#1e1e2f",
-						color: "white"
+			document.querySelectorAll('#fNombre, #fJuego, #fPuesto, #fEstrellas')
+				.forEach(input => input.addEventListener('input', function () {
+
+					clearTimeout(debounceTimer);
+
+					debounceTimer = setTimeout(() => {
+						buscarPersonajes();
+					}, 300);
+				}));
+
+			function buscarPersonajes() {
+				let nombre = document.getElementById("fNombre").value || "";
+				let juego = document.getElementById("fJuego").value || "";
+				let puesto = document.getElementById("fPuesto").value || "";
+				let estrellas = document.getElementById("fEstrellas").value || "";
+
+				let url = `/usuario/buscarPersonajes?nombre=${encodeURIComponent(nombre)}&juego=${encodeURIComponent(juego)}&puesto=${encodeURIComponent(puesto)}&estrellas=${encodeURIComponent(estrellas)}`;
+
+				console.log("🔍 Buscando personajes con:", {nombre, juego, puesto, estrellas});
+				console.log("📡 URL:", url);
+
+				fetch(url)
+					.then(res => {
+						console.log("📨 Respuesta recibida, status:", res.status);
+						if (!res.ok) {
+							throw new Error('Error en la respuesta del servidor: ' + res.status);
+						}
+						return res.json();
+					})
+					.then(lista => {
+						console.log("✅ Datos JSON recibidos:", lista);
+						console.log("🔢 Cantidad de elementos:", lista.length);
+
+						if (lista.length > 0) {
+							console.log("👤 Primer elemento:", lista[0]);
+							console.log("⭐ Estrellas del primer elemento:", lista[0].estrellas);
+						}
+
+						actualizarTabla(lista);
+					})
+					.catch(error => {
+						console.error('❌ Error en la búsqueda:', error);
+						document.getElementById("noResults").style.display = "block";
+						document.getElementById("noResults").textContent = "Error al cargar los datos: " + error.message;
 					});
-				}
+			}
 
-				// Validaciones
-				if (nombre === "") {
-					e.preventDefault();
-					alerta("El nombre no puede estar vacío.");
-					return;
-				}
+			function actualizarTabla(lista) {
+				let tbody = document.getElementById("tablaPersonajes");
+				let noResults = document.getElementById("noResults");
 
-				if (juego === "Seleccione un juego") {
-					e.preventDefault();
-					alerta("Debes seleccionar un juego.");
-					return;
-				}
+				console.log("🔄 Actualizando tabla con", lista.length, "elementos");
 
-				// Validación porcentajes
-				const campos = [
-					{nombre: "Ataque", valor: ataque},
-					{nombre: "Defensa", valor: defensa},
-					{nombre: "Habilidad", valor: habilidad}
-				];
+				tbody.classList.add("hide");
 
-				for (let c of campos) {
-					if (isNaN(c.valor) || c.valor < 1 || c.valor > 100) {
-						e.preventDefault();
-						alerta(`${c.nombre} debe estar entre 1 y 100.`);
-						return;
+				setTimeout(() => {
+					tbody.innerHTML = "";
+
+					if (lista.length === 0) {
+						noResults.style.display = "block";
+						noResults.textContent = "No se encontraron resultados";
+						console.log("❌ No hay resultados para mostrar");
+					} else {
+						noResults.style.display = "none";
+						console.log("✅ Mostrando", lista.length, "resultados");
 					}
-				}
 
-				if (descripcion === "") {
-					e.preventDefault();
-					alerta("La descripción no puede estar vacía.");
-					return;
-				}
+					lista.forEach(p => {
+						console.log("📝 Procesando personaje:", p.nombre);
 
-			});
+						let claseColor = "";
+						let claseBrillo = "";
+
+						if (p.puesto <= 10) {
+							claseColor = "text-oro";
+							claseBrillo = "brillo-oro";
+						} else if (p.puesto <= 20) {
+							claseColor = "text-plata";
+							claseBrillo = "brillo-plata";
+						} else if (p.puesto <= 30) {
+							claseColor = "text-bronce";
+							claseBrillo = "brillo-bronce";
+						} else {
+							claseColor = "text-verde";
+							claseBrillo = "brillo-verde";
+						}
+
+						let estrellasHtml = "⭐".repeat(p.estrellas || 0);
+
+						// Asegurarse de que los datos existan
+						const nombre = p.nombre || "Sin nombre";
+						const imagen = p.imagen ? `/images/${p.imagen}` : "/images/default.jpg";
+						const total = p.total || 0;
+						const juegoNombre = p.juego ? p.juego.nombre : "Sin juego";
+						const caracteristica = p.caracteristica || "Sin descripción";
+						const id = p.id || "#";
+
+						let row = `
+			                <tr class="center text-white fade">
+			                    <td><span class="${claseColor} fw-bold">${p.puesto}</span></td>
+			                    <td>
+			                        <img src="${imagen}" class="img-mini spin-slow ${claseBrillo}" alt="${nombre}">
+			                    </td>
+			                    <td class="${claseColor}">${nombre}</td>
+			                    <td>
+			                        <span style="font-size: 1.4rem;">${estrellasHtml}</span>
+			                        <div style="margin-top: 2px; font-size: 70%;">(${total}%)</div>
+			                    </td>
+			                    <td class="${claseColor}">${juegoNombre}</td>
+			                    <td>
+			                        <a class="btn btn-info"
+			                            data-nombre="${nombre}"
+			                            data-img="${imagen}"
+			                            data-calificacion="${p.estrellas || 0}"
+			                            data-juego="${juegoNombre}"
+			                            data-puesto="${p.puesto}"
+			                            data-descripcion="${caracteristica}"
+			                            onclick="mostrarDetalles(this)">
+			                            <i class="bi bi-eye-fill" style="color: aliceblue;"></i>
+			                        </a>
+			                    </td>
+			                    <td>
+			                        <a class="btn btn-warning" href="/usuario/EditPerson/${id}">
+			                            <i class="bi bi-pencil-fill" style="color: aliceblue;"></i>
+			                        </a>
+			                    </td>
+			                    <td>
+			                        <a class="btn btn-primary" href="/usuario/DeletePerson/${id}">
+			                            <i class="bi bi-trash-fill" style="color: aliceblue;"></i>
+			                        </a>
+			                    </td>
+			                </tr>
+			            `;
+
+						tbody.innerHTML += row;
+					});
+
+					tbody.classList.remove("hide");
+					console.log("🎉 Tabla actualizada correctamente");
+
+				}, 150);
+			}        
 		</script>
 	</div>
-	<div th:fragment="BtnEliminar">
-
-		<script>
-		document.addEventListener("DOMContentLoaded", function () {
-
-		    // ==========================
-		    //   ELIMINAR PERSONAJE
-		    // ==========================
-		    document.querySelectorAll(".btnEliminarPersonaje").forEach(btn => {
-		        btn.addEventListener("click", function (e) {
-		            e.preventDefault();
-		            const url = this.dataset.url;
-
-		            Swal.fire({
-		                title: "¿Eliminar personaje?",
-		                text: "Esta acción no se puede deshacer.",
-		                icon: "warning",
-		                background: "#1e1e2f",
-		                color: "white",
-		                showCancelButton: true,
-		                confirmButtonColor: "#0dcaf0",
-		                cancelButtonColor: "#6c757d",
-		                confirmButtonText: "Sí, eliminar",
-		                cancelButtonText: "Cancelar",
-		            }).then((result) => {
-		                if (result.isConfirmed) window.location.href = url;
-		            });
-		        });
-		    });
-
-
-		    // ======================
-		    //     ELIMINAR JUEGO
-		    // ======================
-		    document.querySelectorAll(".btnEliminarJuego").forEach(btn => {
-		        btn.addEventListener("click", function (e) {
-		            e.preventDefault();
-		            const url = this.dataset.url;
-
-		            Swal.fire({
-		                title: "¿Eliminar juego?",
-		                text: "Todos los ajustes de puestos se aplicarán automáticamente.",
-		                icon: "warning",
-		                background: "#1e1e2f",
-		                color: "white",
-		                showCancelButton: true,
-		                confirmButtonColor: "#0dcaf0",
-		                cancelButtonColor: "#6c757d",
-		                confirmButtonText: "Sí, eliminar",
-		                cancelButtonText: "Cancelar",
-		            }).then((result) => {
-		                if (result.isConfirmed) window.location.href = url;
-		            });
-		        });
-		    });
-
-		});
-		</script>
-
-	</div>
-
 
 </div>

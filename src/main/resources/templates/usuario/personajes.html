@@ -4,227 +4,196 @@
 <head th:insert="~{usuario/template_user.html::head}"> </head>
 
 <body>
-	<div class="container-fluid position-relative d-flex p-0">
+<div class="container-fluid position-relative d-flex p-0">
 
-		<div th:insert="~{usuario/template_user.html::spinner}"></div>
-		<div th:insert="~{usuario/template_user.html::sidebar}"></div>
+    <div th:insert="~{usuario/template_user.html::spinner}"></div>
+    <div th:insert="~{usuario/template_user.html::sidebar}"></div>
 
-		<div class="content">
+    <div class="content">
 
-			<div th:insert="~{usuario/template_user.html::navbar}"></div>
+        <div th:insert="~{usuario/template_user.html::navbar}"></div>
 
-			<!-- CONTENIDO -->
-			<div class="container-fluid pt-4 px-4">
-				<div class="col-sm-12">
-					<div class="bg-secondary rounded h-100 p-4">
-						<h6 class="h2 text-white-50">Personajes</h6>
+        <div class="container-fluid pt-4 px-4">
+            <div class="col-sm-12">
+                <div class="bg-secondary rounded h-100 p-4">
 
-						<table class="table table-borderless">
-							<thead>
-								<tr class="center">
-									<th scope="col" class="text-danger">Top</th>
-									<th scope="col" class="text-danger">Img</th>
-									<th scope="col" class="text-danger">Nombre</th>
-									<th scope="col" class="text-danger">Calificación</th>
-									<th scope="col" class="text-danger">Juego</th>
+                    <h6 class="h2 text-white-50">Personajes</h6>
 
-									<th scope="col" class="text-info">Detalles</th>
-									<th scope="col" class="text-warning">Editar</th>
-									<th scope="col" class="text-primary">Eliminar</th>
-								</tr>
-							</thead>
+                    <!-- BUSCADOR -->
+                    <form class="row mb-4" onsubmit="return false;">
 
-							<tbody th:each="person : ${personajes}">
-								<tr class="center text-white">
+                        <div class="col-md-3">
+                            <input id="fNombre" type="text" class="form-control" placeholder="Buscar por nombre">
+                        </div>
 
-									<!-- Puesto con medallas -->
-									<td>
-									    <span th:switch="true">
+                        <div class="col-md-3">
+                            <input id="fJuego" type="text" class="form-control" placeholder="Buscar por juego">
+                        </div>
 
-									        <!-- Mostrar medalla SOLO si el puesto está entre 1 y 30 -->
-									        <i th:case="${person.puesto >= 1 && person.puesto <= 30}"
-									           class="bi bi-award-fill"
-											   style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-											   th:text="${person.puesto}"
-									           th:classappend="${
-									                person.puesto >= 1 && person.puesto <= 10 ? ' medalla-oro' :
-									                person.puesto >= 11 && person.puesto <= 20 ? ' medalla-plata' :
-									                person.puesto >= 21 && person.puesto <= 30 ? ' medalla-bronce' :
-									                ''
-									           }">
-									        </i>
+                        <div class="col-md-2">
+                            <input id="fPuesto" type="number" min="1" class="form-control" placeholder="Top (puesto)">
+                        </div>
 
-									        <!-- Mostrar número SOLO si el puesto es mayor a 30 -->
-									        <span th:case="${person.puesto > 30}"
-									              th:text="${person.puesto}"
-									              class="text-verde fw-bold">
-									        </span>
+                        <div class="col-md-2">
+                            <select id="fEstrellas" class="form-select">
+                                <option value="">Calificación</option>
+                                <option value="5">⭐⭐⭐⭐⭐</option>
+                                <option value="4">⭐⭐⭐⭐</option>
+                                <option value="3">⭐⭐⭐</option>
+                                <option value="2">⭐⭐</option>
+                                <option value="1">⭐</option>
+                            </select>
+                        </div>
 
-									    </span>
-									</td>
+                    </form>
 
+                    <div id="noResults" class="text-center text-warning fw-bold" style="display:none;">
+                        No se encontraron resultados
+                    </div>
 
-									<!-- Imagen con brillo -->
-									<td>
-										<img th:src="@{'/images/' + ${person.imagen}}" class="img-mini spin-slow"
-											th:classappend="${
+                    <table class="table table-borderless">
+                        <thead>
+                        <tr class="center">
+                            <th class="text-danger">Top</th>
+                            <th class="text-danger">Img</th>
+                            <th class="text-danger">Nombre</th>
+                            <th class="text-danger">Calificación</th>
+                            <th class="text-danger">Juego</th>
+                            <th class="text-info">Detalles</th>
+                            <th class="text-warning">Editar</th>
+                            <th class="text-primary">Eliminar</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="tablaPersonajes" class="fade debug-border">
+                        <tr class="center text-white" th:each="person : ${personajes}">
+
+                            <td th:text="${person.puesto}"></td>
+
+                            <td>
+                                <img th:src="@{'/images/' + ${person.imagen}}"
+                                     class="img-mini spin-slow"
+                                     th:classappend="${
                                         person.puesto <= 10 ? ' brillo-oro' :
                                         person.puesto <= 20 ? ' brillo-plata' :
                                         person.puesto <= 30 ? ' brillo-bronce' :
                                         ' brillo-verde'
-                                     }" alt="img">
-									</td>
+                                     }">
+                            </td>
 
-									<!-- Nombre -->
-									<td th:classappend="${
-                                person.puesto <= 10 ? 'text-oro' :
-                                person.puesto <= 20 ? 'text-plata' :
-                                person.puesto <= 30 ? 'text-bronce' :
-                                'text-verde'
-                            }">
-										<span th:text="${person != null ? person.nombre : '???'}"></span>
-									</td>
+                            <td th:text="${person.nombre}" style="color: aliceblue;"></td>
 
-									<!-- Estrellas -->
-									<td>
-										<span th:each="i : ${#numbers.sequence(1, person.estrellas)}" th:text="'⭐'"
-											th:classappend="${person.estrellas == 5} ? ' estrella-oro' : ''"
-											style="font-size: 1.4rem;">
-										</span>
-										<div style="margin-top: 2px; font-size: 70%;">
-											<span th:text="${'(' + person.total + '%)'}"></span>
-										</div>
-									</td>
+                            <td>
+                                <span th:each="i : ${#numbers.sequence(1, person.estrellas)}">⭐</span>
+                                <div style="font-size: 70%;">(<span th:text="${person.total}"></span>%)</div>
+                            </td>
 
+                            <td th:text="${person.juego != null ? person.juego.nombre : '-'}"></td>
 
-									<!-- Juego -->
-									<td th:text="${person.juego != null ? person.juego.nombre : '-'}" th:classappend="${
-                                    person.puesto <= 10 ? 'text-oro' :
-                                    person.puesto <= 20 ? 'text-plata' :
-                                    person.puesto <= 30 ? 'text-bronce' :
-                                    'text-verde'
-                                }">
-									</td>
+                            <td>
+                                <a class="btn btn-info"
+                                   th:attr="
+                                       data-nombre=${person.nombre},
+                                       data-img=${'/images/' + person.imagen},
+                                       data-calificacion=${person.estrellas},
+                                       data-juego=${person.juego != null ? person.juego.nombre : 'Sin juego'},
+                                       data-puesto=${person.puesto},
+                                       data-descripcion=${person.caracteristica}
+                                   "
+                                   onclick="mostrarDetalles(this)">
+                                    <i class="bi bi-eye-fill" style="color: white;"></i>
+                                </a>
+                            </td>
 
-									<!-- Ver Detalles -->
-									<td>
-										<a class="btn btn-info" title="Ver" th:attr="
-                                        data-id=${person.id},
-                                        data-nombre=${person.nombre},
-                                        data-img=${'/images/' + person.imagen},
-                                        data-calificacion=${person.estrellas},
-                                        data-juego=${person.juego != null ? person.juego.nombre : 'Sin juego'},
-                                        data-puesto=${person.puesto + '°'},
-                                        data-descripcion=${person.caracteristica}
-                                   " onclick="mostrarDetalles(this)">
-											<i class="bi bi-eye-fill" style="color: aliceblue;"></i>
-										</a>
-									</td>
+                            <td>
+                                <a class="btn btn-warning" th:href="@{/usuario/EditPerson/{id}(id=${person.id})}">
+                                    <i class="bi bi-pencil-fill" style="color:white;"></i>
+                                </a>
+                            </td>
 
-									<!-- Editar -->
-									<td>
-										<a class="btn btn-warning" title="Editar"
-											th:href="@{/usuario/EditPerson/{id}(id=${person.id})}">
-											<i class="bi bi-pencil-fill" style="color: aliceblue;"></i>
-										</a>
-									</td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/usuario/DeletePerson/{id}(id=${person.id})}">
+                                    <i class="bi bi-trash-fill" style="color:white;"></i>
+                                </a>
+                            </td>
 
-									<!-- Eliminar -->
-									<td>
-										<a th:href="@{/usuario/DeletePerson/{id}(id=${person.id})}"
-											class="btn btn-primary" title="Eliminar">
-											<i class="bi bi-trash-fill" style="color: aliceblue;"></i>
-										</a>
-									</td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-								</tr>
-							</tbody>
-						</table>
+                </div>
+            </div>
+        </div>
 
-					</div>
-				</div>
-			</div>
+        <div th:insert="~{usuario/template_user.html::footer}"></div>
+    </div>
+</div>
 
-			<div th:insert="~{usuario/template_user.html::footer}"></div>
-		</div>
-	</div>
+<!-- MODAL CORREGIDO -->
+<div class="modal fade" id="DetallesPersonajes" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-0">
 
-	<!-- Modal Detalles -->
-	<div class="modal fade" id="detallePersonajeModal" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered">
-			<div class="modal-content bg-dark text-white border-0">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title">Detalles del personaje</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
 
-				<div class="modal-header border-secondary">
-					<h5 class="modal-title" id="modalTitulo">Detalles del personaje</h5>
-					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-				</div>
+            <div class="modal-body">
 
-				<div class="modal-body">
-					<div id="cardContenedor" class="card-detalle">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img id="modalImg" class="img-fluid rounded mb-3" alt="">
+                    </div>
 
-						<div class="row">
-							<div class="col-md-4 text-center">
-								<img id="modalImagen" src="" class="img-fluid rounded mb-3 border-0" alt="Imagen">
-							</div>
+                    <div class="col-md-8">
+                        <h3 id="modalNombre"></h3>
 
-							<div class="col-md-8">
+                        <p><strong>Calificación:</strong> <span id="modalCalificacion"></span></p>
 
-								<h3 id="modalNombre" class="fw-bold"></h3>
+                        <p><strong>Juego:</strong> <span id="modalJuego"></span></p>
 
-								<p class="mt-2">
-									<strong>Calificación:</strong>
-									<span id="modalCalificacion"></span>
-								</p>
+                        <p><strong>Puesto:</strong> <span id="modalPuesto"></span></p>
 
-								<p>
-									<strong>Juego:</strong>
-									<span id="modalJuego"></span>
-								</p>
+                        <p><strong>Descripción:</strong> <span id="modalDescripcion"></span></p>
+                    </div>
+                </div>
 
-								<p>
-									<strong>Top:</strong>
-									<span id="modalPuesto"></span>
-								</p>
+            </div>
 
-								<p>
-									<strong>Descripción:</strong>
-									<span id="modalDescripcion"></span>
-								</p>
-							</div>
-						</div>
+            <div class="modal-footer border-secondary">
+                <button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
 
-					</div>
+        </div>
+    </div>
+</div>
 
-					<div class="modal-footer border-secondary">
-						<button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
-	<div th:insert="~{usuario/template_user.html::BtnEliminar}"></div>
-
-	<script>
-		function mostrarDetalles(btn) {
-			document.getElementById("modalImagen").src = btn.dataset.img;
-			document.getElementById("modalNombre").textContent = btn.dataset.nombre;
-
-			// Estrellas en modal
-			let est = btn.dataset.calificacion;
-			document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(est);
-
-
-			document.getElementById("modalJuego").textContent = btn.dataset.juego;
-			document.getElementById("modalPuesto").textContent = btn.dataset.puesto;
-			document.getElementById("modalDescripcion").textContent = btn.dataset.descripcion;
-
-			new bootstrap.Modal(document.getElementById("detallePersonajeModal")).show();
-		}
-	</script>
-
+<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+<div th:insert="~{usuario/template_user.html::EfectosPersonajes}"></div>
+<script>
+    // DEBUG MUY SIMPLE - solo verificar elementos básicos
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("=== VERIFICACIÓN BÁSICA ===");
+        
+        // Verificar elementos del DOM
+        const tbody = document.getElementById("tablaPersonajes");
+        console.log("✅ Tbody encontrado:", tbody);
+        
+        const rows = tbody ? tbody.getElementsByTagName("tr") : [];
+        console.log("✅ Filas en tbody:", rows.length);
+        
+        // Verificar si hay datos visibles
+        if (rows.length > 0) {
+            console.log("✅ Hay filas en la tabla");
+            console.log("📋 Primera fila:", rows[0].innerHTML);
+        } else {
+            console.log("❌ No hay filas en la tabla");
+        }
+        
+        // Verificar estilos CSS
+        console.log("🎨 Clases del tbody:", tbody ? tbody.className : "no encontrado");
+    });
+</script>
 </body>
-
 </html>

@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +31,8 @@ public class Juego {
 	private LocalDate fechaRegistro;
 	
 	@OneToMany(mappedBy = "juego")
-	private List<Personaje> personaje = new ArrayList<>();
+	@JsonIgnore
+	private List<Personaje> personaje;
 	
 	@ManyToOne
 	private Correos correo;
@@ -138,14 +142,6 @@ public class Juego {
 
 	public void setCorreo(Correos correo) {
 		this.correo = correo;
-	}
-
-	@Override
-	public String toString() {
-		return "Juego [id=" + id + ", nombre=" + nombre + ", puesto=" + puesto + ", imagen=" + imagen
-				+ ", calificacion=" + calificacion + ", enlaceAlbum=" + enlaceAlbum + ", enlaceDrive=" + enlaceDrive
-				+ ", fechaRegistro=" + fechaRegistro + ", personaje=" + personaje + ", correo=" + correo + ", usuario="
-				+ usuario + "]";
 	}
 	
 }

@@ -1,5 +1,8 @@
 package com.games.h.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -99,6 +102,7 @@ public class Personaje {
     }
 
     @Transient
+    @JsonIgnore
     public int getEstrellas() {
         double pct = (total == null) ? 0 : total;
         int stars = (int) Math.ceil((pct / 100.0) * 5.0);
@@ -115,13 +119,5 @@ public class Personaje {
     @Transient
     public boolean isEstrellaOro() {
         return total != null && total >= 80;
-    }
-
-    @Override
-    public String toString() {
-        return "Personaje [id=" + id + ", nombre=" + nombre + ", puesto=" + puesto +
-               ", valor1=" + valor1 + ", valor2=" + valor2 + ", valor3=" + valor3 +
-               ", total=" + total + ", caracteristica=" + caracteristica +
-               ", imagen=" + imagen + ", juego=" + juego + "]";
     }
 }

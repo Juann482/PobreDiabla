@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
-//import org.apache.tomcat.util.http.fileupload.UploadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -129,12 +129,31 @@ public class UsuarioController {
 	// ========================= PERSONAJE ============================
 
 	@GetMapping("/Personajes")
-	public String Personajes(Personaje personaje, Model model) {
+	public String Personajes(@RequestParam(required = false) String nombre,
+	        @RequestParam(required = false) String juego,
+	        @RequestParam(required = false) Integer puesto,
+	        @RequestParam(required = false) Integer estrellas, Model model) {
+		
+		System.out.println("🎯🎯🎯 CONTROLADOR Personajes EJECUTADO 🎯🎯🎯");
 
-		List<Personaje> personajes = personajeService.findAll();
-
-		// Ordenar por total (Double) de mayor a menor
-		personajes.sort(Comparator.comparing(Personaje::getTotal, Comparator.nullsLast(Double::compare)).reversed());
+		List<Personaje> personajes;
+		
+		// Si hay parámetros de búsqueda, usar el servicio de búsqueda
+		if ((nombre != null && !nombre.isEmpty()) || 
+		    (juego != null && !juego.isEmpty()) || 
+		    puesto != null || 
+		    estrellas != null) {
+			
+			personajes = personajeService.buscar(nombre, juego, puesto, estrellas);
+			System.out.println("Búsqueda filtrada - Resultados: " + personajes.size());
+			
+		} else {
+			// Si no hay parámetros, cargar todos y ordenar por total
+			personajes = personajeService.findAll();
+			personajes.sort(Comparator.comparing(Personaje::getTotal,
+					Comparator.nullsLast(Double::compare)).reversed());
+			System.out.println("Cargando todos los personajes: " + personajes.size());
+		}
 
 		model.addAttribute("personajes", personajes);
 		return "usuario/personajes";
@@ -247,4 +266,41 @@ public class UsuarioController {
 
 		return "redirect:/usuario/Correos";
 	}
+	
+	//================== Busqueda AJAX ===========
+	
+	@GetMapping("/buscarPersonajes")
+	@ResponseBody
+	public List<Personaje> buscarPersonajes(
+	        @RequestParam(required = false) String nombre,
+	        @RequestParam(required = false) String juego,
+	        @RequestParam(required = false) Integer puesto,
+	        @RequestParam(required = false) Integer estrellas) {
+
+		System.out.println("🎯 Búsqueda AJAX recibida:");
+	    System.out.println("   - nombre: " + nombre);
+	    System.out.println("   - juego: " + juego);
+	    System.out.println("   - puesto: " + puesto);
+	    System.out.println("   - estrellas: " + estrellas);
+
+		
+	    List<Personaje> resultados = personajeService.buscar(nombre, juego, puesto, estrellas);
+	    System.out.println("Búsqueda AJAX - Parámetros: nombre=" + nombre + ", juego=" + juego + 
+	                      ", puesto=" + puesto + ", estrellas=" + estrellas);
+	    System.out.println("📊 Total de resultados: " + resultados.size());
+	    
+	    // Debug detallado
+	    if (!resultados.isEmpty()) {
+	        System.out.println("👥 Primer personaje encontrado:");
+	        Personaje primer = resultados.get(0);
+	        System.out.println("   - ID: " + primer.getId());
+	        System.out.println("   - Nombre: " + primer.getNombre());
+	        System.out.println("   - Puesto: " + primer.getPuesto());
+	        System.out.println("   - Total: " + primer.getTotal());
+	        System.out.println("   - Estrellas: " + primer.getEstrellas());
+	        System.out.println("   - Juego: " + (primer.getJuego() != null ? primer.getJuego().getNombre() : "null"));
+	    } 
+	    return resultados;
+	}
+
 }

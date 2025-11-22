@@ -18,4 +18,6 @@ public interface IPersonajeService {
     void reajustarPuestos(); // recalcula puestos de todos (usar después de delete)
 	Optional<Personaje> findById(Integer id);
 	Personaje update(Personaje personaje);
+	List<Personaje> buscar(String nombre, String juego, Integer puesto, Integer estrellas);
+
 }
