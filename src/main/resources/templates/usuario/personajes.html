@@ -17,7 +17,50 @@
 			<div class="container-fluid pt-4 px-4">
 				<div class="col-sm-12">
 					<div class="bg-secondary rounded h-100 p-4">
-						<h6 class="h2 text-white-50">Personajes</h6>
+						<div class="d-flex justify-content-between align-items-center mb-3">
+
+						    <!-- Título a la izquierda -->
+						    <h6 class="h2 text-white-50 m-0">Personajes</h6>
+
+						    <!-- Botones a la derecha -->
+						    <div class="d-flex align-items-center">
+
+						        <!-- Botón Limpiar filtros (solo si hay filtros activos) -->
+						        <div th:if="${
+						                (buscar != null and buscar != '') or
+						                (minTotal != null) or
+						                (maxTotal != null) or
+						                (minPuesto != null) or
+						                (maxPuesto != null) or
+						                (ordenar != null and ordenar != '')
+						            }" class="fade-in">
+
+						            <a th:href="@{/usuario/Personajes}"
+						               class="btn btn-danger glow-rojo me-2">
+						                <i class="bi bi-x-circle"></i> Limpiar filtros
+						            </a>
+
+						        </div>
+
+						        <!-- Botón Filtros -->
+						        <button class="btn btn-info"
+						                data-bs-toggle="modal"
+						                data-bs-target="#modalFiltros"
+						                th:classappend="${
+						                    (buscar != null and buscar != '') or
+						                    (minTotal != null) or
+						                    (maxTotal != null) or
+						                    (minPuesto != null) or
+						                    (maxPuesto != null) or
+						                    (ordenar != null and ordenar != '')
+						                } ? ' glow-azul'">
+						            <i class="bi bi-funnel-fill"></i> Filtros
+						        </button>
+
+						    </div>
+
+						</div>
+
 						<table class="table table-borderless">
 							<thead>
 								<tr class="center">
@@ -44,20 +87,18 @@
 
 									<!-- Puesto con medallas -->
 									<td>
-									    <span>
+										<span>
 
-									        <i class="bi bi-award-fill"
-									           th:text="${person.puesto}"
-									           th:classappend="${
+											<i class="bi bi-award-fill" th:text="${person.puesto}" th:classappend="${
 									                person.total >= 80 ? ' medalla-oro' :
 									                person.total >= 60 ? ' medalla-plata' :
 									                person.total >= 40 ? ' medalla-bronce' :
 									                person.total >= 20 ? ' medalla-verde' :
 									                ' medalla-normal'
 									           }">
-									        </i>
+											</i>
 
-									    </span>
+										</span>
 									</td>
 
 
@@ -122,7 +163,7 @@
 										    data-puesto=${person.puesto},
 										    data-descripcion=${person.caracteristica}
 										" onclick="mostrarDetalles(this)">
-										    <i class="bi bi-eye-fill" style="color: aliceblue;"></i>
+											<i class="bi bi-eye-fill" style="color: aliceblue;"></i>
 										</a>
 
 									</td>
@@ -153,18 +194,34 @@
 						            <!-- Anterior -->
 						            <li th:class="${currentPage == 0} ? 'page-item disabled' : 'page-item'">
 						                <a class="page-link bg-info text-white border-info"
-						                   th:href="@{/usuario/Personajes(page=${currentPage - 1})}">
+						                   th:href="@{/usuario/Personajes(
+						                        page=${currentPage - 1},
+						                        buscar=${buscar},
+						                        minTotal=${minTotal},
+						                        maxTotal=${maxTotal},
+						                        minPuesto=${minPuesto},
+						                        maxPuesto=${maxPuesto},
+						                        ordenar=${ordenar}
+						                   )}">
 						                    Anterior
 						                </a>
 						            </li>
 
-						            <!-- Números de página -->
+						            <!-- Números -->
 						            <li class="page-item"
 						                th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
 						                th:classappend="${i == currentPage} ? ' active'">
 						                
 						                <a class="page-link bg-dark text-white border-dark"
-						                   th:href="@{/usuario/Personajes(page=${i})}"
+						                   th:href="@{/usuario/Personajes(
+						                        page=${i},
+						                        buscar=${buscar},
+						                        minTotal=${minTotal},
+						                        maxTotal=${maxTotal},
+						                        minPuesto=${minPuesto},
+						                        maxPuesto=${maxPuesto},
+						                        ordenar=${ordenar}
+						                   )}"
 						                   th:text="${i + 1}">
 						                </a>
 						            </li>
@@ -172,7 +229,15 @@
 						            <!-- Siguiente -->
 						            <li th:class="${currentPage + 1 == totalPages} ? 'page-item disabled' : 'page-item'">
 						                <a class="page-link bg-info text-white border-info"
-						                   th:href="@{/usuario/Personajes(page=${currentPage + 1})}">
+						                   th:href="@{/usuario/Personajes(
+						                        page=${currentPage + 1},
+						                        buscar=${buscar},
+						                        minTotal=${minTotal},
+						                        maxTotal=${maxTotal},
+						                        minPuesto=${minPuesto},
+						                        maxPuesto=${maxPuesto},
+						                        ordenar=${ordenar}
+						                   )}">
 						                    Siguiente
 						                </a>
 						            </li>
@@ -183,87 +248,168 @@
 
 					</div>
 				</div>
+
+				<div th:insert="~{usuario/template_user.html::footer}"></div>
 			</div>
-
-			<div th:insert="~{usuario/template_user.html::footer}"></div>
 		</div>
-	</div>
 
-	<!-- Modal Detalles -->
-	<div class="modal fade" id="detallePersonajeModal" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered">
-			<div class="modal-content bg-dark text-white border-0">
+		<!-- Modal Detalles -->
+		<div class="modal fade" id="detallePersonajeModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content bg-dark text-white border-0">
 
-				<div class="modal-header border-secondary">
-					<h5 class="modal-title" id="modalTitulo">Detalles del personaje</h5>
-					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-				</div>
+					<div class="modal-header border-secondary">
+						<h5 class="modal-title" id="modalTitulo">Detalles del personaje</h5>
+						<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+					</div>
 
-				<div class="modal-body">
-					<div id="cardContenedor" class="card-detalle">
+					<div class="modal-body">
+						<div id="cardContenedor" class="card-detalle">
 
-						<div class="row">
-							<div class="col-md-4 text-center">
-								<img id="modalImagen" src="" class="img-fluid rounded mb-3 border-0" alt="Imagen">
+							<div class="row">
+								<div class="col-md-4 text-center">
+									<img id="modalImagen" src="" class="img-fluid rounded mb-3 border-0" alt="Imagen">
+								</div>
+
+								<div class="col-md-8">
+
+									<h3 id="modalNombre" class="fw-bold"></h3>
+
+									<p class="mt-2">
+										<strong>Calificación:</strong>
+										<span id="modalCalificacion"></span>
+									</p>
+
+									<p>
+										<strong>Juego:</strong>
+										<span id="modalJuego"></span>
+									</p>
+
+									<p>
+										<strong>Top:</strong>
+										<span id="modalPuesto"></span>
+									</p>
+
+									<p>
+										<strong>Descripción:</strong>
+										<span id="modalDescripcion"></span>
+									</p>
+								</div>
 							</div>
 
-							<div class="col-md-8">
+						</div>
 
-								<h3 id="modalNombre" class="fw-bold"></h3>
-
-								<p class="mt-2">
-									<strong>Calificación:</strong>
-									<span id="modalCalificacion"></span>
-								</p>
-
-								<p>
-									<strong>Juego:</strong>
-									<span id="modalJuego"></span>
-								</p>
-
-								<p>
-									<strong>Top:</strong>
-									<span id="modalPuesto"></span>
-								</p>
-
-								<p>
-									<strong>Descripción:</strong>
-									<span id="modalDescripcion"></span>
-								</p>
-							</div>
+						<div class="modal-footer border-secondary">
+							<button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
 						</div>
 
 					</div>
-
-					<div class="modal-footer border-secondary">
-						<button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-					</div>
-
 				</div>
 			</div>
 		</div>
-	</div>
+		
+		<!-- Modal de Filtros -->
+		<div class="modal fade" id="modalFiltros" tabindex="-1">
+		    <div class="modal-dialog modal-lg modal-dialog-centered">
+		        <div class="modal-content bg-dark text-white border-0">
 
-	<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
-	<div th:insert="~{usuario/template_user.html::BtnEliminar}"></div>
+		            <div class="modal-header border-secondary">
+		                <h5 class="modal-title">
+		                    <i class="bi bi-funnel-fill text-info"></i> Filtros avanzados
+		                </h5>
+		                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+		            </div>
 
-	<script>
-		function mostrarDetalles(btn) {
-			document.getElementById("modalImagen").src = btn.dataset.img;
-			document.getElementById("modalNombre").textContent = btn.dataset.nombre;
+		            <form method="get" th:action="@{/usuario/Personajes}">
+		                <div class="modal-body">
 
-			// Estrellas en modal
-			let est = btn.dataset.calificacion;
-			document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(est);
+		                    <div class="row g-3">
+
+		                        <!-- Buscar -->
+		                        <div class="col-md-6">
+		                            <label class="text-white">Buscar nombre/juego</label>
+		                            <input type="text" class="form-control bg-secondary text-white border-0"
+		                                   name="buscar" th:value="${buscar}">
+		                        </div>
+
+		                        <!-- Ordenar -->
+		                        <div class="col-md-6">
+		                            <label class="text-white">Ordenar por</label>
+		                            <select name="ordenar" class="form-control bg-secondary text-white border-0"
+		                                    th:value="${ordenar}">
+		                                <option value="">Sin ordenar</option>
+		                                <option value="totalDesc">Total ↓</option>
+		                                <option value="totalAsc">Total ↑</option>
+		                                <option value="puestoAsc">Puesto ↑</option>
+		                                <option value="puestoDesc">Puesto ↓</option>
+		                                <option value="nombreAsc">Nombre A-Z</option>
+		                                <option value="nombreDesc">Nombre Z-A</option>
+		                            </select>
+		                        </div>
+
+		                        <!-- Total Mínimo -->
+		                        <div class="col-md-3">
+		                            <label class="text-white">Total mínimo</label>
+		                            <input type="number" class="form-control bg-secondary text-white border-0"
+		                                   name="minTotal" th:value="${minTotal}">
+		                        </div>
+
+		                        <!-- Total Máximo -->
+		                        <div class="col-md-3">
+		                            <label class="text-white">Total máximo</label>
+		                            <input type="number" class="form-control bg-secondary text-white border-0"
+		                                   name="maxTotal" th:value="${maxTotal}">
+		                        </div>
+
+		                        <!-- Puesto Mínimo -->
+		                        <div class="col-md-3">
+		                            <label class="text-white">Puesto mínimo</label>
+		                            <input type="number" class="form-control bg-secondary text-white border-0"
+		                                   name="minPuesto" th:value="${minPuesto}">
+		                        </div>
+
+		                        <!-- Puesto Máximo -->
+		                        <div class="col-md-3">
+		                            <label class="text-white">Puesto máximo</label>
+		                            <input type="number" class="form-control bg-secondary text-white border-0"
+		                                   name="maxPuesto" th:value="${maxPuesto}">
+		                        </div>
+
+		                    </div>
+		                </div>
+
+		                <div class="modal-footer border-secondary">
+		                    <button type="submit" class="btn btn-info w-25">
+		                        <i class="bi bi-check-circle"></i> Aplicar
+		                    </button>
+		                </div>
+		            </form>
+
+		        </div>
+		    </div>
+		</div>
 
 
-			document.getElementById("modalJuego").textContent = btn.dataset.juego;
-			document.getElementById("modalPuesto").textContent = btn.dataset.puesto;
-			document.getElementById("modalDescripcion").textContent = btn.dataset.descripcion;
+		<div th:insert="~{usuario/template_user.html::jsFiles}"></div>
+		<div th:insert="~{usuario/template_user.html::BtnEliminar}"></div>
 
-			new bootstrap.Modal(document.getElementById("detallePersonajeModal")).show();
-		}
-	</script>
+		<script>
+			function mostrarDetalles(btn) {
+				document.getElementById("modalImagen").src = btn.dataset.img;
+				document.getElementById("modalNombre").textContent = btn.dataset.nombre;
+
+				// Estrellas en modal
+				let est = btn.dataset.calificacion;
+				document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(est);
+
+
+				document.getElementById("modalJuego").textContent = btn.dataset.juego;
+				document.getElementById("modalPuesto").textContent = btn.dataset.puesto;
+				document.getElementById("modalDescripcion").textContent = btn.dataset.descripcion;
+
+				new bootstrap.Modal(document.getElementById("detallePersonajeModal")).show();
+			}
+		</script>
 
 </body>
 

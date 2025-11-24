@@ -129,60 +129,115 @@ public class UsuarioController {
 	// ========================= PERSONAJE ============================
 
 	@GetMapping("/Personajes")
-	public String Personajes(@RequestParam(defaultValue = "0") int page,Personaje personaje, Model model) {
-		
-		int pageSize = 15;
-		
-		List<Personaje> personajesOrdenados = personajeService.findAll().stream()
-	            .sorted(Comparator.comparing(Personaje::getTotal, Comparator.nullsLast(Double::compare)).reversed())
+	public String personajes(
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(required = false) String buscar,
+	        @RequestParam(required = false) Integer minTotal,
+	        @RequestParam(required = false) Integer maxTotal,
+	        @RequestParam(required = false) Integer minPuesto,
+	        @RequestParam(required = false) Integer maxPuesto,
+	        @RequestParam(required = false) String ordenar,
+	        Model model) {
+
+	    int pageSize = 15;
+
+	    // ▼ 1. Obtener personajes base
+	    List<Personaje> personajes = personajeService.findAll();
+
+	    // ▼ 2. FILTRO: Buscar por texto
+	    if (buscar != null && !buscar.trim().isEmpty()) {
+	        String filtro = buscar.toLowerCase();
+	        personajes = personajes.stream()
+	                .filter(p ->
+	                        (p.getNombre() != null && p.getNombre().toLowerCase().contains(filtro)) ||
+	                        (p.getJuego() != null && p.getJuego().getNombre().toLowerCase().contains(filtro))
+	                )
+	                .toList();
+	    }
+
+	    // ▼ 3. FILTRO: Totales
+	    if (minTotal != null)
+	        personajes = personajes.stream()
+	                .filter(p -> p.getTotal() >= minTotal)
+	                .toList();
+
+	    if (maxTotal != null)
+	        personajes = personajes.stream()
+	                .filter(p -> p.getTotal() <= maxTotal)
+	                .toList();
+
+	    // ▼ 4. FILTRO: Puestos
+	    if (minPuesto != null)
+	        personajes = personajes.stream()
+	                .filter(p -> p.getPuesto() >= minPuesto)
+	                .toList();
+
+	    if (maxPuesto != null)
+	        personajes = personajes.stream()
+	                .filter(p -> p.getPuesto() <= maxPuesto)
+	                .toList();
+
+	    // ▼ 5. ORDENAR SIEMPRE AL FINAL
+	    Comparator<Personaje> comp = Comparator.comparing(Personaje::getTotal);
+
+	    if (ordenar == null || ordenar.isEmpty()) {
+	        // ✔ Orden por defecto = total DESC
+	        comp = Comparator.comparing(Personaje::getTotal,
+	                Comparator.nullsLast(Double::compare)).reversed();
+	    } else {
+	        switch (ordenar) {
+	            case "totalAsc":
+	                comp = Comparator.comparing(Personaje::getTotal);
+	                break;
+
+	            case "totalDesc":
+	                comp = Comparator.comparing(Personaje::getTotal).reversed();
+	                break;
+
+	            case "puestoAsc":
+	                comp = Comparator.comparing(Personaje::getPuesto);
+	                break;
+
+	            case "puestoDesc":
+	                comp = Comparator.comparing(Personaje::getPuesto).reversed();
+	                break;
+
+	            case "nombreAsc":
+	                comp = Comparator.comparing(Personaje::getNombre, String.CASE_INSENSITIVE_ORDER);
+	                break;
+
+	            case "nombreDesc":
+	                comp = Comparator.comparing(Personaje::getNombre, String.CASE_INSENSITIVE_ORDER).reversed();
+	                break;
+	        }
+	    }
+
+	    personajes = personajes.stream()
+	            .sorted(comp)
 	            .toList();
-		
-		 // 2. Calcular los índices de la página actual
-	    int start = page * pageSize;
-	    int end = Math.min(start + pageSize, personajesOrdenados.size());
 
-	    List<Personaje> personajesPagina = personajesOrdenados.subList(start, end);
+	    // ▼ 6. Paginación
+	    int start = Math.min(page * pageSize, personajes.size());
+	    int end = Math.min(start + pageSize, personajes.size());
 
-	    int totalPages = (int) Math.ceil((double) personajesOrdenados.size() / pageSize);
+	    List<Personaje> pageList = personajes.subList(start, end);
 
-	    model.addAttribute("personajes", personajesPagina);
+	    int totalPages = (int) Math.ceil((double) personajes.size() / pageSize);
+
+	    // ▼ 7. Enviar datos
+	    model.addAttribute("personajes", pageList);
 	    model.addAttribute("totalPages", totalPages);
 	    model.addAttribute("currentPage", page);
+	    model.addAttribute("buscar", buscar);
+	    model.addAttribute("minTotal", minTotal);
+	    model.addAttribute("maxTotal", maxTotal);
+	    model.addAttribute("minPuesto", minPuesto);
+	    model.addAttribute("maxPuesto", maxPuesto);
+	    model.addAttribute("ordenar", ordenar);
 
-		return "usuario/personajes";
+	    return "usuario/personajes";
 	}
 
-	@GetMapping("/PersonajeRegistro")
-	public String PersonajeRegistro(Personaje personaje, Model model) {
-		model.addAttribute("juego", juegoService.findAll());
-		return "usuario/registroPERSONAJE";
-	}
-
-	@PostMapping("/PersonSave")
-	public String PersonSave(Personaje person, @RequestParam("img") MultipartFile file,
-			RedirectAttributes redirectAttributes) throws IOException {
-
-		// Nombre vacío => ???
-		if (person.getNombre() == null || person.getNombre().trim().isEmpty()) {
-			person.setNombre("???");
-		}
-
-		// Característica vacía => "Sin descripción."
-		if (person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty()) {
-			person.setCaracteristica("Sin descripción.");
-		}
-
-		// Imagen solo en nuevos
-		if (person.getId() == null) {
-			String nombreImagen = upload.saveImages(file, person.getNombre());
-			person.setImagen(nombreImagen);
-		}
-
-		personajeService.guardarConAjuste(person);
-
-		redirectAttributes.addFlashAttribute("mensaje", "guardado");
-		return "redirect:/usuario/PersonajeRegistro";
-	}
 
 	@GetMapping("/EditPerson/{id}")
 	public String EditPerson(@PathVariable Integer id, Personaje person, Model model) {
@@ -204,7 +259,7 @@ public class UsuarioController {
 		pr.setValor1(person.getValor1());
 		pr.setValor2(person.getValor2());
 		pr.setValor3(person.getValor3());
-		
+
 		pr.setNombre(person.getNombre());
 		pr.setTotal(person.getTotal());
 
@@ -212,7 +267,6 @@ public class UsuarioController {
 		pr.setCaracteristica(
 				(person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty()) ? "Sin descripción."
 						: person.getCaracteristica());
-
 
 		// Guardar + reajustar puestos
 		personajeService.guardarConAjuste(pr);
