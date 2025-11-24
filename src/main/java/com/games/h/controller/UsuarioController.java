@@ -287,6 +287,44 @@ public class UsuarioController {
 
 		return "redirect:/usuario/Personajes";
 	}
+	
+	@GetMapping("/PersonajeRegistro")
+	public String PersonajeRegistro(Personaje personaje, Model model) {
+		
+	    model.addAttribute("juego", juegoService.findAll());
+	    
+	    return "usuario/registroPERSONAJE";
+
+	}
+	
+	@PostMapping("/PersonSave")
+	public String PersonSave(Personaje person,
+	                         @RequestParam("img") MultipartFile file,
+	                         RedirectAttributes redirectAttributes) throws IOException {
+
+	    // Nombre vacío => ??? 
+	    if (person.getNombre() == null || person.getNombre().trim().isEmpty()) {
+	        person.setNombre("???");
+	    }
+
+	    // Característica vacía => "Sin descripción."
+	    if (person.getCaracteristica() == null || person.getCaracteristica().trim().isEmpty()) {
+	        person.setCaracteristica("Sin descripción.");
+	    }
+
+	    // Imagen solo en nuevos
+	    if (person.getId() == null) {
+	        String nombreImagen = upload.saveImages(file, person.getNombre());
+	        person.setImagen(nombreImagen);
+	    }
+
+	    personajeService.guardarConAjuste(person);
+
+	    redirectAttributes.addFlashAttribute("mensaje", "guardado");
+	    return "redirect:/usuario/PersonajeRegistro";
+	}
+
+
 
 	// ============================== CORREOS ===================================
 

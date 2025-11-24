@@ -1,0 +1,113 @@
+id,calificacion,caracteristica,imagen,nombre,juego_id,puesto,total,valor1,valor2,valor3
+12,NULL,"Posible Novia",Nami_Nami.jpg,Nami,23,39,78.5,100,90,60
+14,NULL,"Posible novia",Bella_x-sa125~2.jpg,Bella,23,51,76,100,70,70
+15,NULL,"Sin descripción.",Zara_x-ad1068~2.jpg,Zara,23,93,57.5,100,75,25
+16,NULL,"Sin descripción.",Sonya_x-ad1635~2.jpg,Sonya,23,75,65,100,90,30
+17,NULL,"Hermana de Victoria",Miya_x-ae1315~2.jpg,Maja,23,109,46.5,100,50,20
+18,NULL,"Posible novia",Victoria_x-ad1802~2.jpg,Victoria,23,35,79.75,100,100,55
+19,NULL,"Sin descripción.",Nia_x-sb184a~2.jpg,Nia,23,101,51.75,100,65,20
+20,NULL,"Sin descripción.",Vannesa_x-ad730~2.jpg,Vannesa,23,104,50.5,100,55,25
+21,NULL,"Sin descripción.",Mila_x-ae735~2.jpg,Mila,23,31,80.75,100,90,65
+22,NULL,"Sin descripción.",Nadia_x-ad1399~2.jpg,Nadia,23,95,57,100,80,20
+23,NULL,"Sin descripción.",Amber_x-sd22~3.jpg,Amber,23,79,64,100,100,20
+24,NULL,"Sin descripción.",Naomi_x-e4_195_nc~2.jpg,Naomi,26,53,75.5,85,90,60
+25,NULL,"Sin descripción.",Victoria_x-e5_2616~2.jpg,Victoria,26,73,66.95,80,80,51
+26,NULL,"Sin descripción.",nn.jpg,Lilith,26,44,77.1,82,77,75
+27,NULL,"Sin descripción.",Madison_Madison.jpg,Madison,26,77,64.15,80,63,58
+28,NULL,"Sin descripción.",Julie_julie.jpg,Julie,26,83,62.25,80,55,60
+29,NULL,"Sin descripción.",Evelyn_Monitajsjs.jpg,Evelyn,26,33,80.6,83,80,80
+30,NULL,"Sin descripción.",Anastasia_anastasia.jpg,Anastasia,26,110,46.2,82,53,25
+31,NULL,"Sin descripción.",Haley_Haley.jpg,Haley,26,58,74.7,83,76,70
+32,NULL,"Sin descripción.",Hyuna_x-e5_415~2.jpg,Hyuna,26,57,75,80,85,65
+33,NULL,"Sin descripción.",Nora_Nora.jpg,Nora,25,89,58.5,82,78,33
+34,NULL,"Sin descripción.",Martha_nosefelitarl.jpg,Martha,25,112,41.7,76,55,20
+35,NULL,"Sin descripción.","Lily_x-18lily (50)~2.jpg",Lily,22,80,63.8,67,58,67
+36,NULL,"Sin descripción.","Sophia_x-27sop (27)~2.jpg",Sophia,22,43,77.45,67,75,84
+37,NULL,"Sin descripción.","Nora_x-24eva (70)~2.jpg",Nora,22,48,76.7,67,78,80
+38,NULL,"Sin descripción.","Samantha_x-1smt (18)~2.jpg",Samantha,22,82,63.15,70,80,47
+39,NULL,"Sin descripción.","Susan_x-28sr (23)~2.jpg",Susan,22,67,70.7,68,68,74
+40,NULL,"Sin descripción.","Eva_x-28en (5)~2.jpg",Eva,22,28,80.9,72,84,82
+41,NULL,"Sin descripción.","Rebbeca_x-24rebs (90)~2.jpg",Haily,22,34,80.15,65,80,87
+42,NULL,"Sin descripción.","Rebbeca_x-19reb (147)~2.jpg",Rebbeca,22,68,70.5,68,70,72
+43,NULL,"Sin descripción.",Jasmine_Jasmine.jpg,Janet,22,54,75.5,70,78,76
+44,NULL,"Sin descripción.",Karen_Karen.jpg,Karen,22,91,57.65,70,72,41
+45,NULL,"Sin descripción.","Lydia_x-28sus (11)~2.jpg",Lydia,22,78,64.15,70,70,57
+46,NULL,"Sin descripción.",P_x-1290~2.jpg,Sonia,22,64,71.7,71,73,71
+47,NULL,"Hermana de Helen",haileyy.jpg,Haley,19,1,98.15,93,100,99
+48,NULL,"Hermana de Haley",Helen_HeFo1~2.jpg,Helen,19,2,96.8,98,100,94
+49,NULL,"Sin descripción.",P_x-Eba5-2~2.jpg,Anna,19,3,95.7,90,100,94
+50,NULL,"Sin descripción.",P_x-KlTk18~2.jpg,Kelly,19,12,87.35,90,85,88
+51,NULL,"Sin descripción.",P_x-Gypvm2~3.jpg,Lana,19,14,84.4,90,92,76
+52,NULL,"Sin descripción.",P_x-Msl3~2.jpg,Lisa,19,61,73.05,90,84,57
+53,NULL,"Sin descripción.",P_x-Mam7~2.jpg,Martha,19,105,49.75,90,65,20
+54,NULL,"Sin descripción.",P_x-CfGcHz11~2.jpg,Lily,19,85,59.5,90,80,30
+55,NULL,"Sin descripción.",P_x-NcT3~2.jpg,Juna,19,23,82.2,90,87,75
+56,NULL,"Sin descripción.",P_x-SbHs31~2.jpg,Jenny,19,36,79.75,90,80,75
+57,NULL,"Sin descripción.",Alyssa_x-ch7aly-89~2.jpg,Alyssa,20,5,92.75,93,100,87
+58,NULL,"Sin descripción.",Paige_x-ch7pgV-04~2.jpg,Paige,20,9,90.1,93,95,85
+59,NULL,"Sin descripción.",Brooke_x-ch7s2m-136~2.jpg,Brooke,20,19,83.65,93,83,80
+62,NULL,"Sin descripción.",Chloe_x-pic_7_130~2.jpg,Chloe,3,11,87.7,83,90,88
+63,NULL,"Sin descripción.",Emily_x-pic_7_844~2.jpg,Emily,3,24,82,80,78,86
+64,NULL,"Sin descripción.",Margarie_x-pic1791~2.jpg,Margarie,3,10,88,80,90,90
+65,NULL,"Sin descripción.","Gabriella_x-ep14 picture272~2.jpg",Gabriella,3,26,81.25,80,90,75
+66,NULL,"Sin descripción.",Megan_x-pic1767~2.jpg,Megan,3,46,76.9,80,75,77
+67,NULL,"Sin descripción.",Liza_x-pic_7_869~2.jpg,Liza,3,25,81.75,80,85,80
+68,NULL,"Sin descripción.",judy.jpg,Judy,19,92,57.55,90,86,21
+69,NULL,"Sin descripción.",beth.jpg,Beth,19,96,56.25,90,90,15
+71,NULL,"Sin descripción.",Mary_x-ch7jlma-18~2.jpg,Mary,20,102,51.4,90,80,12
+72,NULL,"Sin descripción.",Jordana_jordania.jpg,Jordana,20,7,90.9,97,95,85
+73,NULL,"Sin descripción.",Yana_x-ch7yanab-54~2.jpg,Yana,20,13,84.8,90,88,80
+74,NULL,"Sin descripción.",Thania_x-ch7tha-26~2.jpg,Thania,20,16,84,90,87,79
+75,NULL,"Sin descripción.",Kiara_x-ch7june-63~2.jpg,Kiara,20,20,83.05,90,92,73
+76,NULL,"Sin descripción.",Katarina_x-ch7kat-74~2.jpg,Katarina,20,98,53.8,90,83,15
+77,NULL,"Sin descripción.",Leslie_lelsie.jpg,Leslie,20,50,76.1,90,85,63
+78,NULL,"Sin descripción.",Mary_x-ch7jlma-18~2.jpg,Mary,20,94,57.45,90,87,20
+79,NULL,"Sin descripción.",Alora_x-ch7kat-130~2.jpg,Alora,20,21,82.75,90,86,77
+80,NULL,"Sin descripción.",Rosa_x-start_27.webp,Rosa,6,111,44.15,75,64,15
+81,NULL,"Sin descripción.",Jueza_x-mc_new_depart_35~2.jpg,Jueza,6,99,52.3,75,50,44
+82,NULL,"Sin descripción.",Maggie_x-v2s6_11b_maggie_talk~2.jpg,Maggie,31,66,71,80,80,60
+83,NULL,"Sin descripción.",Veronica_x-v2s8v_44b~2.jpg,Veronica,31,6,92.25,80,97,94
+84,NULL,"Sin descripción.",Jasmine_x-v3s10b_pool_AJN_23b_jasmine~2.jpg,Jasmine,31,29,80.85,80,85,78
+85,NULL,"Sin descripción.",Natalya_x-v1bonus_7_natalya_talk~2.jpg,Natalya,31,40,78.5,80,77,79
+86,NULL,"Sin descripción.",Allison_x-v3s10c_allison_4a~2.jpg,Allison,31,42,77.5,80,78,76
+87,NULL,"Sin descripción.",Riley_Screenshot_2025-09-18-10-16-57-632_dominobeach.hotzone18.com~2.jpg,Riley,17,107,49.25,84,67,20
+88,NULL,"Sin descripción.",Zoe_Screenshot_2025-09-18-09-58-40-157_dominobeach.hotzone18.com~2.jpg,Zoe,17,52,75.75,84,72,75
+89,NULL,"Sin descripción.",Fiona_Screenshot_2025-09-18-10-32-13-266_dominobeach.hotzone18.com~2.jpg,Fiona,17,72,67.1,70,81,55
+90,NULL,"Sin descripción.",Emily_Screenshot_2025-09-18-10-23-56-766_dominobeach.hotzone18.com~2.jpg,Emily,17,100,52.05,70,83,20
+91,NULL,"Sin descripción.",Carla_Screenshot_2025-09-18-10-23-56-766_dominobeach.hotzone18.com~2.jpg,Carla,17,87,59.3,70,78,40
+92,NULL,"Sin descripción.",Deana_x-43~2.png,Deana,18,30,80.8,75,80,84
+93,NULL,"Sin descripción.",Catherine_x-fin2_78~2.png,Catherine,18,49,76.5,75,82,73
+94,NULL,"Sin descripción.",Kaylee_x-pk2_98~2.png,Kaylee,18,74,66.15,75,60,67
+95,NULL,"Sin descripción.",Dahlia_x-pdah1_33~2.png,Dahlia,18,60,73.45,75,77,70
+96,NULL,"Sin descripción.",Nikki_nikki.jpg,Nikki,17,71,67.35,70,65,68
+97,NULL,"Sin descripción.",Olivia_x-c1_e1_d2_roam_220~2.jpg,Olivia,6,106,49.6,77,72,20
+98,NULL,"Sin descripción.",Lana_x-c1_e1_d2_lunch_99~2.jpg,Lana,6,76,64.4,77,59,63
+99,NULL,"Sin descripción.",Miranda_x-c1_e3_d2_miranda_9~2.jpg,Miranda,6,22,82.5,77,94,76
+100,NULL,"Sin descripción.",Taylor_x-c1_e2_d5_hangout_taylor_37~2.jpg,Taylor,6,65,71.5,77,78,64
+101,NULL,"Sin descripción.",Elsa_x-c1_e3_d6_bar_37~2.jpg,Elsa,6,15,84.3,77,85,87
+102,NULL,"Sin descripción.",Samara_x-c1_e3_d4_expo_96~2.jpg,Samara,6,103,51.35,77,77,20
+103,NULL,"Sin descripción.",Aurora_x-c1_e1_d3_insomnia_outside_7~2.jpg,Aurora,6,38,78.7,77,78,80
+104,NULL,"Sin descripción.",default.jpg,Isabelle,6,108,47.35,77,72,15
+105,NULL,"Sin descripción.",Alexandra_x-0_story_alexandra_354_2~2.jpg,Alexandra,15,55,75.3,85,83,65
+106,NULL,"Sin descripción.",Kate_x-13_story_kate_800~2.jpg,Kate,15,32,80.75,80,95,70
+107,NULL,"Sin descripción.",Elena_x-5_story_elena_36_uhd.jpg,Elena,15,97,54.2,80,50,46
+108,NULL,"Sin descripción.",Laura_Screenshot_2025-09-18-20-15-35-665_betrayal.hotzone18.com~2.jpg,Laura,16,86,59.4,92,85,25
+109,NULL,"Sin descripción.",Ashley_Screenshot_2025-09-18-20-12-02-373_betrayal.hotzone18.com~2.jpg,Ashley,16,84,61.15,92,90,25
+110,NULL,"Hermana - Puntaje de sexo alto debido a la probabilidad de suceso",Olivia_x-a562-EDIT.jpg,Olivia,24,8,90.44,100,92,85
+111,NULL,"Posible novia",Samantha_x-a20-EDIT.jpg,Samantha,24,27,81.15,100,95,62
+112,NULL,"Mamá de Sara",Casey_x-a844-EDIT.jpg,Casey,24,56,75.25,100,100,45
+113,NULL,"Sin descripción.",Jasmine_x-ch3_reward_jasmine_1_4K-EDIT.jpg,Jasmine,24,88,58.55,100,78,25
+114,NULL,"Sin descripción.",Sara_x-a772-EDIT.jpg,Sara,24,81,63.25,100,76,37
+115,NULL,"Sin descripción.",Susan_x-r1180-EDIT.jpg,Susan,24,62,73,100,100,40
+116,NULL,"Sin descripción.",Kimi_x-ch3_reward_kimi_1_4K-EDIT.jpg,Kimi,24,90,58,100,70,30
+117,NULL,"Sin descripción.",Chloe_x-r2185-EDIT.jpg,Chloe,24,17,84,100,80,80
+118,NULL,"Mamá de Samantha",PP_x-r610-EDIT.jpg,PP,24,70,67.75,100,85,40
+119,NULL,"Sin descripción.",Kate_x-ag902~2.jpg,Kate,30,59,74.05,100,76,61
+120,NULL,"Sin descripción.",Zoey_x-ag2518~2.jpg,Zoey,30,37,79.35,100,86,65
+121,NULL,"Sin descripción.",Dana_x-ag2410~2.jpg,Dana,30,47,76.8,100,89,57
+122,NULL,"Sin descripción.",Leia_x-z263~2.jpg,Leia,30,18,83.85,100,95,68
+123,NULL,"Sin descripción.",Helen_x-ag489x~3.jpg,Helen,30,63,72.2,100,72,60
+124,NULL,"Sin descripción.",Katarina_x-ag993~2.jpg,Katarina,30,41,78.5,100,90,60
+125,NULL,"Sin descripción.",Daphne_x-ac252~2.jpg,Daphne,30,69,68.5,100,100,30
+126,NULL,"Sin descripción.","Celine_x-extra celine exercise feet end 2~2.jpg",Celine,35,45,77.05,80,78,75
+127,NULL,Mamá,"Joyce_x-holiday joyce 3 nsfw nude~2.jpg",Joyce,35,4,95.3,90,100,94

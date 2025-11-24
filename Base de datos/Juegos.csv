@@ -1,0 +1,36 @@
+id,calificacion,enlaceAlbum,enlaceDrive,fechaRegistro,imagen,nombre,correo_id,usuario_id,puesto
+1,5,https://photos.app.goo.gl/8AjzCqYmzoD48bKv9,https://drive.google.com/drive/folders/13DS6OfGn6bvLyiaZ_UTDh5N7wHz7CilY?usp=sharing,NULL,NULL,"Desert Stalker",2,1,1
+2,4,https://photos.app.goo.gl/av2SZcmFadWa2WsN9,https://drive.google.com/drive/folders/12J4kE1fdRQKjF_sDS3IyjC8VoAMmeXUO?usp=sharing,NULL,NULL,"Growing Things Up",2,1,14
+3,5,https://photos.app.goo.gl/3sWqkbuWxDZwTFMZ9,https://drive.google.com/drive/folders/14xPQf7OJ8BBJNUujAxPa5-MpDN0lGXNC?usp=sharing,NULL,NULL,"Bright Lord",2,1,3
+4,3,https://photos.app.goo.gl/xg5i8Sjnbw2P9Qyj6,https://drive.google.com/drive/folders/16ld_IkRK3oF70jdS4hazpy_-PBJVSGd8?usp=sharing,NULL,NULL,"Fog of war",2,1,25
+5,3,https://photos.app.goo.gl/J7xVbvjjvwKshrLN7,https://drive.google.com/drive/folders/15rtC0y0iKK56Se-IT_7gEjrIRt5FibqV?usp=sharing,2025-11-17,"Heaven's Door_Heaven'sDoor.png","Heaven's Door",2,1,29
+6,5,https://photos.app.goo.gl/ujRqyjqkrn4PpSPu8,https://drive.google.com/drive/folders/15wCDllhk8Iwj29SBMJYRfXi5J63Gtoas?usp=sharing,2025-11-17,"Law School_LawSchool.png","Law School",2,1,8
+7,4,https://photos.app.goo.gl/gG9AWRwUXVik6Ui68,https://drive.google.com/drive/folders/114KLqge5ysNGJoGS2o-pWsQ8SSpx-J35?usp=sharing,2025-11-17,"Lesson in Loyalty_LessoninLoyalty.png","Lesson in Loyalty",2,1,17
+8,2,https://photos.app.goo.gl/BU7txkgPVqmXL9CW6,https://drive.google.com/drive/folders/17edRbt9Aw6h_TEgltfw5YPPwIOyuExED?usp=sharing,2025-11-17,"Move the Chains_Movethechains.png","Move the Chains",2,1,31
+9,3,https://photos.app.goo.gl/giP2eDo8jBVBGiyC6,https://drive.google.com/drive/folders/14Dp3QTHsklfWEkASjTFTyImNEI_wHK95?usp=sharing,2025-11-17,"My Best Deal_MBD.png","My Best Deal",2,1,28
+10,5,https://photos.app.goo.gl/KK5FgzQpM1y4TNET9,https://drive.google.com/drive/folders/1AbzrlpS0Dt-QJNILpCSOyme_Lrzzu2v2?usp=sharing,2025-11-17,"Only Mods_OnlyMods.png","Only Mods",2,1,19
+11,4,https://photos.app.goo.gl/xb7HPn1WrApeY9RF7,https://drive.google.com/drive/folders/1-nCCYJxbp4DsEPEpFzdpj5X7kxIouYAJ?usp=sharing,2025-11-17,"Our Home_OurHome.png","Our Home",2,1,15
+12,4,https://photos.app.goo.gl/mSYRQugpNtFSd8U57,https://drive.google.com/drive/folders/1FzLbLG_umU9n9DB1hOkNYlmirrqyQwBv?usp=sharing,2025-11-17,"Returning to Mia_RTM.png","Returning to Mia",2,1,21
+13,2,https://photos.app.goo.gl/BwPdehc1J9Mnxmz17,https://drive.google.com/drive/folders/193yws4fjD6nWZKX8DlzgUMBvB-Acvq-H?usp=sharing,2025-11-17,"The missing - Part ll_TheMissing.png","The missing - Part ll",2,1,34
+14,5,https://photos.app.goo.gl/zFG9w8HikEB6qoxh9,https://drive.google.com/drive/folders/1-5gQyS9PODGuX_p9NMNfgzoXPuaFeQbP?usp=sharing,2025-11-17,WESTA.png,"Westview Academy - S1",2,1,5
+15,4,https://photos.app.goo.gl/VSkUNK6RNR6VQgTW8,https://drive.google.com/drive/folders/15IJUxm7TceK1e5jgmJDOjqy5XRYcgMgC?usp=sharing,2025-11-17,Amnesia.png,Amnesia,3,1,16
+16,3,https://photos.app.goo.gl/b89oweoqXpdf67te7,https://drive.google.com/drive/folders/14dBeyIoq3fvrJ2OZ5I-hRF5LB4eeaKO0?usp=sharing,2025-11-17,Betrayal_Betrayal.png,Betrayal,3,1,26
+17,5,https://photos.app.goo.gl/ojmEXDzgKcuLEv9p8,https://drive.google.com/drive/folders/19V5fB013oAinetaEJQf4cHARBeCUqz6A?usp=drive_link,2025-11-17,"Domino Beach_DB.png","Domino Beach",3,1,20
+18,4,https://photos.app.goo.gl/P77BnwbW8DbHhWREA,https://drive.google.com/drive/folders/1yVP9JZDJ28DQZQBWfPQMLjoPNP1Bo_co?usp=sharing,2025-11-17,"Empress Game_Empress.png","Empress Game",3,1,22
+19,5,https://photos.app.goo.gl/FAVhBG2shtTEStNB6,https://drive.google.com/drive/folders/1-1jQdSa4PiVhrHSigmR7J9wPu5fs8PFI?usp=sharing,2025-11-17,"The Gray Dream_A-TheGreyDream.png","The Grey Dream",3,1,2
+20,5,https://photos.app.goo.gl/pWJRHun4oPfTS3Bg8,https://drive.google.com/drive/folders/1pVtu_TYUHyLlYHYfKhpZ-clWKQCPsWol?usp=sharing,2025-11-17,"Westview Academy- S2_WESTA.png","Westview Academy - S2",3,1,6
+21,5,https://photos.app.goo.gl/MvQco6Wbyo6gR3w28,https://drive.google.com/file/d/13IVwWdKvNxNB7PyhqT9XrTSuRZc18NvB/view?usp=sharing,2025-11-18,"Summer's Gone Dv_SGDV.png","Summer's Gone Dv",3,1,18
+22,5,https://photos.app.goo.gl/AiPrS72PtfoSBArd7,https://drive.google.com/drive/folders/13Uv6sz2ywWFF08Spz3jOmtLaFuuyqZ0W?usp=sharing,2025-11-18,"Away from home_AFH.png","Away from home",1,1,11
+23,5,https://photos.app.goo.gl/Z9xje9R8vP5bnqNB7,https://drive.google.com/drive/folders/1--YNMukgEDZXTYtRRTg1WZ63Zfo4phvm?usp=sharing,2025-11-18,"Summer's Gone - S1_SumersGoneS1.png","Summer's Gone - S1",1,1,9
+24,5,https://photos.app.goo.gl/NLt9bdD1VTyuUPqh7,https://drive.google.com/drive/folders/1227xcS6ttm6MFY9pt14rJQAqy-Dj7Zw6?usp=sharing,2025-11-18,"Beyond Tomorrow_Beyond.png","Beyond Tomorrow",1,1,12
+25,3,https://photos.app.goo.gl/ULNeuG735wLuLnmJ7,https://drive.google.com/drive/folders/12Xdkw-m6SwVTIo_SyS7NFVjcVEWV3q_X?usp=sharing,2025-11-18,"Undercover with Nora_UnderWNora.png","Undercover with Nora",1,1,27
+26,5,https://photos.app.goo.gl/Ww7EE9C3hz2zcCGn6,https://drive.google.com/drive/folders/1-Tw6chDFJqbku5ifPAG4BBbLTdK7L-fi?usp=sharing,2025-11-18,"Lust Bound_LustBound.png","Lust Bound",1,1,10
+27,2,https://photos.app.goo.gl/TiXzGrm6M5eZJTudA,https://photos.app.goo.gl/TiXzGrm6M5eZJTudA,2025-11-18,"The Neverwhere Tales_TNT.png","The Neverwhere Tales",1,1,32
+28,1,https://photos.app.goo.gl/RwAREFgdjAtw7yzg9,https://drive.google.com/drive/folders/1-mdf-w8NGdxslmVIXID7k_oEc9_nvPsD?usp=sharing,2025-11-18,Hillside_Hillside.png,Hillside,1,1,35
+29,2,https://photos.app.goo.gl/Mf7QedYYdr6Si2dT9,https://drive.google.com/drive/folders/109UfmyHFc74C2u0_ZYpm5Ib_eyLKuj3X?usp=sharing,2025-11-18,"Shattered Minds_SM.png","Shattered Minds",1,1,33
+30,4,https://photos.app.goo.gl/Ux3JdV6VP3kqn5rRA,https://drive.google.com/drive/folders/11-yRid0ZbG26VxqyhEZ7vbMqHwqEdWTI?usp=sharing,2025-11-18,"Where It All Began - S1_WIAB.png","Where It All Began - S1",1,1,13
+31,5,https://photos.app.goo.gl/KR8XYxVV73wq2EHv7,https://drive.google.com/drive/folders/1tDEDLB9wjp9NMJy7GIHaxAZyK2aCOwUV?usp=sharing,2025-11-18,"Race of Life_RaceOfLife.png","Race of Life",4,1,7
+32,4,https://photos.app.goo.gl/H8oy7JjVdrHiUxT26,https://drive.google.com/drive/folders/1YoQWNFmyS01GYgMYxNjbpEv5DBgtgjK_?usp=sharing,2025-11-18,"Rock the Rim_ROCK.png","Rock the Rim",4,1,24
+33,3,https://photos.app.goo.gl/vJvykQTH56PtuDZN7,https://drive.google.com/drive/folders/1n0dwZTYjsNJxDKmhoSnuBMUWg7f2H2LV?usp=sharing,2025-11-18,Fzone_FZ.png,Fzone,4,1,30
+34,4,https://photos.app.goo.gl/VFtCJD64Ke97rkxa6,https://drive.google.com/drive/folders/1Pod8djnMQkFyDRDwPkJPce7-EXHZIHE1?usp=sharing,2025-11-18,"Mergin of the Stars_Mergin.png","Mergin of the Stars",4,1,23
+35,5,https://photos.app.goo.gl/hus1GoNggsbnfkUw9,https://drive.google.com/drive/folders/1xhkQ6MlFFzi7YOo9CdCl_V-kW3xqEM2j?usp=sharing,2025-11-18,"Midnight paradise_Midnight.png","Midnight paradise",5,1,4
