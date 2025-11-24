@@ -34,6 +34,28 @@
 			justify-content: center;
 			text-align: center;
 		}
+		.page-link {
+		    transition: all 0.25s ease-in-out;
+		}
+		.page-link:hover {
+		    background-color: #dc3545 !important; /* rojo bootstrap */
+		    color: white !important;
+		    border-color: #dc3545 !important;
+			box-shadow: 0 0 10px #dc3545, 0 0 20px #dc3545; /* GLOW */
+		}
+		/* Glow también para el botón activo */
+		.page-item.active {
+		    background-color: #dc3545 !important;
+		    border-color: #dc3545 !important;
+		    color: white !important;
+		    box-shadow: 0 0 10px #dc3545, 0 0 25px #dc3545; /* Glow más fuerte */
+		}
+		.page-item.active .page-link {
+		    background-color: #dc3545 !important;
+		    border-color: #dc3545 !important;
+		    color: white !important;
+		}
+
 	</style>
 
 </head>
@@ -214,6 +236,84 @@
 	<script th:src="@{/lib/tempusdominus/js/moment-timezone.min.js}"></script>
 	<script th:src="@{/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js}"></script>
 
+	<script>
+	function mostrarDetalles(btn) {
+
+	    const img      = document.getElementById("modalImagen");
+	    const nombre   = document.getElementById("modalNombre");
+	    const juego    = document.getElementById("modalJuego");
+	    const puesto   = document.getElementById("modalPuesto");
+	    const desc     = document.getElementById("modalDescripcion");
+	    const califBox = document.getElementById("modalCalificacion");
+
+	    let total       = parseInt(btn.dataset.total);
+	    let puestoNum   = btn.dataset.puesto;
+	    let imagen      = btn.dataset.img;
+	    let name        = btn.dataset.nombre;
+	    let game        = btn.dataset.juego;
+	    let descripcion = btn.dataset.descripcion;
+	    let estrellas   = parseInt(btn.dataset.calificacion);
+
+	    // ------------------------------------
+	    // ⭐ Estrellas + total
+	    // ------------------------------------
+	    califBox.innerHTML = "⭐".repeat(estrellas) +
+	        ` <span style="font-size:70%">(${total}%)</span>`;
+
+	    // ------------------------------------
+	    // ✨ BRILLO por TOTAL
+	    // ------------------------------------
+	    function brilloPorTotal(t) {
+	        if (t >= 80) return "brillo-oro";
+	        if (t >= 60) return "brillo-plata";
+	        if (t >= 40) return "brillo-bronce";
+	        if (t >= 20) return "brillo-verde";
+	        return "brillo-gris";
+	    }
+
+	    img.className = "img-fluid rounded mb-3 border-0 " + brilloPorTotal(total);
+
+	    // ------------------------------------
+	    // 🎨 COLOR por TOTAL
+	    // ------------------------------------
+	    function colorPorTotal(t) {
+	        if (t >= 80) return "text-oro";
+	        if (t >= 60) return "text-plata";
+	        if (t >= 40) return "text-bronce";
+	        if (t >= 20) return "text-verde";
+	        return "text-gris";
+	    }
+
+	    let colorClass = colorPorTotal(total);
+	    nombre.className = "fw-bold " + colorClass;
+	    juego.className  = colorClass;
+
+	    // ------------------------------------
+	    // 🏅 MEDALLA por TOTAL
+	    // ------------------------------------
+	    function medallaPorTotal(t) {
+	        if (t >= 80) return "medalla-oro";
+	        if (t >= 60) return "medalla-plata";
+	        if (t >= 40) return "medalla-bronce";
+	        if (t >= 20) return "medalla-verde";
+	        return "medalla-normal";
+	    }
+
+	    puesto.innerHTML =
+	        `<i class="bi bi-award-fill ${medallaPorTotal(total)}"></i> ${puestoNum}°`;
+
+	    // ------------------------------------
+	    // DATOS
+	    // ------------------------------------
+	    img.src = imagen;
+	    nombre.textContent = name;
+	    juego.textContent  = game;
+	    desc.textContent   = descripcion;
+
+	    new bootstrap.Modal(document.getElementById("detallePersonajeModal")).show();
+	}
+	</script>
+
 	<!-- Template Javascript -->
 	<script th:src="@{/js/main.js}"></script>
 	<script>
@@ -237,107 +337,10 @@
 			setInterval(actualizarFechaHora, 1000);
 		});
 	</script>
-	<script>
-		function mostrarDetalles(btn) {
-
-			const nombre = btn.getAttribute("data-nombre");
-			const img = btn.getAttribute("data-img");
-			const calificacion = btn.getAttribute("data-calificacion");
-			const juego = btn.getAttribute("data-juego");
-			const puesto = parseInt(btn.getAttribute("data-puesto"));
-			const descripcion = btn.getAttribute("data-descripcion");
-
-			let colorClass = "";
-			let imgGlow = "";
-
-			if (puesto === 1) {
-				colorClass = "text-oro";
-				imgGlow = "brillo-img-oro";
-			} else if (puesto === 2) {
-				colorClass = "text-plata";
-				imgGlow = "brillo-img-plata";
-			} else if (puesto === 3) {
-				colorClass = "text-bronce";
-				imgGlow = "brillo-img-bronce";
-			} else if (puesto <= 10) {
-				colorClass = "text-verde";
-				imgGlow = "brillo-img-verde";
-			} else {
-				colorClass = "";
-				imgGlow = "";
-			}
-
-			document.getElementById("modalNombre").innerHTML = nombre;
-			document.getElementById("modalNombre").className = colorClass;
-
-			const imgTag = document.getElementById("modalImg");
-			imgTag.src = img;
-			imgTag.className = "rounded-circle img-fluid";
-			if (imgGlow) imgTag.classList.add(imgGlow);
-
-			document.getElementById("modalPuesto").innerHTML = puesto + "°";
-			document.getElementById("modalPuesto").className = colorClass;
-
-			document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(calificacion);
-			document.getElementById("modalJuego").innerHTML = juego;
-			document.getElementById("modalDescripcion").innerHTML = descripcion;
-
-			new bootstrap.Modal(document.getElementById("DetallesPersonajes")).show();
-		}
+	
 
 
-		const nombre = btn.getAttribute("data-nombre");
-		const img = btn.getAttribute("data-img");
-		const calificacion = btn.getAttribute("data-calificacion");
-		const juego = btn.getAttribute("data-juego");
-		const puesto = parseInt(btn.getAttribute("data-puesto"));
-		const descripcion = btn.getAttribute("data-descripcion");
-
-		// Determinar color por puesto
-		let colorClass = "";
-		let imgGlow = "";
-
-		if (puesto <= 4) {
-			colorClass = "text-oro";
-			imgGlow = "brillo-img-oro";
-		}
-		else if (puesto <= 8) {
-			colorClass = "text-plata";
-			imgGlow = "brillo-img-plata";
-		}
-		else if (puesto <= 14) {
-			colorClass = "text-bronce";
-			imgGlow = "brillo-img-bronce";
-		}
-		else {
-			colorClass = "text-verde";
-			imgGlow = "brillo-img-verde";
-		}
-
-		document.getElementById("modalNombre").innerHTML = nombre;
-		document.getElementById("modalNombre").className = colorClass;
-
-		const imgTag = document.getElementById("modalImg");
-		imgTag.src = img;
-
-		// limpiar clases previas primero
-		imgTag.className = "rounded-circle img-fluid";
-
-		// aplicar brillo nuevo
-		imgTag.classList.add(imgGlow);
-
-		document.getElementById("modalPuesto").innerHTML = puesto + "°";
-		document.getElementById("modalPuesto").className = colorClass;
-
-		document.getElementById("modalCalificacion").innerHTML = "⭐".repeat(calificacion);
-		document.getElementById("modalJuego").innerHTML = juego;
-		document.getElementById("modalDescripcion").innerHTML = descripcion;
-
-		const myModal = new bootstrap.Modal(document.getElementById("DetallesPersonajes"));
-		myModal.show();
-
-	</script>
-
+		
 	<script>
 		function mostrarJuego(btn) {
 			const nombre = btn.getAttribute("data-nombre");

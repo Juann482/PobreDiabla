@@ -18,7 +18,6 @@
 				<div class="col-sm-12">
 					<div class="bg-secondary rounded h-100 p-4">
 						<h6 class="h2 text-white-50">Personajes</h6>
-
 						<table class="table table-borderless">
 							<thead>
 								<tr class="center">
@@ -35,55 +34,58 @@
 							</thead>
 
 							<tbody th:each="person : ${personajes}">
-								<tr class="center text-white">
+								<tr class="center text-white" th:classappend="${
+								        person.total >= 80 ? ' fila-oro' :
+								        person.total >= 60 ? ' fila-plata' :
+								        person.total >= 40 ? ' fila-bronce' :
+								        person.total >= 20 ? ' fila-verde' :
+								        ' fila-gris'
+								    }">
 
 									<!-- Puesto con medallas -->
 									<td>
-									    <span th:switch="true">
+									    <span>
 
-									        <!-- Mostrar medalla SOLO si el puesto está entre 1 y 30 -->
-									        <i th:case="${person.puesto >= 1 && person.puesto <= 30}"
-									           class="bi bi-award-fill"
-											   style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-											   th:text="${person.puesto}"
+									        <i class="bi bi-award-fill"
+									           th:text="${person.puesto}"
 									           th:classappend="${
-									                person.puesto >= 1 && person.puesto <= 10 ? ' medalla-oro' :
-									                person.puesto >= 11 && person.puesto <= 20 ? ' medalla-plata' :
-									                person.puesto >= 21 && person.puesto <= 30 ? ' medalla-bronce' :
-									                ''
+									                person.total >= 80 ? ' medalla-oro' :
+									                person.total >= 60 ? ' medalla-plata' :
+									                person.total >= 40 ? ' medalla-bronce' :
+									                person.total >= 20 ? ' medalla-verde' :
+									                ' medalla-normal'
 									           }">
 									        </i>
 
-									        <!-- Mostrar número SOLO si el puesto es mayor a 30 -->
-									        <span th:case="${person.puesto > 30}"
-									              th:text="${person.puesto}"
-									              class="text-verde fw-bold">
-									        </span>
-
 									    </span>
 									</td>
+
 
 
 									<!-- Imagen con brillo -->
 									<td>
 										<img th:src="@{'/images/' + ${person.imagen}}" class="img-mini spin-slow"
 											th:classappend="${
-                                        person.puesto <= 10 ? ' brillo-oro' :
-                                        person.puesto <= 20 ? ' brillo-plata' :
-                                        person.puesto <= 30 ? ' brillo-bronce' :
-                                        ' brillo-verde'
-                                     }" alt="img">
+										        person.total >= 80 ? ' brillo-oro' :
+										        person.total >= 60 ? ' brillo-plata' :
+										        person.total >= 40 ? ' brillo-bronce' :
+										        person.total >= 20 ? ' brillo-verde' :
+										        ' brillo-gris'
+										     }" alt="img">
+
 									</td>
 
 									<!-- Nombre -->
 									<td th:classappend="${
-                                person.puesto <= 10 ? 'text-oro' :
-                                person.puesto <= 20 ? 'text-plata' :
-                                person.puesto <= 30 ? 'text-bronce' :
-                                'text-verde'
-                            }">
+									        person.total >= 80 ? ' text-oro' :
+									        person.total >= 60 ? ' text-plata' :
+									        person.total >= 40 ? ' text-bronce' :
+									        person.total >= 20 ? ' text-verde' :
+									        ' text-gris'
+									}">
 										<span th:text="${person != null ? person.nombre : '???'}"></span>
 									</td>
+
 
 									<!-- Estrellas -->
 									<td>
@@ -99,26 +101,30 @@
 
 									<!-- Juego -->
 									<td th:text="${person.juego != null ? person.juego.nombre : '-'}" th:classappend="${
-                                    person.puesto <= 10 ? 'text-oro' :
-                                    person.puesto <= 20 ? 'text-plata' :
-                                    person.puesto <= 30 ? 'text-bronce' :
-                                    'text-verde'
-                                }">
+									        person.total >= 80 ? ' text-oro' :
+									        person.total >= 60 ? ' text-plata' :
+									        person.total >= 40 ? ' text-bronce' :
+									        person.total >= 20 ? ' text-verde' :
+									        ' text-gris'
+									    }">
 									</td>
+
 
 									<!-- Ver Detalles -->
 									<td>
 										<a class="btn btn-info" title="Ver" th:attr="
-                                        data-id=${person.id},
-                                        data-nombre=${person.nombre},
-                                        data-img=${'/images/' + person.imagen},
-                                        data-calificacion=${person.estrellas},
-                                        data-juego=${person.juego != null ? person.juego.nombre : 'Sin juego'},
-                                        data-puesto=${person.puesto + '°'},
-                                        data-descripcion=${person.caracteristica}
-                                   " onclick="mostrarDetalles(this)">
-											<i class="bi bi-eye-fill" style="color: aliceblue;"></i>
+										    data-id=${person.id},
+										    data-nombre=${person.nombre},
+										    data-img=${'/images/' + person.imagen},
+										    data-calificacion=${person.estrellas},
+										    data-total=${person.total},
+										    data-juego=${person.juego != null ? person.juego.nombre : 'Sin juego'},
+										    data-puesto=${person.puesto},
+										    data-descripcion=${person.caracteristica}
+										" onclick="mostrarDetalles(this)">
+										    <i class="bi bi-eye-fill" style="color: aliceblue;"></i>
 										</a>
+
 									</td>
 
 									<!-- Editar -->
@@ -140,6 +146,40 @@
 								</tr>
 							</tbody>
 						</table>
+						<div class="d-flex justify-content-center mt-4">
+						    <nav aria-label="Page navigation">
+						        <ul class="pagination">
+
+						            <!-- Anterior -->
+						            <li th:class="${currentPage == 0} ? 'page-item disabled' : 'page-item'">
+						                <a class="page-link bg-info text-white border-info"
+						                   th:href="@{/usuario/Personajes(page=${currentPage - 1})}">
+						                    Anterior
+						                </a>
+						            </li>
+
+						            <!-- Números de página -->
+						            <li class="page-item"
+						                th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+						                th:classappend="${i == currentPage} ? ' active'">
+						                
+						                <a class="page-link bg-dark text-white border-dark"
+						                   th:href="@{/usuario/Personajes(page=${i})}"
+						                   th:text="${i + 1}">
+						                </a>
+						            </li>
+
+						            <!-- Siguiente -->
+						            <li th:class="${currentPage + 1 == totalPages} ? 'page-item disabled' : 'page-item'">
+						                <a class="page-link bg-info text-white border-info"
+						                   th:href="@{/usuario/Personajes(page=${currentPage + 1})}">
+						                    Siguiente
+						                </a>
+						            </li>
+
+						        </ul>
+						    </nav>
+						</div>
 
 					</div>
 				</div>

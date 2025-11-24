@@ -129,14 +129,26 @@ public class UsuarioController {
 	// ========================= PERSONAJE ============================
 
 	@GetMapping("/Personajes")
-	public String Personajes(Personaje personaje, Model model) {
+	public String Personajes(@RequestParam(defaultValue = "0") int page,Personaje personaje, Model model) {
+		
+		int pageSize = 15;
+		
+		List<Personaje> personajesOrdenados = personajeService.findAll().stream()
+	            .sorted(Comparator.comparing(Personaje::getTotal, Comparator.nullsLast(Double::compare)).reversed())
+	            .toList();
+		
+		 // 2. Calcular los índices de la página actual
+	    int start = page * pageSize;
+	    int end = Math.min(start + pageSize, personajesOrdenados.size());
 
-		List<Personaje> personajes = personajeService.findAll();
+	    List<Personaje> personajesPagina = personajesOrdenados.subList(start, end);
 
-		// Ordenar por total (Double) de mayor a menor
-		personajes.sort(Comparator.comparing(Personaje::getTotal, Comparator.nullsLast(Double::compare)).reversed());
+	    int totalPages = (int) Math.ceil((double) personajesOrdenados.size() / pageSize);
 
-		model.addAttribute("personajes", personajes);
+	    model.addAttribute("personajes", personajesPagina);
+	    model.addAttribute("totalPages", totalPages);
+	    model.addAttribute("currentPage", page);
+
 		return "usuario/personajes";
 	}
 
