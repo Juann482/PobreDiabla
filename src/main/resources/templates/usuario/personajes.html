@@ -19,14 +19,14 @@
 					<div class="bg-secondary rounded h-100 p-4">
 						<div class="d-flex justify-content-between align-items-center mb-3">
 
-						    <!-- Título a la izquierda -->
-						    <h6 class="h2 text-white-50 m-0">Personajes</h6>
+							<!-- Título a la izquierda -->
+							<h6 class="h2 text-white-50 m-0">Personajes</h6>
 
-						    <!-- Botones a la derecha -->
-						    <div class="d-flex align-items-center">
+							<!-- Botones a la derecha -->
+							<div class="d-flex align-items-center">
 
-						        <!-- Botón Limpiar filtros (solo si hay filtros activos) -->
-						        <div th:if="${
+								<!-- Botón Limpiar filtros (solo si hay filtros activos) -->
+								<div th:if="${
 						                (buscar != null and buscar != '') or
 						                (minTotal != null) or
 						                (maxTotal != null) or
@@ -35,18 +35,15 @@
 						                (ordenar != null and ordenar != '')
 						            }" class="fade-in">
 
-						            <a th:href="@{/usuario/Personajes}"
-						               class="btn btn-danger glow-rojo me-2">
-						                <i class="bi bi-x-circle"></i> Limpiar filtros
-						            </a>
+									<a th:href="@{/usuario/Personajes}" class="btn btn-danger glow-rojo me-2">
+										<i class="bi bi-x-circle"></i> Limpiar filtros
+									</a>
 
-						        </div>
+								</div>
 
-						        <!-- Botón Filtros -->
-						        <button class="btn btn-info"
-						                data-bs-toggle="modal"
-						                data-bs-target="#modalFiltros"
-						                th:classappend="${
+								<!-- Botón Filtros -->
+								<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalFiltros"
+									th:classappend="${
 						                    (buscar != null and buscar != '') or
 						                    (minTotal != null) or
 						                    (maxTotal != null) or
@@ -54,10 +51,10 @@
 						                    (maxPuesto != null) or
 						                    (ordenar != null and ordenar != '')
 						                } ? ' glow-azul'">
-						            <i class="bi bi-funnel-fill"></i> Filtros
-						        </button>
+									<i class="bi bi-funnel-fill"></i> Filtros
+								</button>
 
-						    </div>
+							</div>
 
 						</div>
 
@@ -188,13 +185,12 @@
 							</tbody>
 						</table>
 						<div class="d-flex justify-content-center mt-4">
-						    <nav aria-label="Page navigation">
-						        <ul class="pagination">
+							<nav aria-label="Page navigation">
+								<ul class="pagination">
 
-						            <!-- Anterior -->
-						            <li th:class="${currentPage == 0} ? 'page-item disabled' : 'page-item'">
-						                <a class="page-link bg-info text-white border-info"
-						                   th:href="@{/usuario/Personajes(
+									<!-- Anterior -->
+									<li th:class="${currentPage == 0} ? 'page-item disabled' : 'page-item'">
+										<a class="page-link bg-info text-white border-info" th:href="@{/usuario/Personajes(
 						                        page=${currentPage - 1},
 						                        buscar=${buscar},
 						                        minTotal=${minTotal},
@@ -203,17 +199,15 @@
 						                        maxPuesto=${maxPuesto},
 						                        ordenar=${ordenar}
 						                   )}">
-						                    Anterior
-						                </a>
-						            </li>
+											Anterior
+										</a>
+									</li>
 
-						            <!-- Números -->
-						            <li class="page-item"
-						                th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-						                th:classappend="${i == currentPage} ? ' active'">
-						                
-						                <a class="page-link bg-dark text-white border-dark"
-						                   th:href="@{/usuario/Personajes(
+									<!-- Números -->
+									<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+										th:classappend="${i == currentPage} ? ' active'">
+
+										<a class="page-link bg-dark text-white border-dark" th:href="@{/usuario/Personajes(
 						                        page=${i},
 						                        buscar=${buscar},
 						                        minTotal=${minTotal},
@@ -221,15 +215,14 @@
 						                        minPuesto=${minPuesto},
 						                        maxPuesto=${maxPuesto},
 						                        ordenar=${ordenar}
-						                   )}"
-						                   th:text="${i + 1}">
-						                </a>
-						            </li>
+						                   )}" th:text="${i + 1}">
+										</a>
+									</li>
 
-						            <!-- Siguiente -->
-						            <li th:class="${currentPage + 1 == totalPages} ? 'page-item disabled' : 'page-item'">
-						                <a class="page-link bg-info text-white border-info"
-						                   th:href="@{/usuario/Personajes(
+									<!-- Siguiente -->
+									<li
+										th:class="${currentPage + 1 == totalPages} ? 'page-item disabled' : 'page-item'">
+										<a class="page-link bg-info text-white border-info" th:href="@{/usuario/Personajes(
 						                        page=${currentPage + 1},
 						                        buscar=${buscar},
 						                        minTotal=${minTotal},
@@ -238,12 +231,12 @@
 						                        maxPuesto=${maxPuesto},
 						                        ordenar=${ordenar}
 						                   )}">
-						                    Siguiente
-						                </a>
-						            </li>
+											Siguiente
+										</a>
+									</li>
 
-						        </ul>
-						    </nav>
+								</ul>
+							</nav>
 						</div>
 
 					</div>
@@ -264,15 +257,15 @@
 					</div>
 
 					<div class="modal-body">
-						<div id="cardContenedor" class="card-detalle">
+						<div id="cardContenedor" class="card-detalle p-3 rounded">
 
 							<div class="row">
 								<div class="col-md-4 text-center">
-									<img id="modalImagen" src="" class="img-fluid rounded mb-3 border-0" alt="Imagen">
+									<img id="modalImagen" src="" class="img-fluid rounded mb-3 border-0"
+										alt="Imagen principal">
 								</div>
 
 								<div class="col-md-8">
-
 									<h3 id="modalNombre" class="fw-bold"></h3>
 
 									<p class="mt-2">
@@ -297,96 +290,109 @@
 								</div>
 							</div>
 
+							<!-- NUEVA SECCIÓN DESTACADOS -->
+							<hr class="border-secondary">
+
+							<h5 class="text-info">
+								<i class="bi bi-stars"></i> Destacados
+							</h5>
+
+							<input type="file" id="inputDestacados"
+								class="form-control bg-secondary text-white border-0 mb-3" multiple
+								onchange="cargarDestacados(this)">
+
+							<div id="destacadosGaleria" class="d-flex flex-wrap"></div>
+
 						</div>
 
 						<div class="modal-footer border-secondary">
 							<button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
 						</div>
-
 					</div>
+
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Modal de Filtros -->
 		<div class="modal fade" id="modalFiltros" tabindex="-1">
-		    <div class="modal-dialog modal-lg modal-dialog-centered">
-		        <div class="modal-content bg-dark text-white border-0">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content bg-dark text-white border-0">
 
-		            <div class="modal-header border-secondary">
-		                <h5 class="modal-title">
-		                    <i class="bi bi-funnel-fill text-info"></i> Filtros avanzados
-		                </h5>
-		                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-		            </div>
+					<div class="modal-header border-secondary">
+						<h5 class="modal-title">
+							<i class="bi bi-funnel-fill text-info"></i> Filtros avanzados
+						</h5>
+						<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+					</div>
 
-		            <form method="get" th:action="@{/usuario/Personajes}">
-		                <div class="modal-body">
+					<form method="get" th:action="@{/usuario/Personajes}">
+						<div class="modal-body">
 
-		                    <div class="row g-3">
+							<div class="row g-3">
 
-		                        <!-- Buscar -->
-		                        <div class="col-md-6">
-		                            <label class="text-white">Buscar nombre/juego</label>
-		                            <input type="text" class="form-control bg-secondary text-white border-0"
-		                                   name="buscar" th:value="${buscar}">
-		                        </div>
+								<!-- Buscar -->
+								<div class="col-md-6">
+									<label class="text-white">Buscar nombre/juego</label>
+									<input type="text" class="form-control bg-secondary text-white border-0"
+										name="buscar" th:value="${buscar}">
+								</div>
 
-		                        <!-- Ordenar -->
-		                        <div class="col-md-6">
-		                            <label class="text-white">Ordenar por</label>
-		                            <select name="ordenar" class="form-control bg-secondary text-white border-0"
-		                                    th:value="${ordenar}">
-		                                <option value="">Sin ordenar</option>
-		                                <option value="totalDesc">Total ↓</option>
-		                                <option value="totalAsc">Total ↑</option>
-		                                <option value="puestoAsc">Puesto ↑</option>
-		                                <option value="puestoDesc">Puesto ↓</option>
-		                                <option value="nombreAsc">Nombre A-Z</option>
-		                                <option value="nombreDesc">Nombre Z-A</option>
-		                            </select>
-		                        </div>
+								<!-- Ordenar -->
+								<div class="col-md-6">
+									<label class="text-white">Ordenar por</label>
+									<select name="ordenar" class="form-control bg-secondary text-white border-0"
+										th:value="${ordenar}">
+										<option value="">Sin ordenar</option>
+										<option value="totalDesc">Total ↓</option>
+										<option value="totalAsc">Total ↑</option>
+										<option value="puestoAsc">Puesto ↑</option>
+										<option value="puestoDesc">Puesto ↓</option>
+										<option value="nombreAsc">Nombre A-Z</option>
+										<option value="nombreDesc">Nombre Z-A</option>
+									</select>
+								</div>
 
-		                        <!-- Total Mínimo -->
-		                        <div class="col-md-3">
-		                            <label class="text-white">Total mínimo</label>
-		                            <input type="number" class="form-control bg-secondary text-white border-0"
-		                                   name="minTotal" th:value="${minTotal}">
-		                        </div>
+								<!-- Total Mínimo -->
+								<div class="col-md-3">
+									<label class="text-white">Total mínimo</label>
+									<input type="number" class="form-control bg-secondary text-white border-0"
+										name="minTotal" th:value="${minTotal}">
+								</div>
 
-		                        <!-- Total Máximo -->
-		                        <div class="col-md-3">
-		                            <label class="text-white">Total máximo</label>
-		                            <input type="number" class="form-control bg-secondary text-white border-0"
-		                                   name="maxTotal" th:value="${maxTotal}">
-		                        </div>
+								<!-- Total Máximo -->
+								<div class="col-md-3">
+									<label class="text-white">Total máximo</label>
+									<input type="number" class="form-control bg-secondary text-white border-0"
+										name="maxTotal" th:value="${maxTotal}">
+								</div>
 
-		                        <!-- Puesto Mínimo -->
-		                        <div class="col-md-3">
-		                            <label class="text-white">Puesto mínimo</label>
-		                            <input type="number" class="form-control bg-secondary text-white border-0"
-		                                   name="minPuesto" th:value="${minPuesto}">
-		                        </div>
+								<!-- Puesto Mínimo -->
+								<div class="col-md-3">
+									<label class="text-white">Puesto mínimo</label>
+									<input type="number" class="form-control bg-secondary text-white border-0"
+										name="minPuesto" th:value="${minPuesto}">
+								</div>
 
-		                        <!-- Puesto Máximo -->
-		                        <div class="col-md-3">
-		                            <label class="text-white">Puesto máximo</label>
-		                            <input type="number" class="form-control bg-secondary text-white border-0"
-		                                   name="maxPuesto" th:value="${maxPuesto}">
-		                        </div>
+								<!-- Puesto Máximo -->
+								<div class="col-md-3">
+									<label class="text-white">Puesto máximo</label>
+									<input type="number" class="form-control bg-secondary text-white border-0"
+										name="maxPuesto" th:value="${maxPuesto}">
+								</div>
 
-		                    </div>
-		                </div>
+							</div>
+						</div>
 
-		                <div class="modal-footer border-secondary">
-		                    <button type="submit" class="btn btn-info w-25">
-		                        <i class="bi bi-check-circle"></i> Aplicar
-		                    </button>
-		                </div>
-		            </form>
+						<div class="modal-footer border-secondary">
+							<button type="submit" class="btn btn-info w-25">
+								<i class="bi bi-check-circle"></i> Aplicar
+							</button>
+						</div>
+					</form>
 
-		        </div>
-		    </div>
+				</div>
+			</div>
 		</div>
 
 
